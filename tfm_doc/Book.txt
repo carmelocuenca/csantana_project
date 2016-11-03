@@ -1,0 +1,13 @@
+cover
+frontmatter:
+maketitle
+tableofcontents
+preface.md
+mainmatter:
+introduction.tex
+state_of_art.tex
+regulation.tex
+design.tex
+result_and_conclusions.tex
+bibliography.tex
+anexos.tex

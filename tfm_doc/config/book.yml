@@ -1,0 +1,11 @@
+---
+slug: tfm_doc
+filename: tfm_doc
+title: Title of the Book
+subtitle: Change me
+description: Change me.
+author: Author Name
+copyright: 2016
+uuid: e1512a64-aa58-4996-a9da-5209e8ba7c13
+pdf_preview_page_range: 1..30
+epub_mobi_preview_chapter_range: 0..1

@@ -1,0 +1,32 @@
+\documentclass[14pt]{extbook} % Edit this line to change the documentclass.
+% Add custom preamble content below.
+% Example commands for using the Polyglossia package with French are
+% included for reference.
+% You may also have to edit config/lang.yml to sync up the HTML/EPUB/MOBI.
+% \usepackage{polyglossia}
+% \setdefaultlanguage{french}
+% \DeclareTextCommandDefault{\nobreakspace}{\leavevmode\nobreak\ }
+
+\usepackage{latex_styles/softcover}
+\VerbatimFootnotes % Allows verbatim text in footnotes
+\title{Title of the Book}
+\subtitle{Change me}
+\author{Author Name}
+\date{}
+
+\begin{document}
+
+\includepdf{images/cover.pdf}
+\frontmatter
+\maketitle
+\tableofcontents
+\include{chapters/preface}
+\mainmatter
+\include{chapters/introduction}
+\include{chapters/state_of_art}
+\include{chapters/regulation}
+\include{chapters/design}
+\include{chapters/result_and_conclusions}
+\include{chapters/bibliography}
+\include{chapters/anexos}
+\end{document}
