@@ -4,11 +4,11 @@
 
 \section{Tecnologías de contenerización}
 
-Las tecnologías de contenerización se basan en el diseño orientado a servicios de aplicaciones. Así, las aplicaciones pueden descomponerse en componentes funcionales o microservicios empaquetados individualmente, junto con todas sus dependencias. Estos componentes, llamados contenedores, pueden implementarse fácilmente en arquitecturas irregulares, simplificando la escalabilidad y actualización de las mismas.
+Las tecnologías de contenerización se inspiran en el diseño orientado a servicios de aplicaciones. De esta manera, las aplicaciones se descomponen en componentes funcionales o microservicios empaquetados individualmente, junto con todas sus dependencias. Estos componentes, llamados contenedores, pueden implementarse fácilmente en arquitecturas irregulares, simplificando la escalabilidad y actualización de las mismas.
 
 De esta manera, las aplicaciones orientadas a servicios dividen la funcionalidad del sistema en contenedores que se comunican unos con otros a través de interfaces bien definidas. Cada contenedor puede escalar o crecer de manera independiente.
 
-Las aplicaciones que implementan este tipo de diseño no tienen que preocuparse de las especificaciones del sistema anfitrión. En su lugar, cada contenedor debe proporcionar APIs consistentes que los clientes puedan usar para acceder al servicio. Estas estrategias permiten a cada componente intercambiarse o actualizarse mientras la API lo mantenga.
+Las aplicaciones que implementan este tipo de diseño no tienen que preocuparse de las especificaciones del sistema anfitrión. En su lugar, cada contenedor debe proporcionar \textit{APIs} consistentes que los clientes puedan usar para acceder al servicio. Estas estrategias permiten a cada componente intercambiarse o actualizarse mientras la \textit{API} lo mantenga.
 
 Algunos de los beneficios del uso de estas tecnologías son:
 \begin{itemize}
@@ -21,9 +21,9 @@ Algunos de los beneficios del uso de estas tecnologías son:
 
 \subsection{Diferencia entre contenedores y máquinas virtuales}
 
-Hasta este punto es óptimo recalcar la diferencia entre contenedores y máquinas virtuales. Principalmente ésta se encuentra en la ubicación de la capa de virtualización y en la forma en que se utilizan los recursos del sistema operativo.
+Los contenedores se diferencian de las máquinas virtuales en la ubicación de la capa de virtualización y en la forma en que se utilizan los recursos del sistema operativo.
 
-Las máquinas virtuales se basan en un hipervisor que normalmente se puede instalar encima del hardware del sistema o del sistema operativo. Luego, las instancias de las máquinas virtuales se pueden aprovisionar a partir de los recursos disponibles en el sistema. De esta manera las máquinas virtuales están completamente aisladas unas de otras y se pueden migrar de un sistema virtualizado a otro sin tener en cuenta el hardware del sistema o los sistemas operativos.
+Las máquinas virtuales se basan en un hipervisor que se instala encima del hardware del sistema o del sistema operativo. Luego, las instancias de las máquinas virtuales se pueden aprovisionar a partir de los recursos disponibles en el sistema. De esta manera las máquinas virtuales están completamente aisladas unas de otras y se pueden migrar de un sistema virtualizado a otro sin tener en cuenta el hardware del sistema o los sistemas operativos.
 
 Ahora bien, el entorno de los contenedores está dispuesto de manera diferente. Los contenedores se instalan encima de un sistema operativo anfitrión. Estas instancias de contenedor se pueden aprovisionar a partir de los recursos disponibles del sistema y se pueden implementar las aplicaciones necesarias. De esta manera cada aplicación contenedora comparte el mismo sistema operativo subyacente.
 
@@ -38,84 +38,103 @@ Sin embargo, hay que tener en cuenta que el sistema operativo único presenta un
 
 \subsection{Docker}
 
-En la ejecución de este proyecto se aplicará el uso de Docker como tecnología de contenerización.
+En la ejecución de este proyecto se aplicará el uso de Docker\footnotettt{Docker}{https://www.docker.com} como tecnología de contenerización.
+
+\begin{figure}[H]
+\image{images/figures/docker.png}
+\caption{Docker.\label{fig:figure_placement_example}}
+\end{figure}
 
 Docker es un software de código abierto introducido como una forma de simplificar las herramientas necesarias para crear y administrar contenedores ligeros y portables, automatizando el despliegue de aplicaciones.
 
-Surgió como un proyecto interno dentro de la empresa dotCloud, por Salomón Hykes, y fue liberado como código abierto en marzo de 2013.
+Surgió como un proyecto interno dentro de la empresa dotCloud\footnotettt{dotCloud}{https://www.get.cloud/home.aspx}, por Salomón Hykes, y fue liberado como código abierto en marzo de 2013.
 
-Para su funcionamiento, existen repositorios Docker o registros Docker que contienen imágenes puestas a disposición del público. Las imágenes de Docker son plantillas de solo lectura que consisten en una instantánea de una distribución Linux y un conjunto de aplicaciones. Éstas pueden ser públicas o privadas y tener que pagar por ellas.
+Para su funcionamiento, existen repositorios Docker o registros Docker que contienen imágenes puestas a disposición del público. Las imágenes de Docker son plantillas de solo lectura que consisten en una instantánea de una distribución Linux\footnotettt{Linux}{http://www.linux-es.org} y un conjunto de aplicaciones. Éstas pueden ser públicas o privadas.
 
-Los pasos de configuración se especifican en un fichero de compilación llamado Dockerfile, describiendo cómo crear la imagen del contenedor.
+Los pasos de configuración se especifican en un fichero de compilación, llamado \kode{Dockerfile}, que describe cómo crear la imagen del contenedor.
 
 \begin{figure}[H]
 \image{images/figures/dockerarchitecture.png}
 \caption{Arquitectura Docker.\label{fig:figure_placement_example}}
 \end{figure}
 
-Cada instalación de Docker incluye un cliente Docker, normalmente una interfaz de línea de comandos. También incluye una API remota y un demonio. Tanto el cliente como el demonio pueden compartir un único sistema anfitrión o el demonio puede ejecutarse en un sistema anfitrión remoto. Así, los contenedores Docker son directorios que contienen todo los necesario para que la aplicación se ejecute de forma aislada, incluyendo el sistema operativo y un sistema de ficheros. Esto permite que los contenedores puedan moverse de sistema anfitrión sin riesgo de errores de configuración.
+Cada instalación de Docker incluye un cliente Docker, normalmente una interfaz de línea de comandos. También incluye una \textit{API} remota y un demonio. Tanto el cliente como el demonio pueden compartir un único sistema anfitrión o el demonio puede ejecutarse en un sistema anfitrión remoto. Así, los contenedores Docker son directorios que contienen todo los necesario para que la aplicación se ejecute de forma aislada, incluyendo el sistema operativo y un sistema de ficheros. Esto permite que los contenedores puedan moverse de sistema anfitrión sin riesgo de errores de configuración.
 
 \section{Sistemas operativos orientados a contenedores}
 
-Tras el éxito y popularidad de las tecnologías de contenerización han surgido sistemas operativos modernos diseñados para funcionar de manera óptima con un ecosistema de contenedores. Estos sistemas operativos tienden a proporcionar la mínima funcionalidad requerida para implementar aplicaciones, junto con propiedades de auto actualización y restablecimiento.
+Tras el éxito y popularidad de las tecnologías de contenerización han surgido sistemas operativos modernos diseñados para funcionar de manera óptima con un ecosistema de contenedores. Estos sistemas operativos proporcionan la mínima funcionalidad requerida para implementar aplicaciones, junto con propiedades de auto actualización y restablecimiento.
 
 Los sistemas operativos orientados a contenedores han evolucionado el modelo operativo tradicional moviéndose hacia el despliegue de aplicaciones dentro de contenedores frente a la implementación de aplicaciones en la capa de aplicación. De forma más simple, aquí las aplicaciones son binarios autónomos que se pueden mover en su entorno de contenedor.
 
 Esta tecnología también se conoce como la virtualización del sistema operativo en el que su núcleo permite la existencia de múltiples instancias de espacio de usuario aisladas, en lugar de una sola. Estas instancias son los contenedores que pueden parecer y sentirse como un servidor real desde el punto de vista de sus usuarios.
 
-Los principales sistemas operativos orientados a contenedores son CoreOS, Red Hat Enterprise Linux (RHEL) Project Atomic y Snappy Ubuntu Core.
+Los principales sistemas operativos orientados a contenedores son CoreOS\footnotettt{CoreOS}{https://coreos.com}, Red Hat Enterprise Linux (RHEL) Project Atomic\footnotettt{Project Atomic}{https://www.projectatomic.io} y Snappy Ubuntu Core\footnotettt{Snappy Ubuntu Core}{https://developer.ubuntu.com/en/snappy}.
 
-Project Atomic facilita la arquitectura centrada en la aplicación al proporcionar una solución para desplegar aplicaciones contenedoras de forma rápida y confiable. La actualización atómica y la reversión de aplicaciones y anfitriones permiten la implementación de pequeñas mejoras frecuentes. Concretamente, RHEL Project Atomic, lanzado en 2014, es un sistema operativo ligero montado a partir del contenido del RMP Package Manager. Se trata de una variante optimizada de RHEL 7 para ejecutar contenedores Linux.
+Project Atomic facilita la arquitectura centrada en la aplicación al proporcionar una solución para desplegar aplicaciones contenedoras de forma rápida y confiable. La actualización atómica y la reversión de aplicaciones y anfitriones permiten la implementación de pequeñas mejoras frecuentes. Concretamente, RHEL Project Atomic, lanzado en 2014, es un sistema operativo ligero montado a partir del contenido del RMP Package Manager\footnotettt{RMP Package Manager}{http://rpm.org}. Se trata de una variante optimizada de RHEL 7\footnotettt{RHEL 7}{https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/7.0\_Release\_Notes} para ejecutar contenedores Linux.
 
-Por su parte Snappy Ubuntu Core, lanzado en 2014, es un sistema operativo que usa una imagen de servidor mínima con las mismas bibliotecas que el sistema operativo Ubuntu actual, pero las aplicaciones se proporcionan a través de un mecanismo más simple. Su enfoque ágil es más rápido, más fiable y permite ofrecer mayores garantías de seguridad para aplicaciones y usuarios. Las aplicaciones Snappy y Ubuntu Core se pueden actualizar de forma atómica y revertirse si es necesario, pensando para contenedores.
+\begin{figure}[H]
+\image{images/figures/projectatomic.png}
+\caption{Project Atomic.\label{fig:figure_placement_example}}
+\end{figure}
+
+Por su parte Snappy Ubuntu Core, lanzado en 2014, es un sistema operativo que usa una imagen de servidor mínima con las mismas bibliotecas que el sistema operativo Ubuntu\footnotettt{Ubuntu}{https://www.ubuntu.com} actual, pero las aplicaciones se proporcionan a través de un mecanismo más simple. Su enfoque ágil es más rápido, más fiable y permite ofrecer mayores garantías de seguridad para aplicaciones y usuarios. Las aplicaciones Snappy y Ubuntu Core se pueden actualizar de forma atómica y revertirse si es necesario, pensando para contenedores.
+
+\begin{figure}[H]
+\image{images/figures/snappyubuntu.png}
+\caption{Snappy Ubuntu.\label{fig:figure_placement_example}}
+\end{figure}
 
 En el desarrollo de este proyecto se utilizará el sistema operativo orientado a contenedores CoreOS, descrito a continuación.
 
 \subsection{CoreOS}
 
-CoreOS es un sistema operativo ligero de código abierto, de la compañía con el mismo nombre, basado en el kernel de Linux y lanzado en octubre de 2013. Esta nueva distribución Linux proporciona las características necesarias para ejecutar contenedores con un enfoque práctico para las actualizaciones del sistema operativo. La filosofía de actualización de CoreOS es que su realización frecuente y confiable es fundamental para una buena seguridad. Las actualizaciones se distribuyen como están disponibles y se pueden instalar de forma inmediata y automática.  
+CoreOS es un sistema operativo ligero de código abierto, de la compañía con el mismo nombre, basado en el núcleo de Linux y lanzado en octubre de 2013. Esta distribución Linux proporciona las características necesarias para ejecutar contenedores con un enfoque práctico para las actualizaciones del sistema operativo. La filosofía de actualización de CoreOS es que su realización frecuente y confiable es fundamental para una buena seguridad. Las actualizaciones se distribuyen como están disponibles y se pueden instalar de forma inmediata y automática.  
+
+\begin{figure}[H]
+\image{images/figures/coreos.png}
+\caption{CoreOS.\label{fig:figure_placement_example}}
+\end{figure}
+
 
 CoreOS está diseñado para implementar una aplicación distribuida en un clúster de nodos. Así, se encarga de proporcionar la infraestructura necesaria para los despliegues en clúster, automatización, facilidad de despliegue de aplicaciones, seguridad, fiabilidad y escalabilidad. Como sistema operativo, CoreOS ofrece solo las funcionalidades mínimas necesarias para la implementación de aplicaciones dentro de contenedores de software, junto con mecanismos incorporados para el descubrimiento de servicios y el intercambio de configuración.
 
-CoreOS es una bifurcación de Chrome OS, sistema operativo basado en web de la compañía Google, por medio de la utilización de su kit de desarrollo de software (SDK), disponible gratuitamente a través de Chromium OS como base, al tiempo que añade nuevas funcionalidades y personalización para soportar el hardware utilizando servidores.
+CoreOS es una bifurcación de Chrome OS\footnotettt{Chrome OS}{https://sites.google.com/site/chromeoslinux}, sistema operativo basado en web de la compañía Google\footnotettt{Google}{https://www.google.com/about/company}, por medio de la utilización de su kit de desarrollo de software (\textit{SDK}), disponible gratuitamente a través de Chromium OS\footnotettt{Chromium OS}{https://www.chromium.org/chromium-os} como base, al tiempo que añade nuevas funcionalidades y personalización para soportar el hardware utilizando servidores.
 
-CoreOS no proporciona un gestor de paquetes, por lo que requiere que todas las aplicaciones se ejecuten dentro de sus contenedores, utilizando Docker y contenedores Linux (LXC) subyacentes de virtualización a nivel de sistema operativo para la ejecución de múltiples sistemas Linux aislados en un único sistema anfitrión de control, que sería la instancia CoreOS. De esa manera, la partición de recursos se lleva a cabo a través de múltiples instancias de espacios de usuario aisladas, en lugar de utilizar un hipervisor y una máquina virtual. Este enfoque se basa en cgroups, funcionalidad del kernel de Linux que ofrece aislamiento del espacio de nombres y habilidades para limitar, contabilizar y aislar el uso de los recursos de un grupo de procesos.
+CoreOS no proporciona un gestor de paquetes, por lo que requiere que todas las aplicaciones se ejecuten dentro de sus contenedores, utilizando Docker y contenedores Linux subyacentes de virtualización a nivel de sistema operativo para la ejecución de múltiples sistemas Linux aislados en un único sistema anfitrión de control, que sería la instancia CoreOS. De esa manera, la partición de recursos se lleva a cabo a través de múltiples instancias de espacios de usuario aisladas, en lugar de utilizar un hipervisor y una máquina virtual. Este enfoque se basa en cgroups, funcionalidad del núcleo de Linux que ofrece aislamiento del espacio de nombres y habilidades para limitar, contabilizar y aislar el uso de los recursos de un grupo de procesos.
 
-Para mayor seguridad y fiabilidad en actualizaciones, CoreOS emplea FastPatch como un esquema de doble partición para su sola lectura del sistema de archivos raíz, lo que significa que las actualizaciones del sistema operativo se llevan a cabo en su totalidad y se instalan en una partición raíz secundaria pasiva, que se activa al reiniciar o realizando una ejecución de kernel (kexec).
+Para mayor seguridad y fiabilidad en actualizaciones, CoreOS emplea \textit{FastPatch} como esquema de doble partición para su sola lectura del sistema de archivos raíz, lo que significa que las actualizaciones del sistema operativo se llevan a cabo en su totalidad y se instalan en una partición raíz secundaria pasiva, que se activa al reiniciar o realizando una ejecución del núcleo (\textit{kexec}).
 
-El sistema de distribución de actualizaciones de CoreOS se basa en el proyecto de código abierto de Google Omaha, que proporciona un mecanismo para el despliegue de actualizaciones y el protocolo subyacente petición-respuesta sobre la base de XML.
+El sistema de distribución de actualizaciones de CoreOS se basa en el proyecto de código abierto de Google Omaha\footnotettt{Google Omaha}{https://github.com/google/omaha}, que proporciona un mecanismo para el despliegue de actualizaciones y el protocolo subyacente petición-respuesta sobre la base de \textit{XML}.
 
-Los componentes principales de CoreOS son su Kernel, Systemd, Etcd, Fleet, Flannel y Rkt. En cuanto a su ecosistema se tiene Docker y Kubernetes, este último explicado en el siguiente capítulo.
+Los componentes principales de CoreOS son su núcleo, systemd\footnotettt{systemd}{https://coreos.com/docs/launching-containers/launching/getting-started-with-systemd}, etcd\footnotettt{etcd}{https://coreos.com/etcd}, fleet\footnotettt{fleet}{https://coreos.com/fleet}, flannel\footnotettt{flannel}{https://coreos.com/flannel/docs/latest/flannel-config.html} y rkt\footnotettt{rkt}{https://coreos.com/rkt}. En cuanto a su ecosistema se tiene Docker y Kubernetes\footnotettt{Kubernetes}{http://kubernetes.io}, este último explicado en el siguiente capítulo.
 
 \begin{figure}[H]
 \image{images/figures/coreosarchitecture.png}
 \caption{Arquitectura CoreOS.\label{fig:figure_placement_example}}
 \end{figure}
 
-Sus propiedades clave a destacar son las siguientes:
+Sus propiedades claves a destacar son las siguientes:
 
 \begin{itemize}
-\item El núcleo o kernel es muy pequeño y rápido para arrancar.
+\item El núcleo es muy pequeño y rápido para arrancar.
 \item El sistema operativo base y todos los servicios son de código abierto.
 \item Los servicios también se pueden usar de manera independiente en sistemas que no son CoreOS.
-\item El sistema operativo no proporciona ninguna gestión de paquetes. Las bibliotecas y los paquetes forman parte de la aplicación desarrollada mediante contenedores.
-\item Permite clústeres de servidores grandes y seguros que pueden utilizarse para el desarrollo de aplicaciones distribuidas.
-\item El tiempo de ejecución de contenedor, el intérprete SSH y el Kernel son los elementos principales.
-\item Cada proceso es administrado por el servicio Systemd.
-\item Etcd, Fleet y Flannel son unidades de control que se ejecutan en la parte superior del Kernel.
-\item Los canales de lanzamiento CoreOS, estable, beta y alfa, se utilizan para controlar el ciclo de lanzamiento.
-\item Los productos comerciales incluyen el servicio CoreUpdate, un panel de control web para la gestión de actualizaciones del clúster, Quay entreprise, repositorio de contenedores, y Tectonic, que conecta el uso de CoreOS junto con Kubernetes, explicado con mayor detalle en el siguiente apartado.
+\item El sistema operativo no proporciona gestor de paquetes. Las bibliotecas y los paquetes forman parte de la aplicación desarrollada mediante contenedores.
+\item Permite clústeres seguros de muchos servidores que pueden utilizarse para el despliegue de aplicaciones distribuidas.
+\item Cada proceso es administrado por el servicio systemd.
+\item etcd, fleet y flannel son unidades de control que se ejecutan como procesos del núcleo.
+\item Los canales de lanzamiento CoreOS (estable, beta y alfa) se utilizan para controlar el ciclo de lanzamiento.
+\item Los productos comerciales incluyen: el servicio CoreUpdate\footnotettt{CoreUpdate}{https://coreos.com/products/coreupdate}, un panel de control web para la gestión de actualizaciones del clúster, Quay entreprise\footnotettt{Quay entreprise}{https://quay.io/enterprise}, repositorios de contenedores, y Tectonic\footnotettt{Tectonic}{https://tectonic.com}, que conecta el uso de CoreOS junto con Kubernetes, explicado con mayor detalle en el siguiente apartado.
 \item Actualmente se ejecuta en procesadores x86.
 \end{itemize}
 
 Entre sus ventajas significativas cabe destacar:
 
 \begin{itemize}
-\item La función de actualización automática del Kernel protege el núcleo de las vulnerabilidades de seguridad.
-\item La huella de memoria CoreOS es muy pequeña.
+\item La función de actualización automática del núcleo lo protege de las vulnerabilidades de seguridad.
+\item Utiliza muy poca memoria respecto a otras distribuciones.
 \item La gestión de las máquinas CoreOS se realiza en el nivel de clúster en lugar de nivel de máquina individual.
-\item Fleet se utiliza para la orquestación de servicios básicos y Kubernetes se utiliza para la orquestación de servicios de aplicación.
-\item Es compatible con todos los principales proveedores de nube, como AWS, GCE, Azure y DigitalOcean.
+\item Es compatible con todos los principales proveedores de nube, como Amazon Web Services\footnotettt{AWS}{https://aws.amazon.com/es}, GCE\footnotettt{GCE}{https://cloud.google.com/compute/docs}, Azure\footnotettt{Azure}{https://azure.microsoft.com/es-es} y DigitalOcean\footnotettt{DigitalOcean}{https://www.digitalocean.com}.
 \item La mayoría de los componentes de CoreOS son de código abierto y el cliente puede elegir la combinación de herramientas necesaria para su aplicación específica.
 \end{itemize}
 
@@ -123,45 +142,17 @@ A continuación se detallan los microservicios de CoreOS a utilizar en el desarr
 
 \subsubsection{Systemd}
 
-Systemd es un sistema de inicio que CoreOS utiliza para iniciar, detener y administrar procesos. Los sistemas más comunes de inicio utilizados en Unix son el propio Systemd en CoreOS y RedHat, Upstart en Ubuntu y Supervisord en el mundo Python.
+Systemd es un sistema de inicio que CoreOS utiliza para iniciar, detener y administrar procesos. Los sistemas más comunes de inicio utilizados en Unix\footnotettt{Unix}{http://www.opengroup.org/unix} son el propio systemd en CoreOS y RedHat\footnotettt{RedHat}{https://www.redhat.com/es}, Upstart\footnotettt{Upstart}{http://upstart.ubuntu.com/getting-started.html} en Ubuntu y Supervisord\footnotettt{Supervisord}{http://supervisord.org} en el mundo Python\footnotettt{Python}{https://www.python.org}.
 
 Un sistema de inicio común tiene las funciones de ser el primer proceso en comenzar, controlar el orden y ejecución de todos los procesos de usuario, ocuparse de reiniciar procesos, si mueren o cuelgan, y de la propiedad del proceso y sus recursos.
 
-Específicamente, cada proceso en systemd se ejecuta en un cgroup, característica del Kernel de Linux que limita, contabiliza y aísla el uso de recursos de una colección de procesos. Si el servicio systemd se cancela, todos los procesos asociados con el servicio, incluidos los procesos bifurcados, se eliminan. Si se ejecuta un contenedor en systemd se puede controlar el uso de recursos, incluso si el contenedor contiene varios procesos.
+Específicamente, cada proceso en systemd se ejecuta en un \textit{cgroup}, característica del núcleo de Linux que limita, contabiliza y aísla el uso de recursos de una colección de procesos. Si el servicio systemd se cancela, todos los procesos asociados con el servicio, incluidos los procesos bifurcados, se eliminan. Si se ejecuta un contenedor en systemd se puede controlar el uso de recursos, incluso si el contenedor contiene varios procesos.
  
-Las unidades systemd se ejecutan y controlan en una sola máquina. Éstas describen una tarea en particular junto con sus dependencias y orden de ejecución. Algunas unidades se inician en el sistema de forma predeterminada y otras por usuarios. Las unidades iniciadas por el sistema están en /usr/lib64/systemd/system y las iniciadas por el usuario en /etc/systemd/system.
+Las unidades systemd se ejecutan y controlan en una sola máquina. Éstas describen una tarea en particular junto con sus dependencias y orden de ejecución. Algunas unidades se inician en el sistema de forma predeterminada y otras por usuarios. Las unidades iniciadas por el sistema están en \kode{/usr/lib64/systemd/system} y las iniciadas por el usuario en \kode{/etc/systemd/system}.
 
-La interfaz de línea de comandos (CLI) systemctl puede utilizarse para controlar unidades systemd.
+La interfaz de línea de comandos (\textit{CLI}) systemctl puede utilizarse para controlar unidades systemd.
 
-Algunos tipos de unidad systemd son service, socket, target, mount y timer. El tipo más común es service y se utiliza para definir un servicio con sus dependencias. El tipo socket se utiliza para exponer los servicios al mundo externo. Por ejemplo, docker.service expone la conectividad externa al motor Docker a través de docker.socket. Los sockets también se pueden utilizar para exportar registros a máquinas externas. Por su parte, la unidad target se utiliza para agrupar unidades relacionadas para que puedan ser iniciadas conjuntamente y la unidad mount para montar discos en el sistema de archivos. Por último, las unidades timer se inician periódicamente en función del intervalo especificado.
-
-Systemd proporciona especificadores de unidad, en modo de accesos directos, para llegar al entorno del sistema. Algunos comunes son \%H para nombre de anfitrión, \%m identifica el ID de la máquina y \%u para el nombre de usuario.
-
-Por ejemplo, una unidad systemd ejemplo puede ser la siguiente:
-
-\begin{codelisting}
-\label{code:systemd}
-\codecaption{Unidad Systemd.}
-\begin{code}
-[Unit] 
-Description=etcd2
-Conflicts=etcd.service
-
-[Service]
-User=etcd
-Environment=ETCD_DATA_DIR=/var/lib/etcd2
-Environment=ETCD_NAME=%m
-ExecStart=/usr/bin/etcd2
-Restart=always
-RestartSec=10s
-LimitNoFILE=40000
-
-[Install]
-WantedBy=multi-user.target
-\end{code}
-\end{codelisting}
-
-El ejemplo de arriba representa algunos detalles sobre el archivo de unidad de servicio etcd2. Como se puede apreciar, todas las unidades tienen la sección [Unit] e [Install] para unidades de tipo service. La opción Conflicts notifica que puede ejecutar etcd o etcd2, pero no ambos. Por su parte, Environment especifica las variables de entorno que se van a utilizar en etcd2. ExecStart señala el ejecutable a ejecutar. Restart indica si se puede reiniciar el servicio y RestartSec el intervalo de tiempo después del cual se debe reiniciar. Por último, LimitNoFILE especifica el límite de conteo de archivos y la opción WantedBy el grupo al que pertenece este servicio.
+Algunos tipos de unidad systemd son \textit{service}, \textit{socket}, \textit{target}, \textit{mount} y \textit{timer}. El tipo más común es \textit{service} y se utiliza para definir un servicio con sus dependencias. El tipo \textit{socket} se utiliza para exponer los servicios al mundo externo. Por ejemplo, \textit{docker.service} expone la conectividad externa al motor Docker a través de \textit{docker.socket}. Los \textit{sockets} también se pueden utilizar para exportar registros a máquinas externas. Por su parte, la unidad \textit{target} se utiliza para agrupar unidades relacionadas para que puedan ser iniciadas conjuntamente y la unidad \textit{mount} para montar discos en el sistema de archivos. Por último, las unidades timer se inician periódicamente en función del intervalo especificado.
 
 Una unidad systemd puede ser creada a partir de una plantilla y ésta ser utilizada para instanciar varias unidades systemd.
 
@@ -169,9 +160,9 @@ También existe el concepto de unidades sueltas, útiles para cambiar las propie
 
 \subsubsection{Etcd}
 
-Etcd es un almacén clave-valor distribuido utilizado por todas las máquinas del clúster CoreOS para leer, escribir e intercambiar datos. Etcd utiliza el algoritmo Raft para mantener un clúster en alta disponibilidad. Además, se utiliza para compartir la configuración y los datos de monitorización en los equipos CoreOS y para realizar el descubrimiento del servicio. Todos los demás servicios de CoreOS usan etcd como una base de datos distribuida. 
+Etcd es un sistema de almacenamiento de pares clave-valor distribuido utilizado por todas las máquinas del clúster CoreOS para leer, escribir e intercambiar datos. Etcd utiliza el algoritmo Raft para mantener un clúster en alta disponibilidad. Además, se utiliza para compartir la configuración y los datos de monitorización en los equipos CoreOS y para realizar el descubrimiento del servicio. Todos los demás servicios de CoreOS usan etcd como una base de datos distribuida. 
 
-La utilidad etcdctl es la interfaz CLI para etcd.
+La utilidad etcdctl es la interfaz \textit{CLI} para etcd.
 
 Los parámetros de configuración de etcd se pueden usar para modificar propiedades de un sólo miembro etcd o de todo el clúster. Estas opciones se clasifican entre las siguientes categorías:
 
@@ -194,48 +185,42 @@ Las operaciones principales que se pueden hacer usando etcd son:
 \item Creación de claves bajo petición.
 \end{itemize}
 
-Algunos parámetros etcd que se pueden ajustar para obtener un rendimiento de clúster óptimo en función del entorno operativo son el tamaño del clúster, el intervalo de latido y el tiempo de espera de elección de un nuevo nodo maestro. 
-
-Es necesario que el servicio etcd sea seguro para garantizar, a su vez, la seguridad de la comunicación entre cliente-servidor y servidor-cliente. Para ello existe una autoridad de certificación utilizada para proporcionar y verificar certificados entre ellos. Así, hay dos entidades asociadas con la autenticación, usuarios y roles. Los usuarios son creados con nombre y contraseña y los roles son utilizados para restringir el acceso a una clave o directorio específico que contiene varias claves. 
-
-
 \subsubsection{Fleet}
 
-El servicio Fleet es un gestor o planificador que controla la creación de servicios a nivel de clúster. Mientras que systemd actua como sistema de inicio para un nodo, Fleet es el sistema de inicio para el clúster y usa el servicio etcd para la comunicación entre nodos.
+El servicio fleet es un gestor o planificador que controla la creación de servicios a nivel de clúster. Mientras que systemd actua como sistema de inicio para un nodo, Fleet es el sistema de inicio para el clúster y usa el servicio etcd para la comunicación entre nodos.
 
-Fleet utiliza el modelo maestro-esclavo con el motor Fleet desempeñando el papel de maestro y el agente Fleet representando el papel de esclavo.
+Fleet utiliza el modelo maestro-esclavo con el motor fleet desempeñando el papel de maestro y el agente fleet representando el papel de esclavo.
 
-El motor Fleet es reponsable de programar las unidades Fleet y el agente Fleet de ejecutarlas y divulgar su estado al motor Fleet. Un motor maestro es elegido entre el núcleo de CoreOS utilizando etcd. Cuando el usuario inicia un servicio Fleet cada agente ofrece ese servicio. Fleet utiliza un algoritmo de programación de carga mínima muy simple para programar la unidad en el nodo apropiado. Las unidades Fleet también constan de metadatos para controlar dónde se ejecuta la unidad con respecto a la propiedad del nodo, así como sobre la base de otros servicios que se ejecutan en ese nodo en particular. El agente Fleet procesa la unidad y la ofrece a systemd para su ejecución. Si un nodo muere se elige un nuevo motor Fleet y las unidades programa en ese nodo se reprograman en un nuevo nodo. 
+El motor fleet es reponsable de programar las unidades fleet y el agente fleet de ejecutarlas y divulgar su estado al motor fleet. Un motor maestro es elegido entre el núcleo de CoreOS utilizando etcd. Cuando el usuario inicia un servicio fleet cada agente ofrece ese servicio. Fleet utiliza un algoritmo de programación de carga mínima muy simple para programar la unidad en el nodo apropiado. Las unidades fleet también constan de metadatos para controlar dónde se ejecuta la unidad con respecto a la propiedad del nodo, así como sobre la base de otros servicios que se ejecutan en ese nodo en particular. El agente fleet procesa la unidad y la ofrece a systemd para su ejecución. Si un nodo muere se elige un nuevo motor fleet y las unidades programa en ese nodo se reprograman en un nuevo nodo. 
 
-Systemd proporciona alta disponibilidad a nivel de nodo, mientras que Fleet lo hace a nivel de clúster.
+Systemd proporciona alta disponibilidad a nivel de nodo, mientras que fleet lo hace a nivel de clúster.
 
-Fleet se utiliza principalmente para la orquestación de servicios del sistema críticos usando systemd. En cambio, otras soluciones de orquestación, como Kubernetes, son usadas para la orquestación de servicios de aplicación en contenedores. No obstante para implementaciones pequeñas Fleet se puede utilizar, también para la orquestación de aplicaciones.
+Fleet se utiliza principalmente para la orquestación de servicios del sistema críticos usando systemd. En cambio, otras soluciones de orquestación, como Kubernetes, son usadas para la orquestación de servicios de aplicación en contenedores. No obstante para implementaciones pequeñas fleet se puede utilizar, también para la orquestación de aplicaciones.
 
-Como se verá en el siguiente capítulo, Kubernetes se compone de múltiples servicios como el servidor kubelet, el servidor API, el planificador y el controlador de replicación, todos ellos funcionando como unidades Fleet. 
+Como se verá en el siguiente capítulo, Kubernetes se compone de múltiples servicios como el servidor kubelet\footnotettt{kubelet}{https://coreos.com/blog/introducing-the-kubelet-in-coreos}, el servidor \textit{API}, el planificador y el controlador de replicación, todos ellos funcionando como unidades fleet. 
 
 Fleet soporta especificadores de unidades y plantillas similares a systemd. Un especificador de unidad le proporciona accesos directos dentro de un archivo de servicio y las plantillas proporcionan archivos de servicio reutilizables.
 
-Los metadatos se pueden utilizar en archivos de servicio Fleet para controlar la programación y las opciones X-Fleet se usan para especificar restricciones al programar el servicio. Entre las disponibles se encuentran:
+Los metadatos se pueden utilizar en archivos de servicio fleet para controlar la programación y las opciones X-Fleet se usan para especificar restricciones al programar el servicio. Entre las disponibles se encuentran:
 \begin{itemize}
-\item MachineMetaData: El servicio se programa basado en metadatos coincidentes.
-\item MachineId: El servicio se programa basado en el MachineId especificado.
-\item MachineOf: El servicio se programa basado en otros servicios que se ejecutan en el mismo nodo. Esto se usa para programar servicios estrechamente acoplados en el mismo nodo.
-\item Conflict: Esta opción se utiliza para evitar la programación de servicios en conflicto en el mismo nodo.
-\item Global: El mismo servicio se programa en todos los nodos del clúster.
+\item \textit{MachineMetaData}: El servicio se programa basado en metadatos coincidentes.
+\item \textit{MachineId}: El servicio se programa basado en el \textit{MachineId} especificado.
+\item \textit{MachineOf}: El servicio se programa basado en otros servicios que se ejecutan en el mismo nodo. Esto se usa para programar servicios estrechamente acoplados en el mismo nodo.
+\item \textit{Conflict}: Esta opción se utiliza para evitar el lanzamiento de servicios en conflicto en el mismo nodo.
+\item \textit{Global}: El mismo servicio se programa en todos los nodos del clúster.
 \end{itemize}
 
 \subsubsection{Flannel}
 
-<<<<<<< HEAD
-Flannel utiliza una red de superposición para permitir que contenedores, a través de diferentes anfitriones, se comuniquen entre sí. Flannel no es parte de la imagen básica de CoreOS para poder mantener el tamaño de la imagen CoreOS mínimo. Así, cuando se inicia Flannel su imagen se recupera del repositorio de imágenes de contenedor. 
+Flannel utiliza una red de superposición para permitir que contenedores, a través de diferentes anfitriones, se comuniquen entre sí. Flannel no es parte de la imagen básica de CoreOS para poder mantener el tamaño de la imagen CoreOS mínimo. Así, cuando se inicia flannel su imagen se recupera del repositorio de imágenes de contenedor. 
 
-El demonio Docker se inicia, normalmente, después del servicio Flannel para que los contenedores puedan obtener la dirección IP asignada por Flannel. Esto representa un problema puesto que Docker es necesario para descargar la imagen de Flannel. CoreOS ha resuelto este problema ejecutando un servicio Docker maestro cuyo único propósito es descargar el contenedor Flannel.
+El demonio Docker se inicia, normalmente, después del servicio flannel para que los contenedores puedan obtener la dirección IP asignada por flannel. Esto representa un problema puesto que Docker es necesario para descargar la imagen de flannel. CoreOS ha resuelto este problema ejecutando un servicio Docker maestro cuyo único propósito es descargar el contenedor flannel.
 
-Entre sus características cabe destacar que Flannel se ejecuta sin un servidor central y utiliza etcd para la comunicación entre los nodos. Como parte del inicio de Flannel, se necesita proporcionar un archivo de configuración que contenga la subred IP que se utilizará para el clúster, así como el protocolo en uso.
+Entre sus características cabe destacar que flannel se ejecuta sin un servidor central y utiliza etcd para la comunicación entre los nodos. Como parte del inicio de flannel, se necesita proporcionar un archivo de configuración que contenga la subred IP que se utilizará para el clúster, así como el protocolo en uso.
 
-Cada nodo del clúster solicita un rango de direcciones IP para los contenedores creados en ese anfitrión y lo registra con etcd. Como cada nodo del clúster conoce el rango de direcciones IP asignado para cada otro nodo, sabe cómo llegar a los contenedores creados en cualquier nodo del clúster. Cuando se crean contenedores, los contenedores obtienen una dirección IP dentro del rango asignado al nodo y si necesitan comunicarse a través de anfitriones, Flannel hace la encapsulación basada en el protocolo elegido. Así, Flannel en el nodo de destino desencapsula el paquete y lo entrega al contenedor.
+Cada nodo del clúster solicita un rango de direcciones IP para los contenedores creados en ese anfitrión y lo registra con etcd. Como cada nodo del clúster conoce el rango de direcciones IP asignado para cada otro nodo, sabe cómo llegar a los contenedores creados en cualquier nodo del clúster. Cuando se crean contenedores, los contenedores obtienen una dirección IP dentro del rango asignado al nodo y si necesitan comunicarse a través de anfitriones, flannel hace la encapsulación basada en el protocolo elegido. Así, flannel en el nodo de destino desencapsula el paquete y lo entrega al contenedor.
 
-Al no utilizar la asignación basada en puertos para hablar a través de los contenedores, Flannel simplifica la comunicación contenedor a contenedor.
+Al no utilizar la asignación basada en puertos para hablar a través de los contenedores, flannel simplifica la comunicación contenedor a contenedor.
 
 Las razones por las que se necesita crear redes de contenedores son:
 \begin{itemize}
@@ -255,31 +240,33 @@ En la siguiente imagen se aprecia un ejemplo de uso y funcionamiento común comp
 \begin{itemize}
 \item Un contenedor apache, representando a una aplicación, que se registra con etcd permitiendo que todos los contenedores disponibles sean descubiertos. 
 \item Un volumen de datos en el que confd puede escribir su configuración.
-\item Un contenedor que ejecuta confd y vigila los cambios en etcd para construir un archivo de configuración ngnix usado, a su vez, para equilibrar la carga entre los contenedores disponibles.
-\item Un contenedor nginx que obtiene la configuración a partir del volumen compartido.
+\item Un contenedor que ejecuta confd y vigila los cambios en etcd para construir un archivo de configuración \textit{ngnix} usado, a su vez, para equilibrar la carga entre los contenedores disponibles.
+\item Un contenedor \textit{nginx} que obtiene la configuración a partir del volumen compartido.
 \end{itemize}
 
 Así, cuando esté funcionando se podrán agregar fácilmente nuevos contenedores de apache y hacer que se agreguen automáticamente al equilibrador de carga.
 
 \begin{figure}[H]
 \image{images/figures/loadbalancerconfd.png}
-\caption{Balanceador de carga con CoreOS, confd y nginx.\label{fig:figure_placement_example}}
+\caption{Balanceador de carga con CoreOS, confd y \textit{nginx}.\label{fig:figure_placement_example}}
 \end{figure}
 
 \section{Herramientas para la orquestación de contenedores}
 
 Un sistema de orquestación de contenedores trata el hardware dispar de la infraestructura como una colección y lo representa para la aplicación como un único recurso. También, programa los contenedores basándose en las restricciones de los usuarios y utiliza la infraestructura de la manera más eficiente posible, escalando los contenedores dinámicamente y manteniendo los servicios en alta disponibilidad.
 
-Las principales herramientas para la orquestación de contenedores en la actualidad son Kubernetes, Docker Swarm y Apache Mesos.
+Las principales herramientas para la orquestación de contenedores en la actualidad son Kubernetes, Docker Swarm\footnotettt{Docker Swarm}{https://www.docker.com/products/docker-swarm} y Apache Mesos\footnotettt{Apache Mesos}{http://mesos.apache.org}.
 
-Docker Swarm es la solución de orquestación nativa de Docker. Con su uso se administra el clúster como sola entidad en lugar de administrar nodos Docker individuales. Esta herramienta tiene un planificador integrado que decide la ubicación de los contenedores en el clúster y utiliza restricciones y afinidades específicas del usuario para decidir esa ubicación. En su arquitectura existe un maestro que se encarga de la planificación de contenedores Docker basado en el algoritmo planificador, restricciones y afinidades. Para proporcionar alta disponibilidad se pueden ejecutar múltiples maestros en paralelo, distribuyendo las cargas de trabajo uniformemente. Por su parte, los agentes se ejecutan en cada nodo y se comunican con el maestro a partir del descubrimiento, necesario porque se ejecutan en diferentes nodos y no son iniciados por él.
+Docker Swarm es la solución de orquestación nativa de Docker. Con su uso se administra el clúster como sola entidad en lugar de administrar nodos Docker individuales. 
+
+Esta herramienta tiene un planificador integrado que decide la ubicación de los contenedores en el clúster y utiliza restricciones y afinidades específicas del usuario para decidir esa ubicación. En su arquitectura existe un maestro que se encarga de la planificación de contenedores Docker basado en el algoritmo planificador, restricciones y afinidades. Para proporcionar alta disponibilidad se pueden ejecutar múltiples maestros en paralelo, distribuyendo las cargas de trabajo uniformemente. Por su parte, los agentes se ejecutan en cada nodo y se comunican con el maestro a partir del descubrimiento, necesario porque se ejecutan en diferentes nodos y no son iniciados por él.
 
 \begin{figure}[H]
 \image{images/figures/dockermasterandagent.png}
 \caption{Composición de maestros y agentes en Docker Swarm.\label{fig:figure_placement_example}}
 \end{figure}
 	
-Apache Mesos combina el sistema operativo con el administrador de clústeres. El sistema operativo de clústeres representa los recursos de múltiples computadores dispares en un único recurso, sobre el que se programan las aplicaciones. Por su parte, el administrador de clúster es el responsable de planificar los trabajos en el clúster. Esta herramienta proporciona un aislamiento eficiente de los recursos y el intercambio a través de aplicaciones distribuidas o frameworks.
+Apache Mesos combina el sistema operativo con el administrador de clústeres. El sistema operativo de clústeres representa los recursos de múltiples computadores dispares en un único recurso, sobre el que se programan las aplicaciones. Por su parte, el administrador de clúster es el responsable de planificar los trabajos en el clúster. Esta herramienta proporciona un aislamiento eficiente de los recursos y el intercambio a través de aplicaciones distribuidas o \textit{frameworks}.
 
 \begin{figure}[H]
 \image{images/figures/apachemesos.png}
@@ -292,47 +279,47 @@ En la elaboración de este proyecto se utilizará Kubernetes, descrito a continu
 
 Kubernetes es una plataforma de código abierto para la orquestación de contenedores, iniciada por Google.
 
-La unidad más pequeña en Kubernetes es un pod. Los pods son un conjunto de contenedores que se encuentran juntos en un único nodo, trabajando estrechamente entre sí. Todos los contenedores de un pod comparten el espacio de nombres IPC, de red, UTS y PID. Al compartir el espacio de nombres IPC, pueden utilizar dichos mecanismos para comunicarse entre sí. Compartiendo el espacio de nombres de red, los contenedores pueden utilizar sockets para comunicarse entre sí. Cada pod tiene una dirección IP y todos los contenedores de ese pod la comparten. Además, al compartir el espacio de nombres UTS, los volúmenes se pueden montar en un pod para que todos los contenedores los vean.
+\begin{figure}[H]
+\image{images/figures/kubernetes.png}
+\caption{Kubernetes.\label{fig:figure_placement_example}}
+\end{figure}
 
-Los pods pueden hablar entre sí a través de los nodos utilizando diferentes técnicas como el enrutamiento basado en la nube, Flannel, Weave, Calico y otros.
+La unidad más pequeña en Kubernetes es un \textit{pod}. Los \textit{pods} son un conjunto de contenedores que se encuentran juntos en un único nodo, trabajando estrechamente entre sí. Todos los contenedores de un \textit{pod} comparten el espacio de nombres \textit{IPC}, de red, \textit{UTS} y \textit{PID}. Al compartir el espacio de nombres \textit{IPC}, pueden utilizar dichos mecanismos para comunicarse entre sí. Compartiendo el espacio de nombres de red, los contenedores pueden utilizar sockets para comunicarse entre sí. Cada \textit{pod} tiene una dirección IP y todos los contenedores de ese \textit{pod} la comparten. Además, al compartir el espacio de nombres \textit{UTS}, los volúmenes se pueden montar en un \textit{pod} para que todos los contenedores los vean.
 
-Los servicios son una abstracción de Kubernetes para combinar lógicamente los pods que proporcionan una funcionalidad similar. También se encarga de equilibrar la carga de múltiples pods. Los servicios deben ser descubiertos internamente o externamente según su tipo.
+Los \textit{pods} pueden hablar entre sí a través de los nodos utilizando diferentes técnicas como el enrutamiento basado en la nube, Flannel, Weave\footnotettt{Weave}{https://developers.google.com/weave}, Calico\footnotettt{Calico}{https://www.projectcalico.org/learn} y otros.
+
+Los servicios son una abstracción de Kubernetes para combinar lógicamente los \textit{pods} que proporcionan una funcionalidad similar. También se encarga de equilibrar la carga de múltiples \textit{pods}. Los servicios deben ser descubiertos internamente o externamente según su tipo.
 
 Para el descubrimiento de servicio interno, Kubernetes ofrece dos opciones:
 \begin{itemize}
-\item Variable de entorno: Cuando se crea un nuevo pod se pueden importar variables de entorno de servicios antiguos, permitiendo a los servicios comunicarse entre sí.
-\item DNS: Todos los servicios se registran en el servicio DNS, kube-dns, de manera que los nuevos servicios pueden encontrar y comunicarse con otros servicios.
+\item Variable de entorno: Cuando se crea un nuevo \textit{pod} se pueden importar variables de entorno de servicios antiguos, permitiendo a los servicios comunicarse entre sí.
+\item \textit{DNS}: Todos los servicios se registran en el servicio \textit{DNS}, kube-dns\footnotettt{kube-dns}{http://kubernetes.io/docs/admin/dns}, de manera que los nuevos servicios pueden encontrar y comunicarse con otros servicios.
 \end{itemize}
 
 Para el descubrimiento de servicio externo, Kubernetes ofrece dos opciones:
 \begin{itemize}
-\item NodePort: Kubernetes expone el servicio a través de puertos especiales (30000-32767) de la dirección IP del nodo.
-\item Loadbalancer: Kubernetes interactúa con el proveedor de la nube para crear un equilibrador de carga que redirige el tráfico a los pods.
+\item \textit{NodePort}: Kubernetes expone el servicio a través de puertos especiales (30000-32767) de la dirección IP del nodo.
+\item \textit{Loadbalancer}: Kubernetes interactúa con el proveedor de la nube para crear un equilibrador de carga que redirige el tráfico a los \textit{pods}.
 \end{itemize}
 
 Kubernetes sigue la arquitectura maestro-esclavo. Los componentes de Kubernetes se pueden dividir entre los que manejan un nodo individual y los que son parte del plano de control. El maestro es la principal unidad de control del cluster que gestiona su carga de trabajo y dirige la comunicación a través del sistema. El plano de control de Kubernetes consta de varios componentes, cada uno con su propio proceso, que puede ejecutarse tanto en un único nodo maestro como en múltiples maestros que soporten clústeres de alta disponibilidad.
 
-Los componentes del plano de control Kubernetes son etcd, el servidor API, el Planificador y el Controlador de Replicación. Los tres últimos ejecutados por los nodos maestros. Los nodos esclavos, en cambio, manejan los servicios críticos como Kubelet y Kube-proxy.
-=======
-\subsubsection{confd}
+Los componentes del plano de control Kubernetes son etcd, el servidor \textit{API}, el planificador y el controlador de replicación. Los tres últimos ejecutados por los nodos maestros. Los nodos esclavos, en cambio, manejan los servicios críticos como kubelet y kube-proxy\footnotettt{kube-proxy}{http://kubernetes.io/docs/admin/kube-proxy}.
 
-\section{Herramientas para el manejo de clusters de computadores}
-Aquí un poco de Apache Mesos, Swarm, y con un poco más de detalle Kubernete
->>>>>>> 0a8cbff926e9848d0e768ac0a2276de2fd11f7aa
+La interacción del usuario con Kubernetes se realiza a través de kubectl, que utiliza la \textit{API} estándar. El servidor \textit{API} sirve a la \textit{API} estándar utilizando \textit{JSON} sobre \textit{HTTP}, proporcionando tanto la interfaz interna como externa a Kubernetes. Así, el servidor \textit{API} procesa y valida las peticiones \textit{REST} y actualiza el estado de los objetos \textit{API} en etcd, permitiendo a los clientes configurar cargas de trabajo y contenedores a través de nodos \textit{Worker} o \textit{Minion}, que son los nodos esclavo. 
 
-La interacción del usuario con Kubernetes se realiza a través de Kubectl, que utiliza la API estándar. El servidor API sirve a la API estándar utilizando JSON sobre HTTP, proporcionando tanto la interfaz interna como externa a Kubernetes. Así, el servidor API procesa y valida las peticiones REST y actualiza el estado de los objetos API en etcd, permitiendo a los clientes configurar cargas de trabajo y contenedores a través de nodos Worker o Minion, que son los nodos esclavo. 
+El planificador es el componente conectable que selecciona en qué nodo debería ejecutarse un \textit{pod} no programado basado en la disponibilidad de recursos y las cargas de trabajo existentes asignadas a través de los servidores.
 
-El Planificador es el componente conectable que selecciona en qué nodo debería ejecutarse un pod no programado basado en la disponibilidad de recursos y las cargas de trabajo existentes asignadas a través de los servidores.
 
-El Controlador de Replicación es necesario para mantener la alta disponibilidad de pods y crear varias instancias como se especifica en su manifiesto. Los controladores se comunican con el servidor de la API para crear, actualizar y eliminar los recursos que administran. 
+El controlador de replicación es necesario para mantener la alta disponibilidad de \textit{pods} y crear varias instancias como se especifica en su manifiesto. Los controladores se comunican con el servidor de la API para crear, actualizar y eliminar los recursos que administran. 
 
-El nodo Worker o Minion es la única máquina virtual donde se despliegan contenedores. Cada nodo del clúster debe ejecutar el contenedor junto con los siguientes componentes, para la comunicación con el maestro y configuración de la red de contenedores:
+El nodo \textit{Worker} o \textit{Minion} es la única máquina virtual donde se despliegan contenedores. Cada nodo del clúster debe ejecutar el contenedor junto con los siguientes componentes, para la comunicación con el maestro y configuración de la red de contenedores:
 \begin{itemize}
 \item Etcd es utilizado como un repositorio de datos compartidos para que todos los nodos se comuniquen entre sí.
-\item DNS se utiliza para el descubrimiento del servicio.
-\item Kubelet es responsable del estado de ejecución de cada nodo. Se ocupa de iniciar, detener y mantener los contenedores de aplicaciones según lo indicado por el plano de control. El servidor API del nodo maestro se comunica con el servicio Kubelet de cada nodo esclavo para proporcionar los pods. Kubelet monitorea el estado de un pod y si no está en el estado deseado, el pod será redistribuido al mismo nodo. El estado del nodo se retransmite cada pocos segundos mediante mensajes de latido al maestro. Una vez que el maestro detecta un fallo de nodo, el Controlador de Replicación observa este cambio de estado y lanza pods en otros nodos saludables.
-\item Kube-proxy se ocupa de la redirección de servicios y el equilibrio de carga del tráfico en los pods. Se trata de una implementación de un proxy de red y un equilibrador de carga, soportando la abstracción de servicios junto con otras operaciones de red. Es responsable de enrutar el tráfico al contenedor apropiado según la IP y número de puerto de la solicitud entrante.
-\item CAdvisor es un agente que monitorea y recopila el uso de recursos y métricas de rendimiento como la CPU, la memoria, el uso de archivos y las redes de contenedores en cada nodo.
+\item \textit{DNS} se utiliza para el descubrimiento del servicio.
+\item Kubelet es responsable del estado de ejecución de cada nodo. Se ocupa de iniciar, detener y mantener los contenedores de aplicaciones según lo indicado por el plano de control. El servidor \textit{API} del nodo maestro se comunica con el servicio kubelet de cada nodo esclavo para proporcionar los \textit{pods}. Kubelet monitorea el estado de un \textit{pod} y si no está en el estado deseado, el \textit{pod} será redistribuido al mismo nodo. El estado del nodo se retransmite cada pocos segundos mediante mensajes de latido al maestro. Una vez que el maestro detecta un fallo de nodo, el controlador de replicación observa este cambio de estado y lanza \textit{pods} en otros nodos saludables.
+\item Kube-proxy se ocupa de la redirección de servicios y el equilibrio de carga del tráfico en los \textit{pods}. Se trata de una implementación de un proxy de red y un equilibrador de carga, soportando la abstracción de servicios junto con otras operaciones de red. Es responsable de enrutar el tráfico al contenedor apropiado según la IP y número de puerto de la solicitud entrante.
+\item CAdvisor\footnotettt{CAdvisor}{https://github.com/google/cadvisor} es un agente que monitorea y recopila el uso de recursos y métricas de rendimiento como la \textit{CPU}, la memoria, el uso de archivos y las redes de contenedores en cada nodo.
 \end{itemize}
 
 \begin{figure}[H]
@@ -342,15 +329,15 @@ El nodo Worker o Minion es la única máquina virtual donde se despliegan conten
 
 \section{Proveedores de Infraestructura como Servicio}
 
-La Infraestructura como Servicio (IaaS) es uno de los tres modelos fundamentales en el campo de la computación en la nube, junto con la Plataforma como Servicio (PaaS) y el Software como Servicio (SaaS). Se trata de una infraestructura informática inmediata que se aprovisiona y administra a través de una conexión pública, normalmente Internet.
+La Infraestructura como Servicio (\textit{IaaS}) es uno de los tres modelos fundamentales en el campo de la computación en la nube, junto con la Plataforma como Servicio (\textit{PaaS}) y el Software como Servicio (\textit{SaaS}). Se trata de una infraestructura informática inmediata que se aprovisiona y administra a través de una conexión pública, normalmente Internet.
 
 Este modelo de servicio proporciona acceso a recursos informáticos situados en un entorno virtualizado, la nube. De esta manera permite reducir o escalar recursos  concretos con rapidez para ajustarlos a la demanda, pagando por uso y evitando el gasto y complejidad que suponen la compra y administración de una infraestructura física propia.
 
 Así, existen proveedores de estos servicios informáticos en la nube que administran la infraestructura, mientras que el cliente solo tiene que configurar y administrar su propio software.
 
-Los recursos informáticos ofrecidos consisten en hardware virtualizado o infraestructura de procesamiento. La definición de IaaS abarca aspectos como el espacio en servidores virtuales, conexiones de red, ancho de banda, direcciones IP y balanceadores de carga. Físicamente, el repertorio de recursos hardware disponibles procede de multitud de servidores y redes, generalmente distribuidos entre numerosos centros de datos.
+Los recursos informáticos ofrecidos consisten en hardware virtualizado o infraestructura de procesamiento. La definición de \textit{IaaS} abarca aspectos como el espacio en servidores virtuales, conexiones de red, ancho de banda, direcciones IP y balanceadores de carga. Físicamente, el repertorio de recursos hardware disponibles procede de multitud de servidores y redes, generalmente distribuidos entre numerosos centros de datos.
 
-Entre las ventajas de IaaS se encuentran:
+Entre las ventajas de \textit{IaaS} se encuentran:
 \begin{itemize}
 \item Eliminación del gasto en capital y corriente eléctrica.
 \item Adquisición de nuevos recursos con rapidez.
@@ -363,15 +350,25 @@ Los ejemplos comerciales mejor conocidos son Amazon Web Services y DigitalOcean.
 
 Por su parte, DigitalOcean, creada en 2011 por Ben y Moisey Uretsky, es un proveedor Estadounidense de servidores virtuales privados. La compañía alquila recursos de centros de cómputo existentes como Nueva York, Amsterdam, San Francisco, Londres y Singapur.
 
-Actualmente, Netcraft, compañía de servicios de Internet orientada al análisis de mercado, ha catalogado a DigitalOcean como la segunda Compañía de alojamiento más grande del mundo, después de Amazon Web Services.
+\begin{figure}[H]
+\image{images/figures/digitalocean.png}
+\caption{Digital Ocean.\label{fig:figure_placement_example}}
+\end{figure}
 
-Entre sus características más destacadas está que sus servidores en la nube, llamados Droplets, pueden ser provisionados típicamente en 55 segundos. Además, provee discos duros SSD de alto rendimiento y virtualización KVM. En general aportan servicios mensuales por 5 dólares al mes, continuando con facturación por hora.
+Actualmente, Netcraft\footnotettt{Netcraft}{https://www.netcraft.com}, compañía de servicios de Internet orientada al análisis de mercado, ha catalogado a DigitalOcean como la segunda Compañía de alojamiento más grande del mundo, después de Amazon Web Services.
+
+Entre sus características más destacadas está que sus servidores en la nube, llamados \textit{droplets}, pueden ser provisionados típicamente en 55 segundos. Además, provee discos duros \textit{SSD} de alto rendimiento y virtualización \textit{KVM}. En general aportan servicios mensuales por 5 dólares al mes, continuando con facturación por hora.
 
 En la ejecución de este proyecto se aplicará el uso de Amazon Web Services como proveedor de Infraestructura como Servicio, detallado a continuación.
 
 \subsection{Amazon Web Services INCOMPLETO DE MOMENTO}
 
 Amazon Web Services (AWS) es una plataforma de servicios de computación en la nube ofrecida a través de Internet por Amazon.com y lanzada en 2006.
+
+\begin{figure}[H]
+\image{images/figures/aws.png}
+\caption{Amazon Web Services.\label{fig:figure_placement_example}}
+\end{figure}
 
 AWS está situado en 11 Regiones geográficas: EE.UU. Este (Norte de Virginia), EE.UU. Oeste (Norte de California), EE.UU. Oeste (Oregón), AWS GovCloud (EE.UU.), São Paulo (Brasil), Irlanda, Singapur, Tokio y Sydney. Cada región está totalmente contenida dentro de un solo país y todos sus datos y servicios permanecen dentro de la región designada. Además, cada una tiene múltiples zonas de disponibilidad, diferentes centros de datos que proporcionan servicios de AWS.
 
@@ -387,28 +384,40 @@ A continuación se describirán otra serie de herramientas necesarias para la el
 
 \subsection{Vagrant}
 
-Vagrant es una herramienta de código abierto para crear y configurar entornos de desarrollo portátiles y virtualizados, centrada en la automatización.
+Vagrant\footnotettt{Vagrant}{https://www.vagrantup.com} es una herramienta de código abierto para crear y configurar entornos de desarrollo portátiles y virtualizados, centrada en la automatización.
+
+\begin{figure}[H]
+\image{images/figures/vagrant.png}
+\caption{Vagrant.\label{fig:figure_placement_example}}
+\end{figure}
 
 Vagrant fue creada en enero de 2010 por Mitchell Hashimoto como un proyecto personal. Su primera versión fue lanzada en marzo de 2010. La primera versión estable, Vagrant 1.0, lo hizo en marzo de 2012 y, en noviembre de ese mismo año, Mitchell Hashimoto creó la organización HashiCorp para respaldar el desarrollo de Vagrant a tiempo completo, contando con la contribución de una fuerte comunidad de desarrolladores.
 
-La idea central detrás de su creación reside en el hecho de que el mantenimiento del entorno de desarrollo se hace cada vez más difícil a medida que el proyecto crece. De esta manera, Vagrant proporciona ambientes de trabajo fáciles de configurar, reproducibles y portátiles. Estos ambientes están construidos sobre tecnología estándar y controlados por un solo flujo de trabajo consistente, lo que ayuda a maximizar la flexibilidad y productividad de los desarrolladores.
+La idea central detrás de su creación reside en el hecho de que el mantenimiento del entorno de desarrollo se hace cada vez más difícil a medida que el proyecto crece. De esta manera, Vagrant proporciona ambientes de trabajo menos complejos de configurar, reproducibles y portátiles. Estos ambientes están construidos sobre tecnología estándar y controlados por un solo flujo de trabajo consistente, lo que ayuda a maximizar la flexibilidad y productividad de los desarrolladores.
 
-En un primer momento Vagrant estaba vinculado a VirtualBox, pero la versión 1.1 ya añadía soporte para otros programas de virtualización y entornos de servidor. Vagrant está escrito en lenguaje Ruby pero puede ser utilizado en proyectos escritos en otros lenguajes de programación como PHP, Python, Java, C\# y Java Script.
+En un primer momento Vagrant estaba vinculado a VirtualBox\footnotettt{VirtualBox}{https://www.virtualbox.org}, pero la versión 1.1 ya añadía soporte para otros programas de virtualización y entornos de servidor. Vagrant está escrito en lenguaje Ruby pero puede ser utilizado en proyectos escritos en otros lenguajes de programación como PHP, Python, Java, C\# y Java Script.
 
-Esta herramienta utiliza aprovisionadores y proveedores como bloques de construcción para administrar los entornos de desarrollo. Los aprovisionadores son herramientas que permiten a los usuarios personalizar la configuración de entornos virtuales, mientras que los proveedores son los servicios que Vagrant utiliza para lanzar y crear los propios entornos virtuales. Ejemplos de proveedores son VirtualBox, VMWare, AWS, Hyper-V, Digital Ocean y Docker. Ejemplos de aprovisionadores son Puppet, Chef, Ansible y Shell.
+Esta herramienta utiliza aprovisionadores y proveedores como bloques de construcción para administrar los entornos de desarrollo. Los aprovisionadores son herramientas que permiten a los usuarios personalizar la configuración de entornos virtuales, mientras que los proveedores son los servicios que Vagrant utiliza para lanzar y crear los propios entornos virtuales. Ejemplos de proveedores son VirtualBox, VMWare\footnotettt{VMWare}{https://www.vmware.com/es.html}, AWS, Hyper-V\footnotettt{Hyper-V}{https://technet.microsoft.com/en-us/library/mt169373(v=ws.11).aspx}, Digital Ocean y Docker. Ejemplos de aprovisionadores son Puppet\footnotettt{Puppet}{https://puppet.com}, Chef\footnotettt{Chef}{https://www.chef.io/chef}, Ansible\footnotettt{Ansible}{https://www.ansible.com} y Shell\footnotettt{Shell}{https://www.vagrantup.com/docs/provisioning/shell.html}.
 
-Para su puesta en marcha se utiliza un fichero de configuración denominado Vagrantfile. Su función principal es describir el tipo de máquina requerida para un proyecto, cómo configurarla y proveerlas. Por otro lado, existen las cajas o "boxes" que son el formato de paquetes para los ambientes Vagrant. Una caja puede ser utilizada por cualquier persona en cualquier plataforma que soporte Vagrant para crear un entorno de trabajo idéntico.
+Para su puesta en marcha se utiliza un fichero de configuración denominado \kode{Vagrantfile}. Su función principal es describir el tipo de máquina requerida para un proyecto, cómo configurarla y proveerlas. Por otro lado, existen cajas o \textit{boxes} que son el formato de paquetes para los ambientes Vagrant. Una caja puede ser utilizada por cualquier persona en cualquier plataforma que soporte Vagrant para crear un entorno de trabajo idéntico.
 
 \subsection{VirtualBox}
 
-VirtualBox es un software de virtualización de código abierto para arquitecturas x86/amd64. Este hipervisor de tipo II o "hosted", se caracteriza porque permite instalar sistemas operativos adicionales, conocidos como sistemas invitados o máquinas virtuales, dentro de otro sistema operativo, sistema anfitrión, cada uno con su propio ambiente virtual.
+VirtualBox es un software de virtualización de código abierto para arquitecturas x86/amd64. 
+
+\begin{figure}[H]
+\image{images/figures/virtualbox.png}
+\caption{VirtualBox.\label{fig:figure_placement_example}}
+\end{figure}
+
+Este hipervisor de tipo II o \textit{hosted}, se caracteriza porque permite instalar sistemas operativos adicionales, conocidos como sistemas invitados o máquinas virtuales, dentro de otro sistema operativo, sistema anfitrión, cada uno con su propio ambiente virtual.
 
 \begin{figure}[H]
 \image{images/figures/hypervisortype2.jpg}
-\caption{Hipervisor tipo 2.\label{fig:figure_placement_example}}
+\caption{Hipervisor tipo II.\label{fig:figure_placement_example}}
 \end{figure}
 
-VirtualBox fue creado originalmente por la empresa alemana Innotek GmbH en enero de 2007. Actualmente es desarrollado por Oracle Corporation y existen dos versiones gratuitas. Por un lado la llamada Oracle VM VirtualBox, sujeta a la licencia de "Uso Personal y de Evaluación VirtualBox". Por otro lado, VirtualBox OSE, sujeta a la licencia GPL.
+VirtualBox fue creado originalmente por la empresa alemana Innotek GmbH\footnotettt{Innotek GmbH}{https://www.innotek.net} en enero de 2007. Actualmente es desarrollado por Oracle Corporation y existen dos versiones gratuitas. Por un lado la llamada Oracle VM VirtualBox, sujeta a la licencia de "Uso Personal y de Evaluación VirtualBox". Por otro lado, VirtualBox OSE, sujeta a la licencia GPL.
 
-Entre sus características más importantes se destaca que: es multiplataforma, en referencia a las arquitecturas soportadas; multi huéspedes, por la variedad y cantidad de sistemas operativos que puede virtualizar; y ofrece portabilidad, al poder importar y exportar las máquinas virtuales a otros sistemas.
+Entre sus características más importantes se destaca que es multiplataforma, en referencia a las arquitecturas soportadas; multi huéspedes, por la variedad y cantidad de sistemas operativos que puede virtualizar; y ofrece portabilidad, al poder importar y exportar las máquinas virtuales a otros sistemas.
 
