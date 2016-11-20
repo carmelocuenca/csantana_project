@@ -3,7 +3,7 @@
 
 \section{Aplicación web de 3 capas}
 
-La aplicación \kode{sample\_app\_rails\_4}, escrita en lenguaje Ruby\footnotettt{Ruby}{https://www.ruby-lang.org/es}, es parte de un tutorial sobre el uso del \textit{framework} de desarrollo de aplicaciones web Ruby on Rails\footnotettt{Ruby on Rails}{http://www.rubyonrails.org.es}. Se trata de una aplicación de muestra, desarrollada mediante una combinación de simulaciones, pruebas de desarrollo \textit{TDD} y pruebas de integración. Tiene una arquitectura de 3 capas: cliente, aplicación y base de datos. Está creada a partir de páginas estáticas con contenido dinámico, tiene un diseño de sitio web, un modelo de datos de usuario y un sistema completo de registro y autenticación, incluida la activación de cuentas y restablecimientos de contraseñas. Además tiene funciones de \textit{microblogging} y redes sociales. Así, tendrá usuarios que crearán \textit{microposts} dentro de un marco de autenticación e inicio de sesión completo.
+La aplicación \kode{sample\_app\_rails\_4}, escrita en lenguaje Ruby\footnotettt{Ruby}{https://www.ruby-lang.org/es}, es parte de un tutorial sobre el uso del \textit{framework} de desarrollo de aplicaciones web Ruby on Rails\footnotettt{Ruby on Rails}{http://www.rubyonrails.org.es}. Se trata de una aplicación de muestra, desarrollada mediante una combinación de simulaciones, pruebas de desarrollo \textit{TDD} y pruebas de integración. Tiene una arquitectura de 3 capas: cliente, aplicación y base de datos SQLite\footnotettt{SQLite}{https://sqlite.org}. Está creada a partir de páginas estáticas con contenido dinámico, tiene un diseño de sitio web, un modelo de datos de usuario y un sistema completo de registro y autenticación, incluida la activación de cuentas y restablecimientos de contraseñas. Además tiene funciones de \textit{microblogging} y redes sociales. Así, tendrá usuarios que crearán \textit{microposts} dentro de un marco de autenticación e inicio de sesión completo.
 
 \begin{figure}[H]
 \image{images/figures/sampleapp.png}
@@ -48,19 +48,12 @@ La aplicación \kode{sample\_app\_rails\_4} está disponible en un repositorio G
 
 Ahora se crea una clonación local del fork para trabajar localmente:
 
-\begin{codelisting}
-\label{code:forkclone}
-\codecaption{Clone del proyecto en local}
 \begin{code}
-\$ git clone https://github.com/CarolinaSantana/sample_app_rails_4-1.git
+$ git clone https://github.com/CarolinaSantana/sample_app_rails_4-1.git 
 \end{code}
-\end{codelisting}
 
-Luego se entra en la carpeta local que lo contiene, seleccionando como \textit{gemset}, conjunto aislado de gemas incorporadas en la aplicación para la versión Ruby en uso por ella, 2.0.0, quedando como \kode{2.0.0@railstutorial\_rails\_4\_0}. Además se deja lista la base de datos de ejemplo que trae, con la intención de probar que los test que comprueban su funcionalidad pasen positivamente: 
+Luego se entra en la carpeta local que lo contiene, seleccionando como \textit{gemset}, conjunto aislado de gemas incorporadas en la aplicación para la versión Ruby en uso por ella, 2.0.0, quedando como \kode{2.0.0@railstutorial\_rails\_4\_0}. Además se deja lista la configuración de la base de datos, con la intención de probar que los test que comprueban su funcionalidad pasen positivamente: 
 
-\begin{codelisting}
-\label{code:forkclone}
-\codecaption{Clone del proyecto en local y comprobación de tests.}
 \begin{code}
 $ cd sample_app_rails_4-1
 $ cp config/database.yml.example config/database.yml
@@ -69,5 +62,128 @@ $ bundle exec rake db:migrate
 $ bundle exec rake db:test:prepare
 $ bundle exec rspec spec/
 \end{code}
+
+A continuación se crea un \textit{seed} idempotente para tener siempre un usuario administrador con el que hacer pruebas en la aplicación web.
+
+\begin{codelisting}
+\label{code:seed1}
+\codecaption{Añadir \textit{seed} idempotente al fichero db/seed.rb}
+\begin{code}
+User.create(name: 'test', email: 'test@test.com',
+password: 'test12', password_confirmation: 'test12')
+\end{code}
 \end{codelisting}
 
+Con la intención de implementar la base de datos de la aplicación desde un contenedor Docker se elimina del fichero \kode{Gemfile} la gema \kode{'sqlite3', '1.3.8'} como base de datos en desarrollo y se cambia por una base de datos PosgreSQL, concretamente la versión \kode{'pg', '0.15.1'}. Para instalar la nueva gema se ejecuta:
+
+\begin{code}
+$ bundle install --without production
+\end{code}
+
+La instalación de PostgreSQL requiere credenciales de usuario y contraseña para acceder. La manera de especificarlas es mediante variables de entorno \kode{\$POSTGRES\_USER} y \kode{\$POSTGRES\_PASSWORD} en el fichero local \kode{~/.postgres/credentials} cuyo contenido es:
+
+\begin{codelisting}
+\label{code:credentials}
+\codecaption{Fichero \kode{~/.postgres/credentials}}
+\begin{code}
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=postgres
+\end{code}
+\end{codelisting}
+
+Se da permiso de ejecución tanto al fichero como a la carpeta que lo contiene:
+
+\begin{code}
+$ chmod 0700 ~/.postgres
+$ chmod 0700 ~/.postgres/credentials
+\end{code}
+
+Ahora para exportar las variables de entorno se ejecuta el fichero desde el directorio de la aplicación:
+
+\begin{code}
+$ . ~/.postgres/credentials
+\end{code}
+
+Ahora hay que cambiar el fichero de configuración de la base de datos de forma que se especifique lo siguiente:
+
+\begin{codelisting}
+\label{code:database}
+\codecaption{Cambios en el fichero \kode{config/database.yml}}
+\begin{code}
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: sample_app_development  
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host : db
+
+test:
+  <<: *default
+  database: sample_app_test
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: db
+
+production:
+  <<: *default
+  database: sample_app_production
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+\end{code}
+\end{codelisting}
+
+De esta manera se ha indicado para las bases de datos de desarrollo, test y producción que el nombre de usuario y contraseña son variables de entorno y que ha de conectarse a \textit{db}, que será el nombre por el que se descubrirá un contenedor docker que provisiona un servidor PostgreSQL.
+
+Para crear el contenedor con la imagen \textit{postgres} se ejecuta el comando:
+
+\begin{code}
+docker run --name some-postgres -e POSTGRES_USER=$POSTGRES_USER \
+-e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres
+\end{code}
+
+Para poder enlazar el contenedor docker que contiene el servidor de la base de datos \kode{postgres}, llamado \kode{some-postgres}, con la aplicación y crear en el primero las tablas de la base de datos es necesario crear una imagen de la aplicación. Para ello es necesario crear un fichero \kode{Dockerfile} que especifica cómo crearla, indicando que lo hará a partir de una imagen ruby y que debe actualizar todos los paquetes e instalar \textit{nodejs}, necesario para la aplicación.
+
+\begin{codelisting}
+\label{code:dockerfile}
+\codecaption{Contenido de \kode{Dockerfile}}
+\begin{code}
+FROM ruby:2.0-onbuild
+RUN apt-get update && apt-get -y install nodejs
+CMD ["/bin/bash"]
+\end{code}
+\end{codelisting}
+
+La imagen se construye a partir del comando:
+
+\begin{code}
+$ docker build -t sample_app_image .
+\end{code}
+
+De esta manera el enlace se crea ejecutando:
+
+\begin{code}
+$ docker run -d -ti --name sample_app_image -e POSTGRES_USER=$POSTGRES_USER \
+ -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -v $(pwd):/share \
+-p 3000:3000 --link some-postgres:db sample_app_image /bin/bash -l
+\end{code}
+
+Ahora se tiene el contenedor \kode{sample\_app\_image} en ejecución y conectado a la base de datos a través del indicador --link. Con -p se expone el puerto 3000 del contenedor al puerto 3000 del sistema anfitrión. Además se establecen las variables de entorno mediante el indicador -e. -ti ofrece un terminal interactivo dentro del contedor y -v indica que se va a conectar el directorio actual, de la aplicación, al directorio /share dentro del contenedor.
+
+Ahora solamente queda aceder al contenedor mediante:
+
+\begin{code}
+$ docker exec -it sample_app_image bash
+\end{code}
+
+Por último se construye y se migra la base de datos, reconociendo también el seed idempotente creado anteriormente;
+
+\begin{code}
+$ rake db:create && rake db:migrate && rake db:seed
+\end{code}
+
+Así, ya se tienen creadas las tablas de las bases de datos, ejecutando la aplicación en local con su base de datos dentro de un contenedor Docker. Esto se puede comprobar arrancando el servidor mediante \kode{rails s} y accediendo en el navegador a la dirección \kode{http://0.0.0.0:3000}, introduciendo el usuario \kode{test@test.com} y la contraseña \kode{test12}.
