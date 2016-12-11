@@ -139,6 +139,54 @@ Por motivos de seguridad el fichero de configuración de la base de datos no se 
 $ cp config/database.yml config/database.yml.postgres
 \end{code}
 
+Con la intención de que cuando ya existan datos en la base de datos no se vuelvan a crear, se cambia el fichero \kode{lib/tasks/sample\_data.rake}, que viene por defecto, para que sea un \textit{seed} idempotente. Solo se crearán datos en la base de datos si aún no existen, quedando el fichero como:
+
+\begin{codelisting}
+\label{code:idempotentseed}
+\codecaption{Fichero \kode{lib/tasks/sample\_data.rake}}
+%= lang:ruby
+\begin{code}
+namespace :db do
+  desc "Fill database with sample data"
+  task populate: :environment do
+    make_users_microposts_relationships
+  end
+end
+
+def make_users_microposts_relationships
+  User.find_or_create_by(email:"example@railstutorial.org") do |admin| 
+  	admin.name = "Example User"
+	admin.password = "foobar"
+        admin.password_confirmation = "foobar"
+        admin.admin = true
+
+	99.times do |n|
+	    name  = Faker::Name.name
+	    email = "example-#{n+1}@railstutorial.org"
+	    password  = "password"
+	    User.create!(name:     name,
+                 email:    email,
+                 password: password,
+                 password_confirmation: password)
+        end
+
+	users = User.all(limit: 6)
+  	50.times do
+	    content = Faker::Lorem.sentence(5)
+	    users.each { |user| user.microposts.create!(content: content) }
+	end  
+
+	users = User.all
+	user  = users.first
+	followed_users = users[2..50]
+	followers      = users[3..40]
+	followed_users.each { |followed| user.follow!(followed) }
+	followers.each      { |follower| follower.follow!(user) }
+  end
+end
+\end{code}
+\end{codelisting}
+
 Por su parte, para poder acceder a la aplicación en cuestión, se cambia el servidor web \kode{rails s} por \kode{puma}\footnotettt{Servidor Web Puma}{http://puma.io}, construido para ofrecer mayor velocidad y paralelismo que, por ejemplo, el primero.
 
 Para ello se añade al fichero \kode{Gemfile} la siguiente entrada:
@@ -183,11 +231,6 @@ RUN apt-get update && apt-get -y install nodejs && \
 CMD ["/bin/bash"]
 \end{code}
 \end{codelisting}
-
-%= lang:bash
-\begin{code}
-$ bundle install
-\end{code}
 
 A partir de ahora se ejecuta el script que realizará el despliegue. En primer lugar, se crea la imagen de la aplicación web. En segundo lugar se creará el contenedor \kode{some-postgres} con el servidor \kode{PostgreSQL}, a partir de la imagen \kode{postgres} indicada con \textit{\--d}. También se especifica que redirija el tráfico, con \textit{\--p}, del sistema anfitrión en el puerto 5432 al mismo puerto en el contenedor. Para poder acceder a la base de datos es necesario pasarle las credenciales en el momento de su creación, con \textit{\--e}. Una vez se tiene en ejecución se crea el contenedor de la aplicación web, llamado \kode{some-app}, a partir de la imagen de ésta, \textit{\--d}, enlazando la base de datos de la misma con el contenedor \kode{some-postgres} a través del indicador \textit{\--link}. El indicador \textit{-ti} ofrece un terminal interactivo dentro del contedor y \textit{-w} indica que se va a compartir el directorio inicial del proyecto local en el contenedor. 
 
