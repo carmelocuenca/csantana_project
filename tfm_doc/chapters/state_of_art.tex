@@ -421,3 +421,16 @@ VirtualBox fue creado originalmente por la empresa alemana Innotek GmbH\footnote
 
 Entre sus características más importantes se destaca que es multiplataforma, en referencia a las arquitecturas soportadas; multi huéspedes, por la variedad y cantidad de sistemas operativos que puede virtualizar; y ofrece portabilidad, al poder importar y exportar las máquinas virtuales a otros sistemas.
 
+\subsection{Travis CI}
+
+Travis CI\footnotettt{Travis CI}{https://docs.travis-ci.com} es una compañia y sistema distribuido que ofrece servicios de Integración y Despliegue continuo (CI/CD) gratuitos o de pago. El servicio gratuito permite conectar el repositorio de GitHub público para poder regenerar el proyecto tras cada cambio. 
+
+\begin{figure}[H]
+\image{images/figures/travisci.png}
+\caption{Travis CI.\label{fig:figure_placement_example}}
+\end{figure}
+
+Para su implementación hay definir el fichero de configuración \kode{.travis.yml} que contiene las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática. Cuando se detecta una actualización del repositorio GitHub indicado se procede a ejecutar las tareas descritas en el fichero, en el caso de que los tests pasen satisfactoriamente.
+
+
+
