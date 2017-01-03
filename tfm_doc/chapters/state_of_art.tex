@@ -423,14 +423,14 @@ Entre sus características más importantes se destaca que es multiplataforma, e
 
 \subsection{Travis CI}
 
-Travis CI\footnotettt{Travis CI}{https://docs.travis-ci.com} es una compañia y sistema distribuido que ofrece servicios de Integración y Despliegue continuos (CI/CD) gratuitos o de pago. El servicio gratuito permite conectar el repositorio de GitHub público para poder regenerar el proyecto tras cada cambio. 
+Travis CI\footnotettt{Travis CI}{https://docs.travis-ci.com} es una compañia y sistema distribuido que ofrece servicios de Integración y Despliegue continuos (CI/CD) gratuitos o de pago.
 
 \begin{figure}[H]
-\image{images/figures/travisci.png}
+\image{images/figures/travisci.jpg}
 \caption{Travis CI.\label{fig:figure_placement_example}}
 \end{figure}
 
-Esta herramienta fiscaliza el directorio de GitHub de manera que cuando detecta que se ha producido un cambio en él utiliza el fichero de configuración \kode{.travis.yml} para realizar las acciones descritas en el mismo. Este fichero contiene las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática. Ejemplos de dichas acciones son la comprobación de que los tests pasen satisfactoriamente, construir una nueva imagen Docker y subirla al repositorio DockerHub.
+El servicio gratuito permite conectar el repositorio de GitHub público para poder regenerar el proyecto tras cada cambio. Así, esta herramienta fiscaliza el directorio de GitHub de manera que cuando detecta que se ha producido un cambio en él utiliza el fichero de configuración \kode{.travis.yml} para realizar las acciones descritas en el mismo. Este fichero contiene las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática. Ejemplos de dichas acciones son la comprobación de que los tests pasen satisfactoriamente, construir una nueva imagen Docker y subirla al repositorio DockerHub.
 
-
+Entre los beneficios que aporta la integración continua están la reducción de riesgos y tiempo, la reducción de procesos manuales repetitivos, la obtención de una versión de software mediante un proceso conocido, confiable, probado, versionado y repetible y la mejora la visibilidad del estado del proyecto. Además, permite mantener la calidad de todo el sistema meduante la ejecución de todos los tests periódicamente, ayudando a identificar rápidamente problemas y a corregirlos antes de pasar a una versión en producción.
 
