@@ -1,4 +1,4 @@
-# Despliegue de una aplicación web usando las tecnologías CoreOS, Docker y Amazon Web Service
+# Contenerización y Despliegue de una aplicación web usando las tecnologías CoreOS, Docker y Amazon Web Services
 
 ## Memoria del TFT
 Utilizas la gema [softcover](https://github.com/softcover/softcover), que a su vez utiliza un sublenguaje de Latex.
