@@ -390,3 +390,38 @@ Esta construcción terminará con la creación y subida de las siguientes imáge
 \caption{Repositorio de \kode{sample\_app\_rails\_4\_image}.\label{fig:figure_placement_example}}
 \end{figure}
 
+\section{Despliegue monomáquina con contenedores en una máquina virtual con CoreOS}
+
+En primer lugar se realiza una copia del repositorio GitHub \kode{CoreOS Vagrant} que proporciona una plantilla \kode{Vagrantfile} para crear una máquina virtual CoreOS usando el hipervisor software VirtualBox. Una vez finalizada la instalación, se tendrá una única máquina virtual CoreOS que se ejecutará localmente. Para ello se realiza un \textit{fork} seleccionando el botón con el mismo nombre y automáticamente se crea la copia del repositorio en la cuenta personal. Seguidamente se clona esta copia para trabajar localmente:
+
+%= lang:bash
+\begin{code}
+$ git clone https://github.com/CarolinaSantana/coreos-vagrant.git 
+\end{code}
+
+Luego, se entra en la carpeta local que lo contiene y se prepara para comprobar su funcionamiento con los datos de usuario y la configuración de ejemplo. Esto se prueba ejecutando el \kode{Vagrantfile} y conectándose a la máquina virtual creada: 
+
+%= lang:bash
+\begin{code}
+$ cd coreos-vagrant
+$ cp user-data.sample user-data
+$ cp config.rb.sample config.rb
+$ vagrant up
+$ vagrant ssh core-01
+\end{code}
+
+Comprobando que funciona correctamente:
+
+\begin{figure}[H]
+\image{images/figures/vagrantssh.png}
+\caption{Conexión ssh a la máquina virtual \kode{core-01}.\label{fig:figure_placement_example}}
+\end{figure}
+
+Además puede visualizarse la máquina mediante VirtualBox:
+
+\begin{figure}[H]
+\image{images/figures/vboxcore01.png}
+\caption{Máquina virtual \kode{core-01} desde VirtualBox.\label{fig:figure_placement_example}}
+\end{figure}
+
+
