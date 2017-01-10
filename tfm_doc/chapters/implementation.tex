@@ -1,9 +1,50 @@
-\chapter{Desarrollo}
+\chapter{Diseño e Implementación}
 \label{cha:regulation}
 
-En esta sección se expone el desarrollo de las diferentes iteraciones propuestas en la fase de Diseño a modo de procedimientos.
+En esta sección se expone el análisis, las decisiones de diseño y el desarrollo de cada una de las 4 iteraciones por las que se compone el proyecto.
 
 \section{Despliegue monomáquina con contenedores}
+
+\subsection{Análisis y Diseño}
+
+La primera iteración del proyecto consiste en adecuar la aplicación Ruby on Rails para que utilice contenedores en su funcionamiento. Esta tarea supone su despliegue en una sola máquina física.
+
+La aplicación \kode{sample\_app\_rails\_4} está disponible en un repositorio GitHub\footnotettt{GitHub}{https://github.com}. Para trabajar con ella se hace una copia del repositorio a través de un \textit{fork}. Esto crea una bifurcación que permite la libre experimentación de cambios, sin afectar el proyecto original, utilizando el proyecto de otra persona como punto de partida de una idea propia.
+
+Una vez se tiene una copia local y se comprueba que funciona correctamente se va a hacer uso de la tecnología de contenerización Docker para desplegar la siguiente estructura:
+
+\begin{figure}[H]
+\image{images/figures/monomachine-docker.png}
+\caption{Estructura del despliegue monomáquina con contenedores Docker.\label{fig:figure_monomachine_docker}}
+\end{figure}
+
+Mediante Docker se obtienen las imágenes pertenecientes a dos servicios. El primero implementa la funcionalidad de la base de datos \kode{PostgreSQL} y el segundo implementa el servidor web y proxy inverso \kode{Nginx}. El proxy inverso es un proxy que aparenta ser un servidor web ante los clientes, pero que en realidad reenvía las solicitudes que recibe a uno o más servidores de origen. Se escoge \kode{Nginx} por ser multiplataforma, ligero, de alto rendimiento y software libre.
+
+La aplicación en su origen utiliza una base de datos \kode{SQLite}\footnotettt{SQLite}{https://sqlite.org} que va a ser cambiada por la base de datos \kode{PostgreSQL}, provisionada por el contenedor \kode{some-postgres}. 
+
+Otro de los cambios a implementar es la sustitución del servidor web \kode{rails s} por \kode{puma}\footnotettt{Servidor Web Puma}{http://puma.io}, construido para ofrecer mayor velocidad y paralelismo.
+
+Como se ha comentado, a través de Docker se pueden obtener las imágenes de los servidores \kode{PostgreSQL} y \kode{Nginx}, pero para poder crear un contenedor que contenga la aplicación web habrá que crear su imagen Docker. 
+
+El principal propósito de este despliegue es que pueda realizarse automáticamente tras la ejecución de un \textit{script}. Este fichero comprobará que las variables de entorno que especifican el nombre y la contraseña del usuario de las distintas bases de datos PostgreSQL existentes (test, desarrollo y producción) están correctamente establecidas.
+
+La siguiente acción a realizar será la construcción de la imagen Docker de la aplicación web, que se llamará \kode{sample\_app\_rails\_4\_image}. 
+
+Luego se creará el contenedor \kode{some-postgres} con el servidor \kode{PostgreSQL} y, seguidamente, se creará el contenedor de la aplicación web, llamado \kode{some-app}, a partir de la imagen de ésta, enlazándola con el contenedor \kode{some-postgres}, que será su base de datos.
+
+Con la intención de utilizar como servidor web de la aplicación un contenedor diferente al propio, se crea el contenedor \kode{some-nginx} que proporciona el servidor \kode{Nginx}. Se le indicará que el tráfico del puerto 8080 en el sistema anfitrión se redirija al 80 del contenedor. Así, el sitio web será accesible por la dirección local en el puerto 8080. Además, se enlazará a la aplicación web mediante el contenedor en el que se ejecuta, y se montará el volumen Docker compartido \kode{volume-public}.
+
+Así, solo quedará construir, migrar y poblar la base de datos que se ejecuta en el contenedor \kode{some-app}, dentro del contenedor \kode{some-postgres}.
+
+Finalmente, se ejecutará el servidor \kode{puma} dentro del contenedor \kode{some-app} y se comprobará desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080. Esto producirá el siguiente resultado:
+\begin{figure}[H]
+\image{images/figures/resultado1.png}
+\caption{Resultado de la Iteración 1 con el uso de Docker.\label{fig:figure_placement_example}}
+\end{figure}
+
+A efectos de mantener la imagen de la aplicación remotamente se subirá al repositorio DockerHub con la etiqueta \kode{initial}.
+
+\subsection{Preparación del repositorio local y remoto}
 
 En primer lugar se realiza una copia del repositorio GitHub de la aplicación \kode{sample\_app\_rails\_4}. Para ello se realiza un \textit{fork} seleccionando el botón con el mismo nombre y automáticamente se crea la copia del repositorio en la cuenta personal. Seguidamente se clona esta copia para trabajar localmente:
 
@@ -24,7 +65,7 @@ $ bundle exec rake db:test:prepare
 $ bundle exec rspec spec/
 \end{code}
 
-\subsection{Primera iteración: Docker}
+\subsection{Cambio y configuración de la base de datos}
 
 Una vez completada la fase de preparación de la aplicación en el entorno local se quiere desplegar la estructura definida en la Figura \ref{fig:figure_monomachine_docker}, página \pageref{fig:figure_monomachine_docker}.
 
@@ -94,6 +135,8 @@ Por motivos de seguridad el fichero de configuración de la base de datos no se 
 $ cp config/database.yml config/database.yml.postgres
 \end{code}
 
+\subsection{Creación de un alimentador de base de datos idempotente}
+
 Con la intención de que cuando ya existan datos en la base de datos no se vuelvan a crear, se cambia el fichero \kode{lib/tasks/sample\_data.rake}, que viene por defecto, para que sea un \textit{seed} idempotente. Solo se crearán datos en la base de datos si aún no existen, quedando el fichero como:
 
 \begin{codelisting}
@@ -142,6 +185,8 @@ end
 \end{code}
 \end{codelisting}
 
+\subsection{Cambio y configuración del servidor web}
+
 Por su parte, para poder acceder a la aplicación en cuestión, se cambia el servidor web \kode{rails s} por \kode{puma}\footnotettt{Servidor Web Puma}{http://puma.io}. Para ello se añade al fichero \kode{Gemfile} la siguiente entrada:
 
 \begin{codelisting}
@@ -161,6 +206,8 @@ Luego se instala la nueva gema:
 \begin{code}
 $ bundle install --without production
 \end{code}
+
+\subsection{Configuración automatizada para la creación de los contenedores}
 
 En este momento ya se tienen listas las configuraciones necesarias para proceder a la creación de los contenedores.
 
@@ -264,6 +311,8 @@ docker exec some-app bash -c 'rake db:create ; rake db:migrate ; rake db:seed \
 \end{code}
 \end{codelisting}
 
+\subsection{Resultado}
+
 Finalmente, se ejecuta el servidor \kode{puma} dentro del contenedor \kode{some-app} y se comprueba desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 80 mediante el comando \kode{curl http://localhost:8080}, produciendo el siguiente volcado:
 
 \begin{figure}[H]
@@ -280,11 +329,33 @@ $ docker tag <image-id> carolina/sample_app_rails_4_image:initial
 $ sudo docker push carolina/sample_app_rails_4_image
 \end{code}
 
-\subsection{Integración y Despliegue continuos}
+\section{Integración y Despliegue continuos}
+
+\subsection{Análisis y Diseño}
+
+En esta iteración se busca adaptar la aplicación Ruby on Rails para que funcione con Travis CI. Esta herramienta tecnológica se conectará al repositorio de GitHub \kode{sample\_app\_rails\_4-1}, en el que se desarrolla el proyecto, con la intención de poder generar una imagen Docker del mismo tras cada cambio. Esto permite trabajar en un entorno de desarrollo en el que la integración de los cambios en el proyecto es continua, así como también su despliegue puede ser automatizado.
+
+Para ello se realiza el siguiente proceso:
+\begin{figure}[H]
+\image{images/figures/monomachine-travis.png}
+\caption{Travis CI.\label{fig:figure_placement_example}}
+\end{figure}
+
+Las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática se especifican en el fichero \kode{.travis.yml}. A este fichero se le añadirán, además, las credenciales de la cuenta de DockerHub mediante variables de entorno encriptadas, sumando una respectiva al repositorio GitHub. Las acciones a realizar serán la comprobación de los tests, de manera que pasen satisfactoriamente, la construcción de una nueva imagen Docker y su subida al repositorio DockerHub.
+
+Al repositorio en DockerHub se subirán 3 copias comprimidas de la imagen. La primera etiquetada con el hash del \textit{commit} correspondiente, la segunda con el número de construcción en Travis CI y la tercera como la última versión, \textit{latest}.
+
+Para que se pueda llevar a cabo tal trabajo es necesario añadir una configuración de base de datos específica donde se defina una en particular para tal propósito. En este caso se llamará \kode{travis\_ci\_test}.
+
+Finalmente, el resultado permitirá que cuando se haga un nuevo cambio o \textit{commit} acompañado de una subida del mismo al repositorio GitHub se comenzará también la construcción en Travis CI.
+
+\subsection{Vinculación con el repositorio remoto}
 
 En primer lugar hay que ingresar en el sitio Travis CI con la cuenta de GitHub y añadir el repositorio con el que se trabaja actualmente.
 
-Luego se edita el fichero \kode{Gemfile} para incluir la siguiente gema:
+\subsection{Configuración y establecimiento de precondiciones, condiciones y postcondiciones}
+
+En segundo lugar se procede a instalar la nueva gema. Para ello se edita el fichero \kode{Gemfile}, incluyendo:
 
 \begin{codelisting}
 \label{code:addtravis}
@@ -298,16 +369,16 @@ group :development, :test do
 end
 .
 \end{code}
-\end{codelisting}
+\end{codelisting}: 
 
-Luego se instala la nueva gema: 
+Luego se instala mediante:
 
 %= lang:bash
 \begin{code}
 $ bundle install --without production
 \end{code}
 
-Es necesario crear un nuevo fichero de configuración para la base de datos en Travis CI, que será utilizado para la integración continua en su testeo:
+Una vez instalada, es necesario crear un nuevo fichero de configuración para la base de datos en Travis CI, que será utilizado para la integración continua en su testeo:
 \begin{codelisting}
 \label{code:travisdatabase}
 \codecaption{Fichero \kode{config/database.yml.travis} }
@@ -376,6 +447,8 @@ after_success:
 \end{code}
 \end{codelisting}
 
+\subsection{Resultado}
+
 Finalmente cuando se haga un nuevo \textit{commit} y subida al repositorio GitHub comenzará también la construcción en Travis CI.
 
 \begin{figure}[H]
@@ -390,7 +463,11 @@ Esta construcción terminará con la creación y subida de las siguientes imáge
 \caption{Repositorio de \kode{sample\_app\_rails\_4\_image}.\label{fig:figure_placement_example}}
 \end{figure}
 
-\section{Despliegue monomáquina con contenedores en una máquina virtual con CoreOS}
+\section{Despliegue monomáquina con unidades usando CoreOS}
+
+\subsection{Análisis y Diseño}
+
+\subsection{Preparación del repositorio local y remoto}
 
 En primer lugar se realiza una copia del repositorio GitHub \kode{CoreOS Vagrant} que proporciona una plantilla \kode{Vagrantfile} para crear una máquina virtual CoreOS usando el hipervisor software VirtualBox. Una vez finalizada la instalación, se tendrá una única máquina virtual CoreOS que se ejecutará localmente. Para ello se realiza un \textit{fork} seleccionando el botón con el mismo nombre y automáticamente se crea la copia del repositorio en la cuenta personal. Seguidamente se clona esta copia para trabajar localmente:
 
@@ -424,4 +501,9 @@ Además puede visualizarse la máquina mediante VirtualBox:
 \caption{Máquina virtual \kode{core-01} desde VirtualBox.\label{fig:figure_placement_example}}
 \end{figure}
 
+\subsection{Configuración de las unidades}
+
+\subsection{Resultado}
+
+\section{Despliegue multimáquina con unidades usando CoreOS}
 
