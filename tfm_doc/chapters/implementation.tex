@@ -1,7 +1,50 @@
-\chapter{Diseño e Implementación}
+\chapter{Desarrollo}
 \label{cha:regulation}
 
-En esta sección se expone el análisis, las decisiones de diseño y el desarrollo de cada una de las 4 iteraciones por las que se compone el proyecto.
+En esta sección se expone el análisis de la aplicación web Ruby on Rails, de 3 capas, utilizada para el desarrollo del proyecto. Además, se expone el análisis, las decisiones de diseño y el desarrollo de cada una de las 4 iteraciones por las que se compone el trabajo realizado a partir de ella.
+
+\section{Análisis de la aplicación Ruby on Rails}
+
+La aplicación \kode{sample\_app\_rails\_4}, escrita en lenguaje Ruby\footnotettt{Ruby}{https://www.ruby-lang.org/es}, es parte de un tutorial sobre el uso del \textit{framework} de desarrollo de aplicaciones web Ruby on Rails\footnotettt{Ruby on Rails}{http://www.rubyonrails.org.es}. Se trata de una aplicación de muestra, desarrollada mediante una combinación de simulaciones, pruebas de desarrollo \textit{TDD} y pruebas de integración. Tiene una arquitectura de 3 capas: cliente, aplicación y base de datos. Está creada a partir de páginas estáticas con contenido dinámico, tiene un diseño de sitio web, un modelo de datos de usuario y un sistema completo de registro y autenticación, incluida la activación de cuentas y restablecimientos de contraseñas. Además tiene funciones de \textit{microblogging} y redes sociales. Así, tendrá usuarios que crearán \textit{microposts} dentro de un marco de autenticación e inicio de sesión completo.
+
+\begin{figure}[H]
+\image{images/figures/sampleapp.png}
+\caption{Integración entre características y componentes de Ruby on Rails.\label{fig:figure_placement_example}}
+\end{figure}
+
+La arquitectura de Ruby on Rails que implementa la aplicación web tiene las siguientes características:
+\begin{itemize}
+\item Arquitectura Modelo-Vista-Controlador (MVC): Mejora la capacidad de mantenimiento, desacoplamiento y pruebas de la aplicación.
+\subitem-- Modelo: Lógica de negocio de la aplicación y reglas para manipular los datos. Representa la información en la base de datos y realizan las validaciones apropiadas.
+\subitem-- Vista: Representa la interfaz de usuario.
+\subitem-- Controlador: Responde a eventos e invoca perticiones al modelo cuando se hace una solicitud de información.
+\item Arquitectura \textit{Representational State Transfer} (REST) para servicios web.
+\item Soporta las principales bases de datos como MySQL\footnotettt{MySQL}{https://www.mysql.com}, Oracle\footnotettt{Oracle}{https://www.oracle.com/es/database/index.html} y PostgreSQL\footnotettt{PostgreSQL}{http://www.postgresql.org.es}, entre otras.
+\item Lenguaje \textit{scripting} del lado del servidor de código abierto.
+\item Convención sobre configuración.
+\item Generadores de \textit{scripts} para automatizar tareas.
+\item Uso de \textit{YAML}, formato de serialización de datos inspirado en lenguajes como \textit{XML} y \textit{C}.
+\end{itemize}
+
+Las características anteriormente descritas se distribuyen en los siguientes componentes de Rails:
+\begin{itemize}
+\item \textit{Action Mailer}: Responsable de proporcionar servicios de correo electrónico. 
+\item \textit{Action Pack}: Capta las solicitudes de usuario realizadas por el navegador y asignan estas solicitudes a acciones definidas en la capa de controladores.
+\subitem-- \textit{Action Controller}: Enruta solicitudes a su controlador correspondiente. 
+\subitem-- \textit{Action Dispatcher}: Controla el enrutamiento de la solicitud del navegador web, la analiza y procesa.
+\subitem-- \textit{Action View}: Realiza la presentación de la página web solicitada.
+\item \textit{Active Model}: Define la interfaz entre el \textit{Action Pack} y los módulos \textit{Active Record}.
+\item \textit{Active Record}: Proporciona capacidad de crear relaciones o asociaciones entre modelos y construye la capa Modelo que conecta las tablas de la base de datos con su representación en las clases Ruby.
+\item \textit{Active Resource}: Administra la conexión entre servicios web \textit{RESTful} y objetos de negocio.
+\item \textit{Active Support}: Colección de clases de utilidad y extensiones de bibliotecas estándar de Ruby útiles para el desarrollo en Ruby on Rails.
+\item \textit{Railties}: Código básico de Rails que construye nuevas aplicaciones. \end{itemize}	 
+
+\begin{figure}[H]
+\image{images/figures/rubyonrails.png}
+\caption{Integración entre características y componentes de Ruby on Rails.\label{fig:figure_placement_example}}
+\end{figure}
+
+Una vez vistas las características y capacidades, tanto de una aplicación Ruby on Rails genérica como de la aplicación en actual estudio, se decide elaborar un trabajo adicional sobre ella, con cambios y adiciones que llevarán a un resultado viable y eficaz, de manera que pueda  operarse sobre lo ya implementado sin que suponga ningún coste y que, además, pueda expandirse en un futuro.
 
 \section{Iteración 1: Conversión de una aplicación Ruby on Rails a una arquitectura de microservicios}
 
@@ -37,6 +80,7 @@ Con la intención de utilizar como servidor web de la aplicación un contenedor 
 Así, solo quedará construir, migrar y poblar la base de datos que se ejecuta en el contenedor \kode{some-app}, dentro del contenedor \kode{some-postgres}.
 
 Finalmente, se ejecutará el servidor \kode{puma} dentro del contenedor \kode{some-app} y se comprobará desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080. Esto producirá el siguiente resultado:
+
 \begin{figure}[H]
 \image{images/figures/resultado1.png}
 \caption{Resultado de la Iteración 1 con el uso de Docker.\label{fig:figure_placement_example}}
@@ -372,14 +416,30 @@ docker run --name some-nginx -v "${PWD}/nginx.conf":/etc/nginx/conf.d/default.co
 
 \subsection{Resultado}
 
-Finalmente, en el contenedor \kode{app-task} se encuentra en ejecución el servidor \kode{puma}, así que se puede comprobar desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080 mediante el comando \kode{curl http://localhost:8080}, produciendo el siguiente volcado:
+El resultado del script anterior crea los distintos elementos propuestos en el planteamiento de esta iteración. Así las imagenes Docker descargadas y la creada, perteneciente a la aplicación, son:
+
+\begin{figure}[H]
+\image{images/figures/dockerimages.png}
+\caption{Imágenes docker mostradas con \kode{docker images}.\label{fig:figure_placement_example}}
+\end{figure}
+
+Y los contenedores Docker creados son:
+
+\begin{figure}[H]
+\image{images/figures/dockerps.png}
+\caption{Contenedores docker mostrados con \kode{docker ps -a}.\label{fig:figure_placement_example}}
+\end{figure}
+
+De esta manera, en el contenedor \kode{app-task} se encuentra en ejecución el servidor \kode{puma}, así que se puede comprobar desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080 mediante el comando \kode{curl http://localhost:8080}, produciendo el siguiente volcado:
 
 \begin{figure}[H]
 \image{images/figures/curldocker.png}
 \caption{Volcado de ejecución \kode{curl http://localhost:8080}.\label{fig:figure_placement_example}}
 \end{figure}
 
-A efectos de mantener la imagen remotamente se sube al repositorio DockerHub. Para ello se inicia sesión por consola y se añade una etiqueta a la imagen \kode{sample\_app\_rails\_4\_image}, especificando su identificador y el repositorio de la cuenta:
+\section{Iteración 2: Subida de la imagen a DockerHub}
+
+A efectos de mantener la imagen remotamente se sube al repositorio DockerHub. Para ello hay que tener una cuenta en él. Una vez creada, se inicia sesión por consola y se añade una etiqueta a la imagen \kode{sample\_app\_rails\_4\_image}, especificando su identificador y el repositorio de la cuenta:
 
 %= lang:bash
 \begin{code}
@@ -388,7 +448,37 @@ $ docker tag <image-id> carolina/sample_app_rails_4_image:initial
 $ sudo docker push carolina/sample_app_rails_4_image
 \end{code}
 
-\section{Iteración 2: Integración y Despliegue continuos}
+Cuando se muestran las imágenes docker se aprecia la etiquetación hecha:
+
+\begin{figure}[H]
+\image{images/figures/dockerimages2.png}
+\caption{Imágenes docker mostradas con \kode{docker images}.\label{fig:figure_placement_example}}
+\end{figure}
+
+La subida de la imagen etiquetada como \kode{initial} se puede apreciar ahora en Docker Hub:
+
+\begin{figure}[H]
+\image{images/figures/dockerimages2.png}
+\caption{Imágenes docker mostradas con \kode{docker images}.\label{fig:figure_placement_example}}
+\end{figure}
+
+También puede ser comprobado localmente mediante:
+
+%= lang:bash
+\begin{code}
+$ docker 
+$ docker tag <image-id> carolina/sample_app_rails_4_image:initial
+$ sudo docker push carolina/sample_app_rails_4_image
+\end{code}
+
+Cuyo resultado es:
+
+\begin{figure}[H]
+\image{images/figures/dockerimages3.png}
+\caption{Resultado de la búsqueda de la imagen con \kode{docker search}.\label{fig:figure_placement_example}}
+\end{figure}
+
+\section{Iteración 3: Integración y Despliegue continuos con Travis CI}
 
 \subsection{Planteamiento}
 
@@ -506,6 +596,26 @@ after_success:
 \end{code}
 \end{codelisting}
 
+Como no se quiere compartir las credenciales del repositorio ya que, aunque éstas esten encriptadas, si otro usuario hiciera uso del repositorio accedería a la cuenta DockerHub, pudiendo subir nuevas imágenes. Por ello se crea una copia donde se borran manualmente las credenciales \kode{secure}:
+
+%= lang:bash
+\begin{code}
+$ cp .travis.yml .travis.yml.sample
+\end{code}
+
+Además se oculta el fichero \kode{.travis.yml} tanto para GitHub como para DockerHub:
+
+\begin{codelisting}
+\label{code:scriptdocker}
+\codecaption{Añadido a los ficheros \kode{.gitignore} y \kode{.dockerignore}}
+%= lang:bash
+\begin{code}
+.
+.travis.yml
+.
+\end{code}
+\end{codelisting}
+
 \subsection{Resultado}
 
 Finalmente cuando se haga un nuevo \textit{commit} y subida al repositorio GitHub comenzará también la construcción en Travis CI.
@@ -528,7 +638,9 @@ Esta construcción terminará con la creación y subida de las tres imágenes co
 
 \subsection{Preparación del repositorio local y remoto}
 
-En primer lugar se realiza una copia del repositorio GitHub \kode{CoreOS Vagrant} que proporciona una plantilla \kode{Vagrantfile} para crear una máquina virtual CoreOS usando el hipervisor software VirtualBox. Una vez finalizada la instalación, se tendrá una única máquina virtual CoreOS que se ejecutará localmente. Para ello se realiza un \textit{fork} seleccionando el botón con el mismo nombre y automáticamente se crea la copia del repositorio en la cuenta personal. Seguidamente se clona esta copia para trabajar localmente:
+En primer lugar se realiza una copia del repositorio GitHub \kode{CoreOS Vagrant} que proporciona una plantilla \kode{Vagrantfile} para configurar el entorno de una máquina virtual CoreOS, usando el hipervisor software VirtualBox. 
+
+Una vez finalizada la instalación, se tendrá una única máquina virtual CoreOS que se ejecutará localmente. Para ello se realiza un \textit{fork} seleccionando el botón con el mismo nombre y automáticamente se crea la copia del repositorio en la cuenta personal. Seguidamente se clona esta copia para trabajar localmente:
 
 %= lang:bash
 \begin{code}
@@ -560,7 +672,77 @@ Además puede visualizarse la máquina mediante VirtualBox:
 \caption{Máquina virtual \kode{core-01} desde VirtualBox.\label{fig:figure_placement_example}}
 \end{figure}
 
+En estos momentos el fichero \kode{Vagrantfile} establece el tamaño del clúster CoreOS que ha de ser creado por Vagrant. En este caso una sola instancia. Además señala el \textit{discovery token} para la detección del tamaño del clúster, reemplazándose automáticamente cuando se hace \kode{vagrant up}.
+
+El fichero \kode{user-data} es el archivo de configuración \kode{cloud-config} que especifica el \kode{discovery token}, las variables de entorno y la lista de unidades que se deben iniciar de forma predeterminada. Vagrant copia el archivo \kode{cloud-config} en \kode{/var/lib/coreos-vagrant/vagrantfile-user-data}, dentro de la máquina virtual. De esta manera \kode{coreos-cloudinit} lee \kode{vagrantfile-user-data} en cada incio y lo utiliza para crear el archivo de datos del usuario de la máquina.
+
+Por su parte el fichero \kode{config.rb} especifica el número de nodos CoreOS y proporciona una opción para generar automáticamente un \textit{discovery token}.
+
+\subsection{Interpretación del fichero de configuración Cloud-Config}
+
+Una vez que el entorno se ha comprobado y preparado para su uso se accede al fichero \kode{user-data} que contiene la lógica necesaria sobre los servicios \kode{etcd2}, \kode{fleet} y \kode{flannel}.
+
+A efectos de CoreOS este fichero se denomina como \kode{cloud-config}. Los parámetros \kode{coreos.etcd}, \kode{coreos.fleet} y \kode{coreos.flannel} son traducidos a una unidad \kode{systemd} parcial actuando como un archivo de configuración \kode{etcd2}, \kode{fleet} y \kode{flannel}, respectivamente. 
+
+Como el entorno de plataforma admite la función de plantilla de \kode{coreos-cloudinit}, es posible automatizar la configuración de \kode{etcd2} con los campos \kode{$private_ipv4} y \kode{$public_ipv4}. Al generar un \textit{discovery token} se establece el tamaño del clúster, ya que \kode{etcd2} lo utiliza para determinar si todos los miembros se han unido a él. Después de que se inicializa, el clúster puede crecer o reducirse. Por su parte \kode{fleet} y \kode{flannel} usan variables de entorno en su configuración.
+
+La siguiente sección de este fichero pertenece a las unidades de servicio, de las que ya se encuentran definidas \kode{etcd2.service}, \kode{fleet.service}, \kode{flanneld.service}, donde esta última especifica la red en CoreOS.
+
+\begin{codelisting}
+\label{code:cloud-config1}
+\codecaption{Fichero \kode{user-data}. Cloud-Config. Servicios.}
+%= lang:ruby
+\begin{code}
+#cloud-config
+
+---
+coreos:
+  etcd2:
+    advertise-client-urls: http://$public_ipv4:2379
+    initial-advertise-peer-urls: http://$private_ipv4:2380
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+    listen-peer-urls: http://$private_ipv4:2380,http://$private_ipv4:7001
+    discovery: https://discovery.etcd.io/acd611cb07df434a400bbd7e36d793a0
+  fleet:
+    public-ip: "$public_ipv4"
+  flannel:
+    interface: "$public_ipv4"
+  units:
+  - name: etcd2.service
+    command: start
+  - name: fleet.service
+    command: start
+  - name: flanneld.service
+    drop-ins:
+    - name: 50-network-config.conf
+      content: |
+        [Service]
+        ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
+    command: start
+.
+.
+.
+\end{code}
+\end{codelisting}
+
 \subsection{Configuración de las unidades}
+
+El siguiente paso consiste en agregar las unidades de servicio de la aplicación. Para ello añadimos lo siguiente al fichero anterior \kode{user-data}
+
+https://coreos.com/os/docs/latest/cloud-config.html
+
+\begin{codelisting}
+\label{code:cloud-config2}
+\codecaption{Fichero \kode{user-data}. Cloud-Config. Unidades.}
+%= lang:ruby
+\begin{code}
+.
+.
+.
+
+\end{code}
+\end{codelisting}
+
 
 \subsection{Resultado}
 
