@@ -458,7 +458,7 @@ Cuando se muestran las imágenes docker se aprecia la etiquetación hecha:
 La subida de la imagen etiquetada como \kode{initial} se puede apreciar ahora en Docker Hub:
 
 \begin{figure}[H]
-\image{images/figures/dockerimages2.png}
+\image{images/figures/dockerhubinitial.png}
 \caption{Imágenes docker mostradas con \kode{docker images}.\label{fig:figure_placement_example}}
 \end{figure}
 
@@ -581,6 +581,8 @@ script:
   - bundle exec rspec
 notifications:
   email:
+    recipients:
+      - c.santanamartel@gmail.com
     on_success: always
     on_failure: always
 sudo: required
@@ -596,7 +598,7 @@ after_success:
 \end{code}
 \end{codelisting}
 
-Como no se quiere compartir las credenciales del repositorio ya que, aunque éstas esten encriptadas, si otro usuario hiciera uso del repositorio accedería a la cuenta DockerHub, pudiendo subir nuevas imágenes. Por ello se crea una copia donde se borran manualmente las credenciales \kode{secure}:
+Solo a efectos de construcción del repositorio final en GitHub para compartirlo con la comunidad, no se quiere compartir las credenciales del repositorio ya que, aunque éstas esten encriptadas, si otro usuario hiciera uso del repositorio accedería a la cuenta DockerHub, pudiendo subir nuevas imágenes. Por ello se crea una copia donde se borran manualmente las credenciales \kode{secure}:
 
 %= lang:bash
 \begin{code}
@@ -620,9 +622,33 @@ Además se oculta el fichero \kode{.travis.yml} tanto para GitHub como para Dock
 
 Finalmente cuando se haga un nuevo \textit{commit} y subida al repositorio GitHub comenzará también la construcción en Travis CI.
 
+Tanto si se produce un fallo como si termina con éxito se ha configurado el envío de un correo electrónico para informarlo. Probamos el caso de fallo comentando la línea que crea la base de datos de prueba \kode{travis\_ci\_test} y el de éxito con ello. Los correos electrónicos recibidos son:
+
 \begin{figure}[H]
-\image{images/figures/travis.png}
-\caption{Integración en Travis CI.\label{fig:figure_placement_example}}
+\image{images/figures/travisfailure.png}
+\caption{Correo electrónico de Travis CI en caso de fallo.\label{fig:figure_placement_example}}
+\end{figure}
+
+\begin{figure}[H]
+\image{images/figures/travissuccess.png}
+\caption{Correo electrónico de Travis CI en caso de éxito.\label{fig:figure_placement_example}}
+\end{figure}
+
+Dirigiendo a Travis CI donde se comenta el fallo o el éxito:
+
+\begin{figure}[H]
+\image{images/figures/travisfailure2.png}
+\caption{Caso de fallo en Travis CI.\label{fig:figure_placement_example}}
+\end{figure}
+
+\begin{figure}[H]
+\image{images/figures/travisfailure3.png}
+\caption{Motivo de fallo en Travis CI.\label{fig:figure_placement_example}}
+\end{figure}
+
+\begin{figure}[H]
+\image{images/figures/travissuccess2.png}
+\caption{Caso de éxito en Travis CI.\label{fig:figure_placement_example}}
 \end{figure}
 
 Esta construcción terminará con la creación y subida de las tres imágenes comentadas en el repositorio de DockerHub:
@@ -630,6 +656,12 @@ Esta construcción terminará con la creación y subida de las tres imágenes co
 \begin{figure}[H]
 \image{images/figures/dockerhubimages.png}
 \caption{Repositorio de \kode{sample\_app\_rails\_4\_image}.\label{fig:figure_placement_example}}
+\end{figure}
+
+
+\begin{figure}[H]
+\image{images/figures/travis.png}
+\caption{Integración en Travis CI.\label{fig:figure_placement_example}}
 \end{figure}
 
 \section{Iteración 3: Despliegue monomáquina con unidades usando CoreOS}
@@ -684,7 +716,7 @@ Una vez que el entorno se ha comprobado y preparado para su uso se accede al fic
 
 A efectos de CoreOS este fichero se denomina como \kode{cloud-config}. Los parámetros \kode{coreos.etcd}, \kode{coreos.fleet} y \kode{coreos.flannel} son traducidos a una unidad \kode{systemd} parcial actuando como un archivo de configuración \kode{etcd2}, \kode{fleet} y \kode{flannel}, respectivamente. 
 
-Como el entorno de plataforma admite la función de plantilla de \kode{coreos-cloudinit}, es posible automatizar la configuración de \kode{etcd2} con los campos \kode{$private_ipv4} y \kode{$public_ipv4}. Al generar un \textit{discovery token} se establece el tamaño del clúster, ya que \kode{etcd2} lo utiliza para determinar si todos los miembros se han unido a él. Después de que se inicializa, el clúster puede crecer o reducirse. Por su parte \kode{fleet} y \kode{flannel} usan variables de entorno en su configuración.
+Como el entorno de plataforma admite la función de plantilla de \kode{coreos-cloudinit}, es posible automatizar la configuración de \kode{etcd2} con los campos \kode{\$private\_ipv4} y \kode{\$public\_ipv4}. Al generar un \textit{discovery token} se establece el tamaño del clúster, ya que \kode{etcd2} lo utiliza para determinar si todos los miembros se han unido a él. Después de que se inicializa, el clúster puede crecer o reducirse. Por su parte \kode{fleet} y \kode{flannel} usan variables de entorno en su configuración.
 
 La siguiente sección de este fichero pertenece a las unidades de servicio, de las que ya se encuentran definidas \kode{etcd2.service}, \kode{fleet.service}, \kode{flanneld.service}, donde esta última especifica la red en CoreOS.
 
@@ -727,22 +759,85 @@ coreos:
 
 \subsection{Configuración de las unidades}
 
-El siguiente paso consiste en agregar las unidades de servicio de la aplicación. Para ello añadimos lo siguiente al fichero anterior \kode{user-data}
+El primer paso consiste en permitir que exista almacenamiento NFS compartido entre la máquina local y la máquina virtual CoreOS. Para ello hay que descomentar la siguiente línea en el fichero \kode{Vagrantfile}:
 
-https://coreos.com/os/docs/latest/cloud-config.html
+\begin{codelisting}
+\label{code:vagrantfile2}
+\codecaption{Fichero \kode{Vagrantfile}}
+%= lang:ruby
+\begin{code}
+.
+config.vm.synced_folder ".", "/home/core/share", id: "core", :nfs => true, \
+:mount_options => ['nolock,vers=3,udp']
+.
+\end{code}
+\end{codelisting}
+
+Además habrá que instalar el adaptador NFS en el sistema anfitrión y cargar los cambios. Esto creará dentro de la máquina virtual el directorio \kode{share}:
+
+%= lang:bash
+\begin{code}
+$ sudo apt-get install nfs-kernel-server -y
+$ vagrant reload --provision
+\end{code}
+
+El siguiente paso consiste en agregar las unidades de servicio de la aplicación. Para ello  se crea la ruta \kode{etc/sysctl/postgresql.service}. En este fichero se configura el servicio \kode{postgresql.service} de base de datos de la aplicación. Su contenido es el siguiente:
 
 \begin{codelisting}
 \label{code:cloud-config2}
 \codecaption{Fichero \kode{user-data}. Cloud-Config. Unidades.}
 %= lang:ruby
 \begin{code}
-.
-.
-.
+[Unit] 
+  Description=PostgreSQL database 
+  After=docker.service 
+  Requires=docker.service 
 
+[Service] 
+  TimeoutStartSec=0 
+  ExecStartPre=/usr/bin/sh -c "export POSTGRES_USER=postgres" 
+  ExecStartPre=/usr/bin/sh -c "export POSTGRES_PASSWORD=postgres" 
+  ExecStartPre=-/usr/bin/docker kill some-postgres 
+  ExecStartPre=-/usr/bin/docker rm some-postgres 
+  ExecStartPre=/usr/bin/docker pull postgres 
+  ExecStart=/usr/bin/docker run --rm --name some-postgres \
+  -e "POSTGRES_USER=${POSTGRES_USER}" \
+  -e "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" -p 5432:5432 postgres 
+  ExecStop=/usr/bin/docker stop some-postgres 
+
+[Install] 
+  WantedBy=multi-user.target
 \end{code}
 \end{codelisting}
 
+El siguiente paso es acceder a la máquina \kode{core-01} y copiar dicho fichero dentro de ella en la siguiente ruta:
+
+%= lang:bash
+\begin{code}
+$ vagrant shh core-01
+$ sudo cp share/etc/sysctl/postgresql.service /etc/systemd/system/
+\end{code}
+
+Luego se habilita el servicio y se inicia:
+%= lang:bash
+\begin{code}
+$ sudo systemctl enable postgresql.service
+$ sudo systemctl start postgresql.service
+\end{code}
+
+Comprobando que el estado del servicio es activo:
+
+\begin{figure}[H]
+\image{images/figures/postgresqlservice.png}
+\caption{Estado del servicio \kode{postgresql.service}.\label{fig:figure_placement_example}}
+\end{figure}
+
+Así como el contenedor docker está en marcha:
+
+\begin{figure}[H]
+\image{images/figures/postgresqlcontainer.png}
+\caption{Estado del contenedor \kode{some-postgres}.\label{fig:figure_placement_example}}
+\end{figure}
 
 \subsection{Resultado}
 
