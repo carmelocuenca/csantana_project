@@ -6,7 +6,6 @@ preface.md
 mainmatter:
 introduction.tex
 state_of_art.tex
-regulation.tex
 implementation.tex
 result_and_conclusions.tex
 bibliography.tex

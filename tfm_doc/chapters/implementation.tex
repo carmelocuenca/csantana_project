@@ -48,8 +48,6 @@ Una vez vistas las características y capacidades, tanto de una aplicación Ruby
 
 \section{Iteración 1: Conversión de una aplicación Ruby on Rails a una arquitectura de microservicios}
 
-\subsection{Planteamiento}
-
 La primera iteración del proyecto consiste en adecuar la aplicación Ruby on Rails para que utilice contenedores en su funcionamiento. Esta tarea supone su despliegue en una sola máquina física.
 
 La aplicación \kode{sample\_app\_rails\_4} está disponible en un repositorio GitHub\footnotettt{GitHub}{https://github.com}. Para trabajar con ella se hace una copia del repositorio a través de un \textit{fork}. Esto crea una bifurcación que permite la libre experimentación de cambios, sin afectar el proyecto original, utilizando el proyecto de otra persona como punto de partida de una idea propia.
@@ -480,8 +478,6 @@ Cuyo resultado es:
 
 \section{Iteración 3: Integración y Despliegue continuos con Travis CI}
 
-\subsection{Planteamiento}
-
 En esta iteración se busca adaptar la aplicación Ruby on Rails para que funcione con Travis CI. Esta herramienta tecnológica se conectará al repositorio de GitHub \kode{sample\_app\_rails\_4-1}, en el que se desarrolla el proyecto, con la intención de poder generar una imagen Docker del mismo tras cada cambio. Esto permite trabajar en un entorno de desarrollo en el que la integración de los cambios en el proyecto es continua, así como también su despliegue puede ser automatizado.
 
 Para ello se realiza el siguiente proceso:
@@ -665,8 +661,6 @@ Esta construcción terminará con la creación y subida de las tres imágenes co
 \end{figure}
 
 \section{Iteración 3: Despliegue monomáquina con unidades usando CoreOS}
-
-\subsection{Planteamiento}
 
 \subsection{Preparación del repositorio local y remoto}
 

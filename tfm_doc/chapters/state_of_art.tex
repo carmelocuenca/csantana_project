@@ -13,13 +13,13 @@ Las aplicaciones que implementan este tipo de diseño no tienen que preocuparse 
 Algunos de los beneficios del uso de estas tecnologías son:
 \begin{itemize}
 \item Abstracción del sistema anfitrión donde se ejecutará la aplicación contenerizada mediante interfaces definidas, con independencia de los recursos o arquitecturas del sistema anfitrión.
-\item Fácil escalabilidad para pruebas y puesta en producción.
+\item Escalabilidad en pruebas y puesta en producción.
 \item Administración simplificada de dependencias y versiones de aplicaciones.
 \item Ambientes de ejecución aislados a nivel de proceso.
 \item Compartir contenedores evitando la duplicación y ocupando menor espacio en disco.
 \end{itemize}
 
-\subsection{Diferencia entre contenedores y máquinas virtuales}
+\subsection{Contenedores y Máquinas Virtuales}
 
 Los contenedores se diferencian de las máquinas virtuales en la ubicación de la capa de virtualización y en la forma en que se utilizan los recursos del sistema operativo.
 
@@ -60,6 +60,8 @@ Los pasos de configuración se especifican en un fichero de compilación, llamad
 
 Cada instalación de Docker incluye un cliente Docker, normalmente una interfaz de línea de comandos. También incluye una \textit{API} remota y un demonio. Tanto el cliente como el demonio pueden compartir un único sistema anfitrión o el demonio puede ejecutarse en un sistema anfitrión remoto. Así, los contenedores Docker son directorios que contienen todo los necesario para que la aplicación se ejecute de forma aislada, incluyendo el sistema operativo y un sistema de ficheros. Esto permite que los contenedores puedan moverse de sistema anfitrión sin riesgo de errores de configuración.
 
+\subsection{Otras tecnologías de contenedores}
+
 \section{Sistemas operativos orientados a contenedores}
 
 Tras el éxito y popularidad de las tecnologías de contenerización han surgido sistemas operativos modernos diseñados para funcionar de manera óptima con un ecosistema de contenedores. Estos sistemas operativos proporcionan la mínima funcionalidad requerida para implementar aplicaciones, junto con propiedades de auto actualización y restablecimiento.
@@ -68,23 +70,7 @@ Los sistemas operativos orientados a contenedores han evolucionado el modelo ope
 
 Esta tecnología también se conoce como la virtualización del sistema operativo en el que su núcleo permite la existencia de múltiples instancias de espacio de usuario aisladas, en lugar de una sola. Estas instancias son los contenedores que pueden parecer y sentirse como un servidor real desde el punto de vista de sus usuarios.
 
-Los principales sistemas operativos orientados a contenedores son CoreOS\footnotettt{CoreOS}{https://coreos.com}, Red Hat Enterprise Linux (RHEL) Project Atomic\footnotettt{Project Atomic}{https://www.projectatomic.io} y Snappy Ubuntu Core\footnotettt{Snappy Ubuntu Core}{https://developer.ubuntu.com/en/snappy}.
-
-Project Atomic facilita la arquitectura centrada en la aplicación al proporcionar una solución para desplegar aplicaciones contenedoras de forma rápida y confiable. La actualización atómica y la reversión de aplicaciones y anfitriones permiten la implementación de pequeñas mejoras frecuentes. Concretamente, RHEL Project Atomic, lanzado en 2014, es un sistema operativo ligero montado a partir del contenido del RMP Package Manager\footnotettt{RMP Package Manager}{http://rpm.org}. Se trata de una variante optimizada de RHEL 7\footnotettt{RHEL 7}{https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/7.0\_Release\_Notes} para ejecutar contenedores Linux.
-
-\begin{figure}[H]
-\image{images/figures/projectatomic.png}
-\caption{Project Atomic.\label{fig:figure_placement_example}}
-\end{figure}
-
-Por su parte Snappy Ubuntu Core, lanzado en 2014, es un sistema operativo que usa una imagen de servidor mínima con las mismas bibliotecas que el sistema operativo Ubuntu\footnotettt{Ubuntu}{https://www.ubuntu.com} actual, pero las aplicaciones se proporcionan a través de un mecanismo más simple. Su enfoque ágil es más rápido, más fiable y permite ofrecer mayores garantías de seguridad para aplicaciones y usuarios. Las aplicaciones Snappy y Ubuntu Core se pueden actualizar de forma atómica y revertirse si es necesario, pensando para contenedores.
-
-\begin{figure}[H]
-\image{images/figures/snappyubuntu.png}
-\caption{Snappy Ubuntu.\label{fig:figure_placement_example}}
-\end{figure}
-
-En el desarrollo de este proyecto se utilizará el sistema operativo orientado a contenedores CoreOS, descrito a continuación.
+En el desarrollo de este proyecto se utilizará el sistema operativo orientado a contenedores CoreOS\footnotettt{CoreOS}{https://coreos.com}, descrito a continuación.
 
 \subsection{CoreOS}
 
@@ -94,7 +80,6 @@ CoreOS es un sistema operativo ligero de código abierto, de la compañía con e
 \image{images/figures/coreos.png}
 \caption{CoreOS.\label{fig:figure_placement_example}}
 \end{figure}
-
 
 CoreOS está diseñado para implementar una aplicación distribuida en un clúster de nodos. Así, se encarga de proporcionar la infraestructura necesaria para los despliegues en clúster, automatización, facilidad de despliegue de aplicaciones, seguridad, fiabilidad y escalabilidad. Como sistema operativo, CoreOS ofrece solo las funcionalidades mínimas necesarias para la implementación de aplicaciones dentro de contenedores de software, junto con mecanismos incorporados para el descubrimiento de servicios y el intercambio de configuración.
 
@@ -251,29 +236,33 @@ Así, cuando esté funcionando se podrán agregar fácilmente nuevos contenedore
 \caption{Balanceador de carga con CoreOS, confd y \textit{nginx}.\label{fig:figure_placement_example}}
 \end{figure}
 
+\subsection{Otros}
+
+Aparte de CoreOS, los otros dos principales sistemas operativos orientados a contenedores son  Red Hat Enterprise Linux (RHEL) Project Atomic\footnotettt{Project Atomic}{https://www.projectatomic.io} y Snappy Ubuntu Core\footnotettt{Snappy Ubuntu Core}{https://developer.ubuntu.com/en/snappy}.
+
+Project Atomic facilita la arquitectura centrada en la aplicación al proporcionar una solución para desplegar aplicaciones contenedoras de forma rápida y confiable. La actualización atómica y la reversión de aplicaciones y anfitriones permiten la implementación de pequeñas mejoras frecuentes. Concretamente, RHEL Project Atomic, lanzado en 2014, es un sistema operativo ligero montado a partir del contenido del RMP Package Manager\footnotettt{RMP Package Manager}{http://rpm.org}. Se trata de una variante optimizada de RHEL 7\footnotettt{RHEL 7}{https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/7.0\_Release\_Notes} para ejecutar contenedores Linux.
+
+\begin{figure}[H]
+\image{images/figures/projectatomic.png}
+\caption{Project Atomic.\label{fig:figure_placement_example}}
+\end{figure}
+
+Por su parte Snappy Ubuntu Core, lanzado en 2014, es un sistema operativo que usa una imagen de servidor mínima con las mismas bibliotecas que el sistema operativo Ubuntu\footnotettt{Ubuntu}{https://www.ubuntu.com} actual, pero las aplicaciones se proporcionan a través de un mecanismo más simple. Su enfoque ágil es más rápido, más fiable y permite ofrecer mayores garantías de seguridad para aplicaciones y usuarios. Las aplicaciones Snappy y Ubuntu Core se pueden actualizar de forma atómica y revertirse si es necesario, pensando para contenedores.
+
+\begin{figure}[H]
+\image{images/figures/snappyubuntu.png}
+\caption{Snappy Ubuntu.\label{fig:figure_placement_example}}
+\end{figure}
+
 \section{Herramientas para la orquestación de contenedores}
 
 Un sistema de orquestación de contenedores trata el hardware dispar de la infraestructura como una colección y lo representa para la aplicación como un único recurso. También, programa los contenedores basándose en las restricciones de los usuarios y utiliza la infraestructura de la manera más eficiente posible, escalando los contenedores dinámicamente y manteniendo los servicios en alta disponibilidad.
 
-Las principales herramientas para la orquestación de contenedores en la actualidad son Kubernetes, Docker Swarm\footnotettt{Docker Swarm}{https://www.docker.com/products/docker-swarm} y Apache Mesos\footnotettt{Apache Mesos}{http://mesos.apache.org}.
+Las principales herramientas para la orquestación de contenedores en la actualidad son, por un lado, Fleet y Kubernetes y, por otro, Docker Swarm\footnotettt{Docker Swarm}{https://www.docker.com/products/docker-swarm} y Apache Mesos\footnotettt{Apache Mesos}{http://mesos.apache.org}.
 
-Docker Swarm es la solución de orquestación nativa de Docker. Con su uso se administra el clúster como sola entidad en lugar de administrar nodos Docker individuales. 
+A continuación se describen, con especial relevancia, los dos primeros.
 
-Esta herramienta tiene un planificador integrado que decide la ubicación de los contenedores en el clúster y utiliza restricciones y afinidades específicas del usuario para decidir esa ubicación. En su arquitectura existe un maestro que se encarga de la planificación de contenedores Docker basado en el algoritmo planificador, restricciones y afinidades. Para proporcionar alta disponibilidad se pueden ejecutar múltiples maestros en paralelo, distribuyendo las cargas de trabajo uniformemente. Por su parte, los agentes se ejecutan en cada nodo y se comunican con el maestro a partir del descubrimiento, necesario porque se ejecutan en diferentes nodos y no son iniciados por él.
-
-\begin{figure}[H]
-\image{images/figures/dockermasterandagent.png}
-\caption{Composición de maestros y agentes en Docker Swarm.\label{fig:figure_placement_example}}
-\end{figure}
-	
-Apache Mesos combina el sistema operativo con el administrador de clústeres. El sistema operativo de clústeres representa los recursos de múltiples computadores dispares en un único recurso, sobre el que se programan las aplicaciones. Por su parte, el administrador de clúster es el responsable de planificar los trabajos en el clúster. Esta herramienta proporciona un aislamiento eficiente de los recursos y el intercambio a través de aplicaciones distribuidas o \textit{frameworks}.
-
-\begin{figure}[H]
-\image{images/figures/apachemesos.png}
-\caption{Abstracción de nodos en Apache Mesos.\label{fig:figure_placement_example}}
-\end{figure}
-
-En la elaboración de este proyecto se utilizará Kubernetes, descrito a continuación.	
+\subsection{Fleet}
 
 \subsection{Kubernetes}
 
@@ -326,6 +315,25 @@ El nodo \textit{Worker} o \textit{Minion} es la única máquina virtual donde se
 \image{images/figures/kubernetesarchitecture.png}
 \caption{Arquitectura Kubernetes.\label{fig:figure_placement_example}}
 \end{figure}
+
+\subsection{Otros}
+
+Docker Swarm es la solución de orquestación nativa de Docker. Con su uso se administra el clúster como sola entidad en lugar de administrar nodos Docker individuales. 
+
+Esta herramienta tiene un planificador integrado que decide la ubicación de los contenedores en el clúster y utiliza restricciones y afinidades específicas del usuario para decidir esa ubicación. En su arquitectura existe un maestro que se encarga de la planificación de contenedores Docker basado en el algoritmo planificador, restricciones y afinidades. Para proporcionar alta disponibilidad se pueden ejecutar múltiples maestros en paralelo, distribuyendo las cargas de trabajo uniformemente. Por su parte, los agentes se ejecutan en cada nodo y se comunican con el maestro a partir del descubrimiento, necesario porque se ejecutan en diferentes nodos y no son iniciados por él.
+
+\begin{figure}[H]
+\image{images/figures/dockermasterandagent.png}
+\caption{Composición de maestros y agentes en Docker Swarm.\label{fig:figure_placement_example}}
+\end{figure}
+	
+Apache Mesos combina el sistema operativo con el administrador de clústeres. El sistema operativo de clústeres representa los recursos de múltiples computadores dispares en un único recurso, sobre el que se programan las aplicaciones. Por su parte, el administrador de clúster es el responsable de planificar los trabajos en el clúster. Esta herramienta proporciona un aislamiento eficiente de los recursos y el intercambio a través de aplicaciones distribuidas o \textit{frameworks}.
+
+\begin{figure}[H]
+\image{images/figures/apachemesos.png}
+\caption{Abstracción de nodos en Apache Mesos.\label{fig:figure_placement_example}}
+\end{figure}
+
 
 \section{Proveedores de Infraestructura como Servicio}
 
