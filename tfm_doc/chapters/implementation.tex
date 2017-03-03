@@ -866,7 +866,7 @@ $ vagrant reload --provision
 
 La primera unidad de servicio a crear será el volumen Docker compartido entre todos los contenedores. Para ello se crea, localmente, la ruta \kode{etc/sysctl/volume-public.service}. En este fichero se configura el servicio \kode{volume-public.service}. 
 
-El contenido del mismo especifica que comenzará después de que lo haga el servicio Docker, el cual es requerido para el correcto funcionamiento. El servicio empezará directamente sin tiempo de espera e inspeccionará el contenido compartido con el contenedor some-postgres, en relevancia a la base de datos para leerlos. Una vez hecho se creará el volumen, añadiendo un enlace simbólico al mismo para todos los usuarios de la máquina. 
+El contenido del mismo especifica que comenzará después de que lo haga el servicio Docker, el cual es requerido para el correcto funcionamiento. El servicio empezará directamente sin tiempo de espera. Una vez hecho se creará el volumen, añadiendo un enlace simbólico al mismo para todos los usuarios de la máquina. 
 
 \begin{codelisting}
 \label{code:volume-public.service}
@@ -881,7 +881,6 @@ El contenido del mismo especifica que comenzará después de que lo haga el serv
 
 [Service] 
   TimeoutStartSec=0 
-  ExecStartPre=-/usr/bin/docker volume inspect some-postgres
   ExecStart=/usr/bin/docker volume create --name volume-public
 
 [Install] 
@@ -1209,7 +1208,6 @@ coreos:
 
       [Service] 
       TimeoutStartSec=0 
-      ExecStartPre=-/usr/bin/docker volume inspect some-postgres
       ExecStart=/usr/bin/docker volume create --name volume-public
 
       [Install] 
