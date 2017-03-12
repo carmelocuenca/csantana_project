@@ -1335,7 +1335,9 @@ coreos:
   \end{code}
 \end{codelisting}
 
-Como se puede apreciar, ya no es necesaría la copia de los ficheros de las unidades del entorno local a la máquina CoreOS. Ahora simplemente se hace uso de estos ficheros y de los correspondientes a \kode{/fleet\_machines.env} y \kode{nginx.conf} desde el directorio compartido. Por lo tanto ya no es necesaria la línea de provisión del script en el fichero \kode{Vagranfile}
+Como ya no es necesario el almacenamiento NFS compartido ya no hay que realizar la copia de los ficheros de las unidades del entorno local a la máquina CoreOS. Por lo tanto ya no es necesaria la línea de provisión del script en el fichero \kode{Vagranfile}.
+
+El fichero user-data es validado con la utilidad \textit{Config Validator}\footnotettt{Config Validator}{Config Validator}. 
 
 Si se inicia el despliegue manual:
 
