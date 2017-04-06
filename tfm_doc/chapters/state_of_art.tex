@@ -33,7 +33,7 @@ Sin embargo, hay que tener en cuenta que el sistema operativo único presenta un
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/figures/containervsmv.png}
+\includegraphics[width=0.7\textwidth]{images/figures/containervsmv.png}
 \caption{Diferencia entre máquina virtual y contenedor.\label{fig:figure_placement_example}}
 \end{figure}
 
@@ -57,7 +57,7 @@ Los pasos de configuración se especifican en un fichero de compilación, llamad
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/figures/dockerarchitecture.png}
+\includegraphics[width=0.7\textwidth]{images/figures/dockerarchitecture.png}
 \caption{Arquitectura Docker.\label{fig:figure_placement_example}}
 \end{figure}
 
@@ -75,7 +75,7 @@ Otra tecnología de contenedores es rkt, software de código abierto del equipo 
 
 Este es un gestor de contenedores de última generación para clústeres de Linux. Está diseñado para la seguridad, simplicidad y componibilidad. Así, rkt descubre, verifica, extrae y ejecuta contenedores aislados de aplicaciones que pueden ser conetables. El mismo contenedor puede ser ejecutado con diversos grados de protección, desde el espacio de nombres y el aislamiento de capacidades ligeras y de nivel de sistema operativo hasta la virtualización hadware a nivel de máquina virtual pesada.
 
-La interfaz principal de rkt comprende un solo ejecutable, en lugar de un demonio. Este diseño es aprovechado para integrarse fácilmente con los sistemas de inicio existentes, como systemd, y con entornos de orquestación de clúster avanzados, como Kubernetes. De este modo, se implementa un formato de contenedor moderno, abierto y estándar, el \textit{App Container} (appc)\footnotettt{App Container}{https://coreos.com/rkt/docs/latest/app-container.html}, pero también se puede ejecutar otras imágenes de contenedores, como las creadas con Docker.
+La interfaz principal de rkt comprende un solo ejecutable, en lugar de un demonio. Este diseño es aprovechado para integrarse fácilmente con los sistemas de inicio existentes y con entornos de orquestación de clúster avanzados, como Kubernetes. De este modo, se implementa un formato de contenedor moderno, abierto y estándar, el \textit{App Container} (appc)\footnotettt{App Container}{https://coreos.com/rkt/docs/latest/app-container.html}, pero también se puede ejecutar otras imágenes de contenedores, como las creadas con Docker.
 
 \section{Sistemas operativos orientados a contenedores}
 
@@ -109,7 +109,7 @@ El sistema de distribución de actualizaciones de CoreOS se basa en el proyecto 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{images/figures/coreosarchitecture.png}
+\includegraphics[width=0.8\textwidth]{images/figures/coreosarchitecture.png}
 \caption{Arquitectura CoreOS.\label{fig:figure_placement_example}}
 \end{figure}
 
@@ -156,7 +156,7 @@ La interfaz de línea de comandos (\textit{CLI}) systemctl puede utilizarse para
 
 Algunos tipos de unidad systemd son \textit{service}, \textit{socket}, \textit{target}, \textit{mount} y \textit{timer}. El tipo más común es \textit{service} y se utiliza para definir un servicio con sus dependencias. El tipo \textit{socket} se utiliza para exponer los servicios al mundo externo. Por ejemplo, \textit{docker.service} expone la conectividad externa al motor Docker a través de \textit{docker.socket}. Los \textit{sockets} también se pueden utilizar para exportar registros a máquinas externas. Por su parte, la unidad \textit{target} se utiliza para agrupar unidades relacionadas para que puedan ser iniciadas conjuntamente y la unidad \textit{mount} para montar discos en el sistema de archivos. Por último, las unidades timer se inician periódicamente en función del intervalo especificado.
 
-Una unidad systemd puede ser creada a partir de una plantilla y ésta ser utilizada para instanciar varias unidades systemd.
+Una unidad systemd puede ser creada a partir de una plantilla y ésta ser utilizada para instanciar varias unidades.
 
 También existe el concepto de unidades sueltas, útiles para cambiar las propiedades de la unidad del sistema en tiempo de ejecución. Así como las unidades de red.
 
@@ -335,7 +335,8 @@ El nodo \textit{Worker} o \textit{Minion} es la única máquina virtual donde se
 \end{itemize}
 
 \begin{figure}[H]
-\image{images/figures/kubernetesarchitecture.png}
+\centering
+\includegraphics[width=0.8\textwidth]{images/figures/kubernetesarchitecture.png}
 \caption{Arquitectura Kubernetes.\label{fig:figure_placement_example}}
 \end{figure}
 
@@ -395,7 +396,7 @@ Entre sus características más destacadas está que sus servidores en la nube, 
 
 En la ejecución de este proyecto se aplicará el uso de Amazon Web Services como proveedor de Infraestructura como Servicio, detallado a continuación.
 
-\subsection{Amazon Web Services INCOMPLETO DE MOMENTO}
+\subsection{Amazon Web Services}
 
 Amazon Web Services (AWS) es una plataforma de servicios de computación en la nube ofrecida a través de Internet por Amazon.com y lanzada en 2006.
 
@@ -411,7 +412,17 @@ Este proveedor dispone de una capa gratuita diseñada para permitir obtener expe
 
 Ofrece una gran cantidad de recursos y servicios, innovando constantemente y creando nuevos. Concretamente, en la elaboración de este proyecto se utilizarán los servicios:
 
-PENDIENTE: MIENTRAS VAYA AVANZANDO LISTAR COMO SUBAPARTADOS LOS SERVICIOS A USAR... EC2, EC2 Container Service, S3, RDS...
+\subsubsection{AWS Identity and Access Management (IAM)}
+
+AWS Identity and Access Management (IAM)\footnotettt{IAM}{http://docs.aws.amazon.com/es\_es/IAM/latest/UserGuide/introduction.html} es un servicio web gratuito que permite controlar de forma segura el acceso a los recursos de AWS por parte de los usuarios. Las dos principales características a usar que ofrece son el acceso compartido a la cuenta AWS concediendo permisos a otros usuarios para administrar y utilizar los recursos sin tener que compartir la clave de acceso y la concesión de permisos diferentes a distintos usuarios para diferentes recursos.
+
+\subsubsection{Amazon Elastic Compute Cloud (Amazon EC2)}
+
+Amazon Elastic Compute Cloud (Amazon EC2)\footnotettt{Amazon EC2}{http://docs.aws.amazon.com/es\_es/AWSEC2/latest/UserGuide/concepts.html} proporciona la capacidad de computación escalable en la nube de AWS. Su uso elimina la necesidad de invertir en hardware por adelantado, por lo que se pueden desarrollar e implementar aplicaciones más rápido. Se pueden desplegar tantos servidores virtuales como se necesite, configurar seguridad y redes y administrar el almacenamiento. Además, este servicio permite escalar o reducir los requisitos bajo demanda o picos de popularidad, reduciendo la necesidad de predecir el tráfico. La principal característica es el entorno virtual de computación o instancia. Además, ofrece otras funcionalidades como plantillas preconfiguradas, varios tipos de instancias o configuraciones de CPU, memoria, almacenamiento y capacidad de red, inicio de sesión seguro utilizando pares de claves, volúmenes de almacenamiento de datos temporales que se eliminan al detener o finalizar la instancia, múltiples ubicaciones físicas para los recursos, conocidos como regiones y zonas de disponibilidad y un firewall que permite especificar los protocolos, puertos y rangos de IP usando grupos de seguridad.
+
+\subsubsection{Amazon Virtual Private Cloud (Amazon VPC)}
+
+Amazon Virtual Private Cloud (Amazon VPC)\footnotettt{Amazon VPC}{http://docs.aws.amazon.com/es\_es/AmazonVPC/latest/UserGuide/VPC\_Introduction.html} permite lanzar los servicios AWS en una red virtual definida. Una nube virtual privada (VPC) es una red virtual dedicada a la cuenta de AWS. Está lógicamente aislada de otras redes virtuales en la nube AWS y permite iniciar los recursos en ella. Ésta es configurable, pudiendo seleccionar un rango de direcciones IP, crear subredes y configurar tablas de rutas, pasarelas de red y configuraciones de seguridad. Otro elemento a usar es la subred que es un rango de direcciones IP en de la VPC. Para proteger los recursos de AWS en cada subred se utilizan, entre otros, los grupos de seguridad.
 
 \section{Otras herramientas tecnológicas}
 
@@ -427,15 +438,13 @@ Vagrant\footnotettt{Vagrant}{https://www.vagrantup.com} es una herramienta de c�
 \caption{Vagrant.\label{fig:figure_placement_example}}
 \end{figure}
 
-Vagrant fue creada en enero de 2010 por Mitchell Hashimoto como un proyecto personal. Su primera versión fue lanzada en marzo de 2010. La primera versión estable, Vagrant 1.0, lo hizo en marzo de 2012 y, en noviembre de ese mismo año, Mitchell Hashimoto creó la organización HashiCorp para respaldar el desarrollo de Vagrant a tiempo completo, contando con la contribución de una fuerte comunidad de desarrolladores.
+Vagrant fue creada en enero de 2010 por Mitchell Hashimoto como un proyecto personal. Su primera versión fue lanzada en marzo de 2010. La primera versión estable, Vagrant 1.0, lo hizo en marzo de 2012 y, en noviembre de ese mismo año, Mitchell Hashimoto creó la organización HashiCorp para respaldar el desarrollo de Vagrant a tiempo completo, contando con la contribución de una fuerte comunidad de desarrolladores. Vagrant está escrito en lenguaje Ruby pero puede ser utilizado en proyectos escritos en otros lenguajes de programación.
 
-La idea central detrás de su creación reside en el hecho de que el mantenimiento del entorno de desarrollo se hace cada vez más difícil a medida que el proyecto crece. De esta manera, Vagrant proporciona ambientes de trabajo menos complejos de configurar, reproducibles y portátiles. Estos ambientes están construidos sobre tecnología estándar y controlados por un solo flujo de trabajo consistente, lo que ayuda a maximizar la flexibilidad y productividad de los desarrolladores.
+La idea central detrás de su creación reside en el hecho de que el mantenimiento del entorno de desarrollo se hace cada vez más difícil a medida que el proyecto crece. De esta manera, Vagrant proporciona ambientes de trabajo menos complejos de configurar, reproducibles y portátiles.
 
-En un primer momento Vagrant estaba vinculado a VirtualBox\footnotettt{VirtualBox}{https://www.virtualbox.org}, pero la versión 1.1 ya añadía soporte para otros programas de virtualización y entornos de servidor. Vagrant está escrito en lenguaje Ruby pero puede ser utilizado en proyectos escritos en otros lenguajes de programación como PHP, Python, Java, C\# y Java Script.
+Esta herramienta utiliza aprovisionadores y proveedores como bloques de construcción para administrar los entornos de desarrollo. Los aprovisionadores son herramientas que permiten a los usuarios personalizar la configuración de entornos virtuales, mientras que los proveedores son los servicios que Vagrant utiliza para lanzar y crear los propios entornos virtuales. Ejemplos de proveedores son VirtualBox\footnotettt{VirtualBox}{https://www.virtualbox.org}, VMWare\footnotettt{VMWare}{https://www.vmware.com/es.html}, AWS, Hyper-V\footnotettt{Hyper-V}{https://technet.microsoft.com/en-us/library/mt169373(v=ws.11).aspx}, Digital Ocean y Docker. Ejemplos de aprovisionadores son Puppet\footnotettt{Puppet}{https://puppet.com}, Chef\footnotettt{Chef}{https://www.chef.io/chef}, Ansible\footnotettt{Ansible}{https://www.ansible.com} y Shell\footnotettt{Shell}{https://www.vagrantup.com/docs/provisioning/shell.html}.
 
-Esta herramienta utiliza aprovisionadores y proveedores como bloques de construcción para administrar los entornos de desarrollo. Los aprovisionadores son herramientas que permiten a los usuarios personalizar la configuración de entornos virtuales, mientras que los proveedores son los servicios que Vagrant utiliza para lanzar y crear los propios entornos virtuales. Ejemplos de proveedores son VirtualBox, VMWare\footnotettt{VMWare}{https://www.vmware.com/es.html}, AWS, Hyper-V\footnotettt{Hyper-V}{https://technet.microsoft.com/en-us/library/mt169373(v=ws.11).aspx}, Digital Ocean y Docker. Ejemplos de aprovisionadores son Puppet\footnotettt{Puppet}{https://puppet.com}, Chef\footnotettt{Chef}{https://www.chef.io/chef}, Ansible\footnotettt{Ansible}{https://www.ansible.com} y Shell\footnotettt{Shell}{https://www.vagrantup.com/docs/provisioning/shell.html}.
-
-Para su puesta en marcha se utiliza un fichero de configuración denominado \kode{Vagrantfile}. Su función principal es describir el tipo de máquina requerida para un proyecto, cómo configurarla y proveerlas. Por otro lado, existen cajas o \textit{boxes} que son el formato de paquetes para los ambientes Vagrant. Una caja puede ser utilizada por cualquier persona en cualquier plataforma que soporte Vagrant para crear un entorno de trabajo idéntico.
+Para su puesta en marcha se utiliza un fichero de configuración denominado \kode{Vagrantfile}. Su función principal es describir el tipo de máquina requerida para un proyecto, cómo configurarla y proveerla. Por otro lado, existen cajas o \textit{boxes} que son el formato de paquetes para los ambientes Vagrant. Una caja puede ser utilizada por cualquier persona en cualquier plataforma que soporte Vagrant para crear un entorno de trabajo idéntico.
 
 \subsection{VirtualBox}
 
@@ -479,8 +488,6 @@ Además, se puede contribuir a mejorar el software de otros usuarios, a partir d
 
 \end{itemize}
 
-
-
 \subsection{Travis CI}
 
 Travis CI\footnotettt{Travis CI}{https://docs.travis-ci.com} es una compañia y sistema distribuido que ofrece servicios de Integración y Despliegue continuos (CI/CD) gratuitos o de pago.
@@ -494,4 +501,8 @@ Travis CI\footnotettt{Travis CI}{https://docs.travis-ci.com} es una compañia y 
 El servicio gratuito permite conectar el repositorio de GitHub público para poder regenerar el proyecto tras cada cambio. Así, esta herramienta fiscaliza el directorio de GitHub de manera que cuando detecta que se ha producido un cambio en él utiliza el fichero de configuración \kode{.travis.yml} para realizar las acciones descritas en el mismo. Este fichero contiene las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática. Ejemplos de dichas acciones son la comprobación de que los tests pasen satisfactoriamente, construir una nueva imagen Docker y subirla al repositorio DockerHub.
 
 Entre los beneficios que aporta la integración continua están la reducción de riesgos y tiempo, la reducción de procesos manuales repetitivos, la obtención de una versión de software mediante un proceso conocido, confiable, probado, versionado y repetible y la mejora la visibilidad del estado del proyecto. Además, permite mantener la calidad de todo el sistema meduante la ejecución de todos los tests periódicamente, ayudando a identificar rápidamente problemas y a corregirlos antes de pasar a una versión en producción.
+
+\subsection{Softcover}
+
+Para la elaboración de la memoria se utiliza la gema Ruby Softcover\footnotettt{Softcover}{https://github.com/softcover/softcover} que es un sistema de composición de libros electrónicos para autores técnicos. Depende de otra gema, polytexnic\footnotettt{polytexnic}{https://github.com/skmetz/polytexnic}, para convertir la entrada de \textit{Markdown} o \textit{PolyTeX} a \textit{HTML} y \textit{LaTeX}, y de ahí a \textit{EPUB}, \textit{MOBI} y \textit{PDF}.
 
