@@ -1706,7 +1706,7 @@ $ sudo systemctl status flanneld
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/flanneld-aws-1.png}
-\caption{Comprobación de la red virtual para contenedores con 1 máquina virtual.\label{fig:figure_placement_example}}
+\caption{Comprobación de la red virtual - \kode{core01}.\label{fig:figure_placement_example}}
 \end{figure}
 
 Por último se comprueba desde la consola de comandos que se puede acceder al servicio correctamente con el comando \kode{curl}:
@@ -1714,7 +1714,7 @@ Por último se comprueba desde la consola de comandos que se puede acceder al se
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/curl-aws-1.png}
-\caption{Acceso al servicio por consola de comandos. 1 máquina virtual.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por consola de comandos - \kode{core01}.\label{fig:figure_placement_example}}
 \end{figure}
 
 Además, se utiliza la IP elástica para acceder a través del navegador web:
@@ -1722,14 +1722,14 @@ Además, se utiliza la IP elástica para acceder a través del navegador web:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/access-aws-1.png}
-\caption{Acceso al servicio por el navegador web. 1 máquina virtual.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por el navegador web - \kode{core01}.\label{fig:figure_placement_example}}
 \end{figure}
 
 Desde la consola de AWS se puede apreciar dicha instancia:
 
 \begin{figure}[H]
 \image{images/figures/aws-console-1.png}
-\caption{Consola AWS EC2 Instances. 1 máquina virtual.\label{fig:figure_placement_example}}
+\caption{Consola AWS EC2 Instances - \kode{core-01}.\label{fig:figure_placement_example}}
 \end{figure}
 
 Para eliminar la infraestructura desplegada, así como los recursos asociados a ella, se ejecuta lo siguiente:
@@ -1750,37 +1750,31 @@ A continuación se despliega esta infraestructura:
 $ vagrant up --provider=aws
 \end{code}
 
-Luego se accede a las instancias, desde diferentes terminales, donde X puede ser 1, 2 o 3:
+Ahora se prueba, desde el sistema anfitrión, que la salud del cluster es positiva en todas las máquinas:
 
 %= lang:bash
 \begin{code}
-$ vagrant ssh core-0X
-\end{code}
-
-Ahora se prueba que la salud del cluster es positiva, por ejemplo en la máquina virtual core-02:
-
-%= lang:bash
-\begin{code}
-$ etcdctl cluster-health
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'etcdctl cluster-health'; done
 \end{code}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/cluster-health-aws-3.png}
-\caption{Comprobación de la salud del cluster con 3 máquinas virtuales.\label{fig:figure_placement_example}}
+\caption{Comprobación de la salud del clúster en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
 \end{figure}
 
-Además, se comprueba que la red virtual que une a los contenedores mediante direcciones IP virtuales funciona correctamente:
+Además, se comprueba que la red virtual que une a los contenedores mediante direcciones IP virtuales funciona correctamente. En la siguiente imagen se puede apreciar, aunque el resultado del comando no devuelva colores, que el estado está activo y en ejecución:
 
 %= lang:bash
 \begin{code}
-$ sudo systemctl status flanneld
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'sudo systemctl flanneld \
+  | head -n16'; done
 \end{code}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/flanneld-aws-3.png}
-\caption{Comprobación de la red virtual para contenedores. 3 máquinas virtuales.\label{fig:figure_placement_example}}
+\caption{Comprobación de la red virtual en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
 \end{figure}
 
 Para probar que las máquinas virtuales tienen conexión con los contenedores de otras máquinas virtuales se obtiene, en primer lugar, la dirección IP del contenedor \kode{some-postgres} de la máquina virtual \kode{core-03}:
@@ -1804,27 +1798,45 @@ Luego se prueba que haya conexión desde la máquina virtual \kode{core-01}:
 \caption{Prueba de conexión a un contenedor de core-03 desde core-01.\label{fig:figure_placement_example}}
 \end{figure}
 
-Por último se comprueba desde la consola de comandos que se puede acceder al servicio correctamente con el comando \kode{curl}. Por ejemplo desde la máquina virtual core-02:
+Por último se comprueba desde la consola de comandos que se puede acceder al servicio correctamente con el comando \kode{curl}. 
+
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 \
+  | tail -n 15'; done
+\end{code}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/curl-aws-3.png}
-\caption{Acceso al servicio por consola de comandos. 3 máquinas virtuales.\label{fig:figure_placement_example}}
+\includegraphics[width=0.8\textwidth]{images/figures/curl-aws-3.png}
+\caption{Acceso al servicio por consola de comandos en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
 \end{figure}
 
-Además, se utiliza la IP elástica de la misma máquina para acceder a través del navegador web:
+Además, se utiliza la IP elástica de las instancias para acceder a través del navegador web:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/access-aws-3.png}
-\caption{Acceso al servicio por el navegador web.\label{fig:figure_placement_example}}
+\includegraphics[width=0.7\textwidth]{images/figures/nav-1.png}
+\caption{Acceso al servicio por el navegador web desde \kode{core-01}.\label{fig:figure_placement_example}}
 \end{figure}
 
-Desde la consola de AWS se pueden apreciar las 3 nuevas instancias respecto a la anterior que ha terminado:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/nav-2.png}
+\caption{Acceso al servicio por el navegador web desde \kode{core-02}.\label{fig:figure_placement_example}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/nav-3.png}
+\caption{Acceso al servicio por el navegador web desde \kode{core-03}.\label{fig:figure_placement_example}}
+\end{figure}
+
+Desde la consola de AWS se pueden apreciar las 3 instancias y algunas de sus características con las que se ha trabajado:
 
 \begin{figure}[H]
 \image{images/figures/aws-console-3.png}
-\caption{Consola AWS EC2 Instances. 3 máquinas virtuales.\label{fig:figure_placement_example}}
+\caption{Consola AWS EC2 Instances - \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
 \end{figure}
 
 \subsection{Cambio de las unidades systemd a fleetd}
