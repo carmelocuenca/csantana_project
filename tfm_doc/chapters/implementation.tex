@@ -15,9 +15,6 @@ La aplicación \kode{sample\_app\_rails\_4}, escrita en lenguaje Ruby\footnotett
 La arquitectura de Ruby on Rails que implementa la aplicación web tiene las siguientes características:
 \begin{itemize}
 \item Arquitectura Modelo-Vista-Controlador (MVC): Mejora la capacidad de mantenimiento, desacoplamiento y pruebas de la aplicación.
-\subitem-- Modelo: Lógica de negocio de la aplicación y reglas para manipular los datos. Representa la información en la base de datos y realiza las validaciones apropiadas.
-\subitem-- Vista: Representa la interfaz de usuario.
-\subitem-- Controlador: Responde a eventos e invoca perticiones al modelo cuando se hace una solicitud de información.
 \item Arquitectura \textit{Representational State Transfer} (REST) para servicios web.
 \item Soporta las principales bases de datos como MySQL\footnotettt{MySQL}{https://www.mysql.com}, Oracle\footnotettt{Oracle}{https://www.oracle.com/es/database/index.html} y PostgreSQL\footnotettt{PostgreSQL}{http://www.postgresql.org.es}, entre otras.
 \item Lenguaje \textit{scripting} del lado del servidor de código abierto.
@@ -901,7 +898,9 @@ Vagrant.configure("2") do |config|
       config.vm.box_version = $image_version
   end
   config.vm.provider :virtualbox do |vb, override|
-    override.vm.box_url = "https://storage.googleapis.com/%s.release.core-os.net/amd64-usr/%s/coreos_production_vagrant.json" % [$update_channel, $image_version]
+    override.vm.box_url = "https://storage.googleapis.com/%s.release.core-os.net/
+    amd64-usr/%s/coreos_production_vagrant.json" %
+    [$update_channel,$image_version]
     # On VirtualBox, we don't have guest additions or a functional vboxsf
     # in CoreOS, so tell Vagrant that so it can be smarter.
     vb.check_guest_additions = false
@@ -928,36 +927,46 @@ Vagrant.configure("2") do |config|
       end
       if $expose_docker_tcp
         config.vm.provider :virtualbox do |vb, override|
-          override.vm.network "forwarded_port", guest: 2375, host: ($expose_docker_tcp + i - 1), host_ip: "127.0.0.1", auto_correct: true
+          override.vm.network "forwarded_port", guest: 2375, host: 
+          ($expose_docker_tcp + i - 1), host_ip: "127.0.0.1", auto_correct: true
         end
       end
       config.vm.provider :virtualbox do |vb, override|
         $forwarded_ports.each do |guest, host|
-          override.vm.network "forwarded_port", guest: guest, host: host, auto_correct: true
+          override.vm.network "forwarded_port", guest: guest, host: host, 
+          auto_correct: true
         end
         vb.gui = vm_gui
         vb.memory = vm_memory
         vb.cpus = vm_cpus
-        vb.customize ["modifyvm", :id, "--cpuexecutioncap", "#{$vb_cpuexecutioncap}"]
+        vb.customize ["modifyvm", :id, "--cpuexecutioncap", 
+                      "#{$vb_cpuexecutioncap}"]
         ip = "172.17.8.#{i+100}"
         override.vm.network :private_network, ip: ip
       end
       # Shared storage configuration
       config.vm.provider :virtualbox do |vb, override|
-        # Uncomment below to enable NFS for sharing the host machine into the coreos-vagrant VM.
-        #override.vm.synced_folder ".", "/home/core/share", id: "core", :nfs => true, :mount_options => ['nolock,vers=3,udp']
+        # Uncomment below to enable NFS for sharing the host machine into the 
+        # coreos-vagrant VM.
+        #override.vm.synced_folder ".", "/home/core/share", id: "core", 
+        #:nfs => true, :mount_options => ['nolock,vers=3,udp']
         $shared_folders.each_with_index do |(host_folder, guest_folder), index|
-          override.vm.synced_folder host_folder.to_s, guest_folder.to_s, id: "core-share%02d" % index, nfs: true, mount_options: ['nolock,vers=3,udp']
+          override.vm.synced_folder host_folder.to_s, guest_folder.to_s, 
+          id: "core-share%02d" % index, nfs: true, 
+          mount_options: ['nolock,vers=3,udp']
         end
         if $share_home
-          override.vm.synced_folder ENV['HOME'], ENV['HOME'], id: "home", :nfs => true, :mount_options => ['nolock,vers=3,udp']
+          override.vm.synced_folder ENV['HOME'], ENV['HOME'], id: "home", 
+          :nfs => true, :mount_options => ['nolock,vers=3,udp']
         end
       end
       # Copy of the cloud-config to the machine
       if File.exist?(CLOUD_CONFIG_PATH) && ARGV[0].eql?('up')
         config.vm.provider :virtualbox do |vb, override|
-          override.vm.provision :file, :source => "#{CLOUD_CONFIG_PATH}", :destination => "/tmp/vagrantfile-user-data"
-          override.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
+          override.vm.provision :file, :source => "#{CLOUD_CONFIG_PATH}", 
+          :destination => "/tmp/vagrantfile-user-data"
+          override.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data \
+          /var/lib/coreos-vagrant/", :privileged => true
         end
       end
     end
@@ -1854,7 +1863,7 @@ Desde la consola de AWS se pueden apreciar las 3 instancias y algunas de sus car
 
 \subsection{Cambio de las unidades systemd a fleet}
 
-Hasta ahora, las unidades de servicio se han configurado globalmente, en la sección propia de systemd. Con la intención de mejorar la distribución de la infraestructura se va a pasar a tratar a las unidades de servicio \kode{volume-public.service}, \kode{postgresql.service}, \kode{app-job.service}, \kode{app-task.service} y \kode{nginx.service} como unidades fleet. Para ello es necesario que los servicios sean especificados como ficheros a escribir en el sistema, concretamente se van a situar en la ruta \kode{/home/core/}. La sección \kode{[Install]} se cambia por la propia a fleet, \kode{X-Fleet}. Aquí se especificará el parámetro \kode{Global} que programa la unidad en todos los agentes del clúster de forma que desde cada una de las instancias que lo componen se puedan ver todos los servicios que hay en todas ellas. Luego se crean los servicios \kode{fleet-volume-public.service}, \kode{fleet-postgresql.service}, \kode{fleet-app-job.service}, \kode{fleet-app-task.service} y \kode{fleet-nginx.service} como unidades systemd que se van a encargar de indicar a fleet que ha de empezar los servicios pasados como ficheros. 
+Hasta ahora las unidades de servicio se han configurado globalmente en la sección propia de systemd. Con la intención de mejorar la distribución de la infraestructura se va a pasar a tratar a las unidades de servicio \kode{volume-public.service}, \kode{postgresql.service}, \kode{app-job.service}, \kode{app-task.service} y \kode{nginx.service} como unidades fleet. Para ello es necesario que los servicios sean especificados como ficheros a escribir en el sistema, concretamente se van a situar en la ruta \kode{/home/core/}. La sección \kode{[Install]} se cambia por la propia a fleet, \kode{X-Fleet}. Aquí se especificará el parámetro \kode{Global} que programa la unidad en todos los agentes del clúster de forma que desde cada una de las instancias que lo componen se puedan ver todos los servicios que hay en todas ellas. Luego se crean los servicios \kode{fleet-volume-public.service}, \kode{fleet-postgresql.service}, \kode{fleet-app-job.service}, \kode{fleet-app-task.service} y \kode{fleet-nginx.service} como unidades systemd que se van a encargar de indicar a fleet que ha de empezar los servicios pasados como ficheros. 
 
 De esta manera, continuando con el clúster de 3 instancias, se cambia el fichero \kode{user-data.sampleapp-aws} por lo siguiente:
 
@@ -2091,7 +2100,7 @@ $ vagrant ssh core-01
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/fleetctl-list-units.png}
+\includegraphics[width=0.8\textwidth]{images/figures/fleetctl-list-units.png}
 \caption{Listado de unidades fleet en cada una de las máquinas.\label{fig:figure_placement_example}}
 \end{figure}
 
@@ -2107,9 +2116,258 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 \
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/curl-fleet.png}
+\includegraphics[width=0.8\textwidth]{images/figures/curl-fleet.png}
 \caption{Acceso al servicio por consola de comandos en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
 \end{figure}
+
+\subsection{Configuración DNS usando SkyDNS}
+
+Con el objetivo de aislar la base de datos en una sola máquina se va a hacer uso de un servidor de sistema de nombres de dominio (DNS). Este servidor es necesario puesto que los contenedores \kode{app-job}, encargado de crear, migrar y poblar la base de datos, y \kode{app-task}, el propio servicio web, necesitan acceder al contenedor \kode{some-postgres}. Este contenedor, al no estar alojado en la misma máquina, tendrá que ser registrado en el servidor DNS para que pueda ser descubierto desde las otras máquinas. Así, los contenedor \kode{app-job} y \kode{app-task} resolverán la base de datos mediante dicho servidor DNS, que tendrá presencia en todas las máquinas como un nuevo contenedor, llamado \kode{skydns}. El servidor DNS a usar es SkyDNS, servicio distribuido para el anuncio y el descubrimiento de servicios construidos sobre etcd. De está manera crea registros en etcd y los lee desde el mismo sitio. Se trata de un proyecto de código abierto que puede ser encontrado en GitHub, bajo el repositorio \kode{skynetservices/skydns}\footnotettt{SkyDNS}{https://github.com/skynetservices/skydns}.
+
+Así, el primer paso consistirá en la división de la infraestructura de forma que los contenedores \kode{volume-public}, \kode{app-job}, \kode{app-task} y \kode{some-ningx} sean creados en la máquina \kode{core-01}. Por otro lado, el contenedor \kode{some-postgres} será creado en la máquina \kode{core-02}. Esto se consigue usando la opción \textit{metadata} presente en las unidades fleet. Para especificarlo es necesario añadir al fichero \kode{Vagrantfile} un metadato diferente para cada una de las máquinas, de manera que \kode{core-01} reciba \textit{compute=web} y \kode{core-02} {compute=db}. Esto ha de ser añadido bajo la carga de cada una de las líneas que contiene el fichero \kode{user-data}, en el momento en que detecta la sección de configuración fleet, bajo coreos.
+
+\begin{codelisting}
+\label{code:vagrantfile2}
+\codecaption{Fichero \kode{Vagrantfile}}
+%= lang:ruby
+\begin{code}
+.
+data = YAML.load(IO.readlines(CLOUD_CONFIG_PATH)[1..-1].join)
+if data['coreos'].key? 'fleet' and i==1
+  data['coreos']['fleet']['metadata'] = 'compute=web'
+end
+if data['coreos'].key? 'fleet' and i==2
+ data['coreos']['fleet']['metadata'] = 'compute=db'
+end
+.
+\end{code}
+\end{codelisting}
+
+Ahora será necesario añadir el metadato a los ficheros de las unidades de servicio pertenecientes a los contenedores nombrados. Para la máquina \kode{core-01} el parámetro \textit{MachineMetadata=compute=web} y en el fichero correspondiente a la base de datos el parámetro \textit{MachineMetadata=compute=db}, en la máquina \kode{core-02}. Ambos en la sección \textit{[X-Fleet]}.
+
+Lo siguiente será crear el contenedor que se corresponde con el servidor DNS, presente en todas las máquinas. Este último hecho es posible no añadiendo ningún metadato en la sección \textit{[X-Fleet]}. Para ello se escribe un nuevo fichero llamado \kode{/home/core/skydns.service} antes del fichero \kode{/home/core/volumen-public.service}. Además se le indica que será iniciado después de docker y etcd2. Luego se procede de la misma manera que con las otras unidades de servicio. Antes de comenzar el servicio borrará el contenedor si existe previamente y luego descargará la imagen desde DockerHub. Antes de empezar el servicio se establece la configuración de SkyDNS de forma que se especifica la dirección IP y puerto en la que debe escuchar, que será la local a la máquina por el puerto 53: \kode{0.0.0.0:53}. También se establece el dominio para el que es autoritario, escogiéndose \kode{sampleapp.local.}, y el tiempo de vida (TTL) de las respuestas a 30 segundos. A la hora de comenzar el servicio restará indicarle que las máquinas etcd se comunican para los clientes en la dirección IP privada en uso y puerto 2379. Como se trata de una unidad fleet, será necesario añadir el servicio global \kode{fleet-skydns.service} antes de \kode{fleet-volume-public.service} para comenzar el servicio. Así habrá que añadir lo siguiente a \kode{user-data.sampleapp.aws}.
+
+\begin{codelisting}
+\label{code:user-data-skydns}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/home/core/skydns.service"
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=SkyDNS
+      After=docker.service etcd2.service
+      Requires=docker.service etcd2.service
+
+      [Service]
+      Restart=always
+      TimeoutStartSec=0
+      ExecStartPre=-/usr/bin/docker rm -f skydns
+      ExecStartPre=/usr/bin/docker pull skynetservices/skydns
+      ExecStartPre=/usr/bin/etcdctl set /skydns/config \
+        '{"dns_addr":"0.0.0.0:53", "domain": "sampleapp.local.", "ttl":30}'
+      ExecStart=/usr/bin/docker run --rm --name skydns \
+        -e ETCD_MACHINES="http://$private_ipv4:2379" skynetservices/skydns
+      ExecStop=-/usr/bin/docker stop skydns
+
+      [X-Fleet]
+      Global=true
+.
+coreos:
+.
+  units:
+  .
+  - name: fleet-skydns.service
+    command: start
+    content: |
+      [Unit]
+      Description=Start skydns.service using fleet
+
+      [Service]
+      ExecStart=/usr/bin/fleetctl start /home/core/skydns.service
+.
+\end{code}
+\end{codelisting}
+
+Como se dijo inicialmente, este servicio funciona mediante registros y lecturas. De esta manera, al fichero \kode{/home/core/postgresql.service} hay que añadirle el registro de la dirección IP del contenedor some-postgres para que pueda ser encontrado por los otros contenedores, desde las otras máquinas. Este registro ha de ser añadido después de que el contenedor esté en ejecución, por lo que se especificará como \textit{ExecStartPost} y se llevará a cabo una espera hasta que se cumpla tal condición. Los contenedores \kode{app-job} y \kode{app-task} necesitan resolverlo como \textit{db} que es el nombre escogido como adaptador de la base de datos. Sin embargo, \kode{app-job} también resuelve por \textit{some-postgres}, puesto que antes de comenzar sus tareas espera a que dicho contenedor esté activo en el puerto 5432. Teniendo en cuenta estas condiciones se realizan dos registros, el primero tipo nombre canónico (CNAME) de \textit{some-postgres.sampleapp.local.} a \textit{db.sampleapp.local.} y el segundo tipo dirección IP de \textit{db.sampleapp.local.} en dirección IP perteneciente al contenedor \kode{some-postgres}, indicándole que será accesible por el puerto 5432.
+
+\begin{codelisting}
+\label{code:user-data-skydns-postgresql}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/home/core/postgresql.service"
+    .
+      [Service]
+      .
+      ExecStartPost=/bin/bash -c 'while ! \
+        [ $(/usr/bin/docker inspect -f ="{{.State.Running}}" some-postgres) \
+        == "=true" ]; do sleep 1; done; \
+        /usr/bin/etcdctl set /skydns/local/sampleapp/some-postgres \
+        "{ \\"host\\": \\"db.sampleapp.local.\\"}" ; \
+        /usr/bin/etcdctl set /skydns/local/sampleapp/db \
+        "{ \\"host\\": \\"$(/usr/bin/docker inspect -f \
+        "{{ .NetworkSettings.IPAddress }}" some-postgres)\\" , \\"port\\":5432}"'
+.
+\end{code}
+\end{codelisting}
+
+Referente a los contenedores \kode{app-job} y \kode{app-task} habrá que eliminar la opción \textit{--link} y utilizar las opciones \textit{--dns} que apuntará a la dirección IP del contenedor \kode{skydns} y \textit{--dns-search} donde se especifica el dominio trabajado \textit{sampleapp.local} para poder resolver por \textit{db} y \textit{some-postgres} sin especificar el dominio. Dichas modificaciones dejan la sección \textit{ExecStart} de ambas unidades de servicio de la siguiente forma:
+
+\begin{codelisting}
+\label{code:user-data-skydns-app}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/home/core/app-job.service"
+    .
+      [Service]
+      .
+      ExecStart=/bin/bash -c 'usr/bin/docker run --rm --name app-job \
+      -v "volume-public:/usr/src/app/public" --entrypoint "/setup.sh" \
+      -e "POSTGRES_USER=${POSTGRES_USER}" \
+      -e "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" \
+      -w "/usr/src/app" --dns $(/usr/bin/docker inspect \
+      -f "{{ .NetworkSettings.IPAddress }}" skydns) \
+      --dns-search "sampleapp.local" carolina/sample_app_rails_4_image:latest'
+      .
+  - path: "/home/core/app-task.service"
+    .
+      [Service]
+      .
+      ExecStart=/bin/bash -c 'usr/bin/docker run --rm --name app-task \
+      -e "POSTGRES_USER=${POSTGRES_USER}" \
+      -e "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" \
+      -w "/usr/src/app" -v "volume-public:/usr/src/app/public" \
+      --dns $(/usr/bin/docker inspect \
+      -f "{{ .NetworkSettings.IPAddress }}" skydns) \
+      --dns-search "sampleapp.local" carolina/sample_app_rails_4_image:latest \
+      /bin/bash \ -c "cp config/database.yml.postgresql config/database.yml && \
+      puma -p 9292"'
+      .
+\end{code}
+\end{codelisting}
+
+Además habrá que quitar de las secciones \textit{After} y \textit{Requires} el servicio \kode{postgresql.service} en todos los servicios. Así como añadir \kode{skydns.service} antes de \kode{volume-public.service} en todas las unidades de servicio.
+
+A continuación se desplega la infraestructura para poder realizar pruebas de funcionamiento:
+
+%= lang:bash
+\begin{code}
+$ vagrant up --provider=aws
+\end{code}
+
+En primer lugar se comprueba que el clúster sea saludable, contemplado por todas las máquinas:
+
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'etcdctl cluster-health'; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-health.png}
+\caption{Salud del clúster contemplado por las 3 máquinas.\label{fig:figure_placement_example}}
+\end{figure}
+
+Luego se listan las máquinas y se comprueba que han recibido el metadato pertinente:
+
+%= lang:bash
+\begin{code}
+for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-machines'; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-machines.png}
+\caption{Información de las máquinas contemplado por las 3 instancias.\label{fig:figure_placement_example}}
+\end{figure}
+
+También se comprueba que las unidades de servicio se han creado donde se indicó:
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-units'; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-units.png}
+\caption{Información de las unidades contemplado por las 3 máquinas.\label{fig:figure_placement_example}}
+\end{figure}
+
+Se comprueba que los registros se hayan establecido correctamente:
+
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do vagrant ssh core-0$i -c '/usr/bin/etcdctl get \
+  /skydns/local/sampleapp/db; \
+  /usr/bin/etcdctl get /skydns/local/sampleapp/some-postgres '; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-gets.png}
+\caption{Lectura de los registros en SkyDNS contemplado por las 3 máquinas.\label{fig:figure_placement_example}}
+\end{figure}
+
+La máquina \kode{core-01} resuelve tanto \textit{db} como \textit{some-postgres}:
+
+%= lang:bash
+\begin{code}
+docker exec -it app-task sh -c 'ping -c 1 db'
+docker exec -it app-task sh -c 'ping -c 1 some-postgres'
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-ping.png}
+\caption{Conexión a \textit{db} como \textit{some-postgres} desde \kode{app-task}.\label{fig:figure_placement_example}}
+\end{figure}
+
+De esta manera, los registros ingresados han quedado como se pretendía:
+
+%= lang:bash
+\begin{code}
+docker exec -it skydns sh -c 'dig @localhost db.sampleapp.local. A'
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-dig.png}
+\caption{Registros DNS desde el contenedor \kode{skydns}.\label{fig:figure_placement_example}}
+\end{figure}
+
+Así, el servicio funciona correctamente en la máquina \kode{core-01}:
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 | \
+  tail -n 15'; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-curl.png}
+\caption{Conexión al servicio mediante consola desde \kode{core-01}.\label{fig:figure_placement_example}}
+\end{figure}
+
+Y mediante la web y la dirección IP elástica se ingresa con uno de los usuarios poblados en la base de datos, comprobando que sigue funcionando correctamente hasta este punto:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/figures/skydns-web.png}
+\caption{Inicio de sesión con uno de los usuarios mediante navegador web desde la dirección IP elástica de \kode{core-01}.\label{fig:figure_placement_example}}
+\end{figure}
+
 
 \subsection{Resultados}
 
