@@ -4,7 +4,7 @@ filename: tfm_doc
 title: Despliegue de una aplicación Ruby on Rails utilizando las tecnologías de virtualización Docker y CoreOS en la nube pública de Amazon Web Services
 subtitle: Change me
 description: Change me.
-author: Carolina Santana Martel
+author: 
 copyright: 2016
 uuid: e1512a64-aa58-4996-a9da-5209e8ba7c13
 pdf_preview_page_range: 1..30

@@ -1,5 +1,5 @@
 \chapter{Desarrollo}
-\label{cha:regulation}
+\label{cha:development}
 
 En esta sección se expone el análisis de la aplicación web Ruby on Rails, de 3 capas, utilizada para el desarrollo del proyecto. Además, se detallan las decisiones de diseño y desarrollo de cada una de las iteraciones a realizar a partir de la misma.
 
@@ -9,7 +9,7 @@ La aplicación \kode{sample\_app\_rails\_4}, escrita en lenguaje Ruby\footnotett
 
 \begin{figure}[H]
 \image{images/figures/sampleapp.png}
-\caption{Integración entre características y componentes de Ruby on Rails.\label{fig:figure_placement_example}}
+\caption{Integración entre características y componentes de Ruby on Rails.}
 \end{figure}
 
 La arquitectura de Ruby on Rails que implementa la aplicación web tiene las siguientes características:
@@ -40,7 +40,7 @@ Las características anteriormente descritas se distribuyen en los siguientes co
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/rubyonrails.png}
-\caption{Integración entre características y componentes de Ruby on Rails.\label{fig:figure_placement_example}}
+\caption{Integración entre características y componentes de Ruby on Rails.}
 \end{figure}
 
 Una vez vistas las características y capacidades, tanto de una aplicación Ruby on Rails genérica como de la aplicación en actual estudio, se decide elaborar un trabajo adicional sobre ella, aplicando una serie de cambios y adiciones para la consecusión de los objetivos propuestos, inicialmente.
@@ -81,7 +81,7 @@ Finalmente, se ejecutará el servidor \kode{puma} dentro del contenedor \kode{so
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/resultado1.png}
-\caption{Resultado de la Iteración 1 con el uso de Docker.\label{fig:figure_placement_example}}
+\caption{Resultado de la Iteración 1 con el uso de Docker.}
 \end{figure}
 
 A efectos de mantener la imagen de la aplicación remotamente se subirá al repositorio DockerHub con la etiqueta \kode{initial}.
@@ -323,7 +323,7 @@ COPY /setup.sh /
 
 La siguiente acción es la creación del contenedor \kode{some-postgres} con el servidor \kode{PostgreSQL}, a partir de la imagen \kode{postgres} indicada con \textit{\--d}. Para poder acceder a la base de datos es necesario pasarle las credenciales, con \textit{\--e}. 
 
-Con la intención de exportar un volumen compartido entre los contenedores \kode{app-task} y \kode{some-nginx} para que compartan el directorio \kode{/usr/src/app/public} se crea un volumen Docker llamado \kode{volume-public}.
+Con la intención de exportar un volumen compartido entre los contenedores \kode{app-task} y \kode{some-nginx} para que compartan el directorio \kode{/usr/src/app/public} y el directorio \kode{/var/lib/postgresql} con el contenedor \kode{some-postgres} se crea un volumen Docker llamado \kode{volume-public}.
 
 Ahora se crea el contenedor \textit{job} de la aplicación web, llamado \kode{app-job}, a partir de la imagen de ésta, \textit{\--d}, indicando como \textit{\---entrypoint} el script comentado, enlazando la base de datos de la misma con el contenedor \kode{some-postgres} a través del indicador \textit{\--link}. Además, se le pasan las variables de entorno necesarias para acceder a la base de datos, con \textit{\--e}. Por su parte, el indicador \textit{\--it} ofrece un terminal interactivo dentro del contedor y \textit{\--w} indica que se va a compartir el directorio inicial del proyecto local en el contenedor. El volumen creado se exporta mediante \textit{\--v}.
 
@@ -375,7 +375,7 @@ docker run --name some-postgres -e POSTGRES_USER=$POSTGRES_USER \
 docker volume create --name volume-public
 docker run -i --name app-job --entrypoint /setup.sh \
   -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
-  -w /usr/src/app -v volume-public:/usr/src/app/public \
+  -w /usr/src/app -v volume-public:/var/lib/postgresql \
   --link some-postgres:db sample_app_rails_4_image
 docker run -d -it --name app-task -e POSTGRES_USER=$POSTGRES_USER \
   -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -w /usr/src/app \
@@ -396,7 +396,7 @@ El resultado del script anterior crea los distintos elementos propuestos en el p
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/dockerimages.png}
-\caption{Imágenes docker mostradas con \kode{docker images}.\label{fig:figure_placement_example}}
+\caption{Imágenes docker mostradas con \kode{docker images}.}
 \end{figure}
 
 Y los contenedores Docker creados son:
@@ -404,7 +404,7 @@ Y los contenedores Docker creados son:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/dockerps.png}
-\caption{Contenedores docker mostrados con \kode{docker ps -a}.\label{fig:figure_placement_example}}
+\caption{Contenedores docker mostrados con \kode{docker ps -a}.}
 \end{figure}
 
 De esta manera, en el contenedor \kode{app-task} se encuentra en ejecución el servidor \kode{puma}, así que se puede comprobar desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080, mediante el comando \kode{curl http://localhost:8080}:
@@ -412,7 +412,7 @@ De esta manera, en el contenedor \kode{app-task} se encuentra en ejecución el s
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/curldocker.png}
-\caption{Volcado de ejecución \kode{curl http://localhost:8080}.\label{fig:figure_placement_example}}
+\caption{Volcado de ejecución \kode{curl http://localhost:8080}.}
 \end{figure}
 
 Así, a partir de ahora se podrá hacer el despliegue partiendo de la imagen local. Para poder hacerlo de forma automatizada se crea el fichero \kode{docker-microservices-deploy.sh}, con permiso \kode{chmod +x} y ejecutado como \kode{./docker-microservices.sh}, es el siguiente:
@@ -434,7 +434,7 @@ docker volume create --name volume-public
 docker run -i --name app-job --entrypoint /setup.sh \
   -e POSTGRES_USER=$POSTGRES_USER \
   -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -w /usr/src/app \
-  -v volume-public:/usr/src/app/public --link some-postgres:db \
+  -v volume-public:/var/lib/postgresql --link some-postgres:db \
   carolina/sample_app_rails_4_image:latest
 docker run -d -it --name app-task -e POSTGRES_USER=$POSTGRES_USER \
   -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -w /usr/src/app \
@@ -466,7 +466,7 @@ Cuando se muestran las imágenes docker se aprecia la etiquetación hecha:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/dockerimages2.png}
-\caption{Imágenes docker mostradas con \kode{docker images}.\label{fig:figure_placement_example}}
+\caption{Imágenes docker mostradas con \kode{docker images}.}
 \end{figure}
 
 La subida de la imagen etiquetada como \kode{initial} se puede apreciar ahora en Docker Hub:
@@ -474,7 +474,7 @@ La subida de la imagen etiquetada como \kode{initial} se puede apreciar ahora en
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/dockerhubinitial.png}
-\caption{Imágenes docker mostradas con \kode{docker images}.\label{fig:figure_placement_example}}
+\caption{Imágenes docker mostradas con \kode{docker images}.}
 \end{figure}
 
 También puede ser comprobado localmente mediante:
@@ -488,7 +488,7 @@ Cuyo resultado es:
 
 \begin{figure}[H]
 \image{images/figures/dockerimages3.png}
-\caption{Resultado de la búsqueda de la imagen con \kode{docker search}.\label{fig:figure_placement_example}}
+\caption{Resultado de la búsqueda de la imagen con \kode{docker search}.}
 \end{figure}
 
 \section{Iteración 3: Integración y Despliegue continuos de la aplicación con Travis CI y GitHub}
@@ -498,7 +498,7 @@ En esta iteración se busca adaptar la aplicación Ruby on Rails para que funcio
 Para ello se realiza el siguiente proceso:
 \begin{figure}[H]
 \image{images/figures/iteration2.png}
-\caption{Integración y Despliegue continuos con Travis CI.\label{fig:figure_placement_example}}
+\caption{Integración y Despliegue continuos con Travis CI.}
 \end{figure}
 
 Las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática se especifican en el fichero \kode{.travis.yml}. A este fichero se le añadirán, además, las credenciales de la cuenta de DockerHub mediante variables de entorno encriptadas, sumando una respectiva al repositorio GitHub. Las acciones a realizar serán la comprobación de que los tests pasan satisfactoriamente, la construcción de una nueva imagen Docker y su subida al repositorio DockerHub.
@@ -646,13 +646,13 @@ Finalmente, cuando se haga un nuevo \textit{commit} y subida al repositorio GitH
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/travisfailure.png}
-\caption{Correo electrónico de Travis CI en caso de fallo.\label{fig:figure_placement_example}}
+\caption{Correo electrónico de Travis CI en caso de fallo.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/travissuccess.png}
-\caption{Correo electrónico de Travis CI en caso de éxito.\label{fig:figure_placement_example}}
+\caption{Correo electrónico de Travis CI en caso de éxito.}
 \end{figure}
 
 Dirigiendo a Travis CI donde se comenta el fallo o el éxito:
@@ -660,19 +660,19 @@ Dirigiendo a Travis CI donde se comenta el fallo o el éxito:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/travisfailure2.png}
-\caption{Caso de fallo en Travis CI.\label{fig:figure_placement_example}}
+\caption{Caso de fallo en Travis CI.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \image{images/figures/travisfailure3.png}
-\caption{Motivo de fallo en Travis CI.\label{fig:figure_placement_example}}
+\caption{Motivo de fallo en Travis CI.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/travissuccess2.png}
-\caption{Caso de éxito en Travis CI.\label{fig:figure_placement_example}}
+\caption{Caso de éxito en Travis CI.}
 \end{figure}
 
 Esta construcción terminará con la creación y subida de las tres imágenes comentadas en el planteamiento de esta iteración \ref{fig:dockerhub_images} en el repositorio de DockerHub.
@@ -717,7 +717,7 @@ Comprobando que funciona correctamente:
 
 \begin{figure}[H]
 \image{images/figures/vagrantssh.png}
-\caption{Conexión ssh a la máquina virtual \kode{core-01}.\label{fig:figure_placement_example}}
+\caption{Conexión ssh a la máquina virtual \kode{core-01}.}
 \end{figure}
 
 Además puede visualizarse la máquina mediante VirtualBox:
@@ -725,7 +725,7 @@ Además puede visualizarse la máquina mediante VirtualBox:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/vboxcore01.png}
-\caption{Máquina virtual \kode{core-01} desde VirtualBox.\label{fig:figure_placement_example}}
+\caption{Máquina virtual \kode{core-01} desde VirtualBox.}
 \end{figure}
 
 \subsection{Interpretación de la cabecera del fichero user-data}
@@ -803,11 +803,8 @@ El tercer fichero importante para este despliegue es \kode{config.rb}. Dicho fic
 \codecaption{Fichero \kode{config.rb}}
 %= lang:ruby
 \begin{code}
-# Size of the CoreOS cluster created by Vagrant
 $num_instances=1
-# Used to fetch a new discovery token for a cluster of size $num_instances
 $new_discovery_url="https://discovery.etcd.io/new?size=#{$num_instances}"
-# Automatically replace the discovery token on 'vagrant up'
 if File.exists?('user-data') && ARGV[0].eql?('up')
   require 'open-uri'
   require 'yaml'
@@ -1047,7 +1044,7 @@ El contenido del mismo especifica que comenzará después de que lo haga el serv
   ExecStart=/usr/bin/docker run --rm --name some-postgres \
   -e "POSTGRES_USER=${POSTGRES_USER}" \
   -e "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" \
-  -v "volume-public:/var/lib/posgresql" -p "5432:5432" postgres 
+  -v "volume-public:/var/lib/postgresql" -p "5432:5432" postgres 
   ExecStop=/usr/bin/docker stop some-postgres 
 [Install] 
   WantedBy=multi-user.target
@@ -1217,31 +1214,31 @@ Si se inicia el despliegue manual se comprueba el correcto funcionamiento de la 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/figures/volume-public.service.png}
-\caption{Estado de la unidad \kode{volume-public.service}.\label{fig:figure_placement_example}}
+\caption{Estado de la unidad \kode{volume-public.service}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/postgresql.service.png}
-\caption{Estado de la unidad \kode{postgresql.service}..\label{fig:figure_placement_example}}
+\caption{Estado de la unidad \kode{postgresql.service}..}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/app-job.service.png}
-\caption{Estado de la unidad \kode{app-job.service}.\label{fig:figure_placement_example}}
+\caption{Estado de la unidad \kode{app-job.service}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/app-task.service.png}
-\caption{Estado de la unidad \kode{app-task.service}.\label{fig:figure_placement_example}}
+\caption{Estado de la unidad \kode{app-task.service}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/nginx.service.png}
-\caption{Estado de la unidad \kode{nginx.service}.\label{fig:figure_placement_example}}
+\caption{Estado de la unidad \kode{nginx.service}.}
 \end{figure}
 
 Por último se accede a la aplicación en modo consola desde la máquina CoreOS y en modo gráfico desde el sistema anfitrión:
@@ -1249,13 +1246,13 @@ Por último se accede a la aplicación en modo consola desde la máquina CoreOS 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/coreosmanualcurl.png}
-\caption{Acceso a la aplicación desde la máquina CoreOS.\label{fig:figure_placement_example}}
+\caption{Acceso a la aplicación desde la máquina CoreOS.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/coreosmanualhost.png}
-\caption{Acceso a la aplicación desde el sistema anfitrión.\label{fig:figure_placement_example}}
+\caption{Acceso a la aplicación desde el sistema anfitrión.}
 \end{figure}
 
 \subsection{Configuración y despliegue automático de las unidades de servicio systemd}
@@ -1363,7 +1360,7 @@ coreos:
       ExecStart=/usr/bin/docker run --rm --name some-postgres \
       -e "POSTGRES_USER=${POSTGRES_USER}" \
       -e "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" \
-      -v "volume-public:/var/lib/posgresql" -p "5432:5432" postgres 
+      -v "volume-public:/var/lib/postgresql" -p "5432:5432" postgres 
       ExecStop=/usr/bin/docker stop some-postgres
       [Install] 
       WantedBy=multi-user.target
@@ -1463,20 +1460,56 @@ El resultado en ambos casos ha sido positivo:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/coreosmanualcurl.png}
-\caption{Despliegue manual y automático. Acceso desde la máquina CoreOS.\label{fig:figure_placement_example}}
+\caption{Despliegue manual y automático. Acceso desde la máquina CoreOS.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/coreosmanualhost.png}
-\caption{Despliegue manual y automático. Acceso desde el sistema anfitrión.\label{fig:figure_placement_example}}
+\caption{Despliegue manual y automático. Acceso desde el sistema anfitrión.}
 \end{figure}
 
 \section{Iteración 5: Despliegue en la nube pública de Amazon Web Services}
 
-INTRODUCCION En esta iteración se pretende..
+En esta iteración se pretende desplegar la infraestructura en la nube pública de AWS. Para ello se trabajará el mismo fichero \kode{config.rb}, el nuevo \kode{user-data.sampleapp.aws} personalizado, así como se harán una serie de variaciones en el fichero \kode{Vagrantfile}, introduciendo las instrucciones necesarias para el tratamiento e integración del proveedor AWS.
 
-Se trabajará el mismo fichero \kode{config.rb}, el nuevo \kode{user-data.sampleapp.aws} con una variación respecto al fichero \kode{user-data.sample.virtualbox} que se usaba en la iteración anterior y la instroducción de las instrucciones necesarias para integrar el preveedor AWS en \kode{Vagranfile}.
+Así, la distribución de las unidades de servicio y, por tanto, de los contenedores quedará de la siguiente forma:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{images/figures/aws-1-iteration.png}
+\caption{Distribución de la infraestructura a desplegar en la nube pública de Amazon Web Services.}
+\end{figure}
+
+En ella puede distinguirse que el proxy, presente en el contenedor \kode{some-nginx}, que redirige al servidor web de la aplicación se encuentra en la máquina \kode{core-01}. Nginx será el servicio al cual los clientes y usuarios finales realizan las peticiones para acceder a la aplicación. No obstante, no solo se va a tener un servidor de la aplicación, si no que éste puede estar replicado desde en una a todas las instancias de la infraestructura y el servicio nginx deberá balancear la carga entre ellos. Para poder controlar los servidores web que se registran y/o dejan de estar en el sistema se implementará un nuevo contenenedor, \kode{confd}, y un nuevo volumen Docker, \kode{conf-data}. A su vez, el contenedor \kode{some-postgres} para la base de datos se ubicará en la máquina \kode{core-02}. A él tiene que acceder tanto el contenedor \kode{app-job}, que la crea, migra y alimenta, como el contenedor \kode{app-task} que se dirige al mismo para obtener y escribir la información solicitada y añadida en la aplicación web. Ello se consigue con la implementación del contenedor \kode{skydns} que servirá como servidor DNS a estos dos contenedores, trabajando con las claves y valores de etc2.
+
+La relación entre los contenedores, independientemente de su ubicación y replicación en otras instancias, en la manera en la que se ha comentado, puede apreciarse con mayor detalle en la siguiente figura:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/figures/aws-2-iteration.png}
+\caption{Relación entre los contenedores de la Infraestructura.}
+\end{figure}
+
+Cuando la infraestructura se despliega, el contenedor \kode{some-postgres}, donde será alojada la base de datos, se registra en el servidor DNS, \kode{skydns}. Éste utiliza etc2 para almacenar las claves y valores. De esta manera, \kode{some-postgres} puede ser descubierto por los contenedores \kode{app-job}, uno de los cuales, el primero, creará, migrará y alimentará la base de datos. Cuando arrancan los contenedores \kode{app-task}, servidores web de la aplicación, se registran en etc2. El contenedor \kode{confd} vigila estos cambios cada 5 segundos para actualizar la configuración de \kode{some-nginx} y pueda resolver hacia ellos. Puesto que se comparte un fichero entre dos contenedores se utiliza el volumen \kode{conf-data}. Así, cuando un cliente realiza una petición a través de Internet a \kode{some-nginx}, éste puede redirigirle a uno de los servidores \kode{app-task}, el cuál consultará \kode{skydns} para poder obtener y escribir información en la base de datos. La política para redireccionar a los servidores web será \textit{Round Robin}, del primero al último.
+
+Al ya no estar los contenedores en la misma instancia, compartir el volumen Docker \kode{volume-public} de la manera en la que se ha ido haciendo no es posible. Como no es el propósito directo del presente trabajo su implementación se descontinúa y su tratamiento será incorporado en la sección de Trabajos Futuros \ref{trabajosfuturos}.
+
+El servicio quedará disponible mediante el despliegue de la infraestructura desde Vagrant, estableciendo antes las variables de entorno correspondientes al proveedor. El acceso correcto al servicio puede ser probado desde la máquina \kode{core-01}, que contiene el proxy:
+
+%= lang:bash
+\begin{code}
+$ . ~/.aws-credentials/aws-credentials
+$ vagrant up --provider=aws
+$ vagrant ssh core-01
+# curl http://localhost:80
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/curl-confd.png}
+\caption{Respuesta al servicio por comandos en \kode{core-01}.}
+\end{figure}
 
 \subsection{Obtención de la cuenta AWS}
 
@@ -1497,7 +1530,7 @@ En primer lugar se crea una VPC llamada \textit{vpc-sampleapp} con el rango de d
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/vpc-sampleapp.png}
-\caption{Creación de la VPC vpc-sampleapp.\label{fig:figure_placement_example}}
+\caption{Creación de la VPC vpc-sampleapp.}
 \end{figure}
 
 En segundo lugar se crea una subred llamada \textit{subnet-sampleapp} perteneciente a la anterior VPC y con el rango de direcciones IPv4 como bloque de enrutamiento entre dominios sin clases (CIDR) 10.0.0.0/24:
@@ -1505,7 +1538,7 @@ En segundo lugar se crea una subred llamada \textit{subnet-sampleapp} pertenecie
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/subnet-sampleapp.png}
-\caption{Creación de la subred subnet-sampleapp.\label{fig:figure_placement_example}}
+\caption{Creación de la subred subnet-sampleapp.}
 \end{figure}
 
 \subsection{Creación del par de claves y del grupo de seguridad}
@@ -1521,7 +1554,7 @@ $ mv /home/carolina/Descargas/keypair.pem ~/.aws-credentials/
 $ chmod 0600 ~/.aws-credentials/keypair.pem
 \end{code}
 
-Ahora se navega hasta \textit{Network \& Security, Security Groups} y se crea el grupo de seguridad \textit{deploying-security-group} con las reglas TCP entrantes que permitan dejar pasar a la instancia las peticiones que llegan para conexiones a los puertos asignados a los protocolos SSH (22) y HTTP (80). También se añaden las reglas TCP a los puertos que utiliza CoreOS en sus comunicaciones con los clientes, siendo 2379, 2380, 4001, 7001. Con la intención de que, en un momento dado, las distintas máquinas virtuales que se creen formando un cluster CoreOS tengan conectividad con los contenedores de otras máquinas virtuales miembro se habilita el puerto 8285 mediante una regla UDP. Finalmente, se añaden las reglas TCP sobre los puertos que afectan a la aplicación, 9292 para el servidor puma y 5432 para el servidor PostgreSQL.
+Ahora se navega hasta \textit{Network \& Security, Security Groups} y se crea el grupo de seguridad \textit{deploying-security-group} con las reglas TCP entrantes que permitan dejar pasar a la instancia las peticiones que llegan para conexiones a los puertos asignados a los protocolos SSH (22) y HTTP (80). También se añaden las reglas TCP a los puertos que utiliza CoreOS en sus comunicaciones con los clientes, siendo 2379, 2380, 4001, 7001. Con la intención de que, en un momento dado, las distintas máquinas virtuales que se creen formando un clúster CoreOS tengan conectividad con los contenedores de otras máquinas virtuales miembro se habilita el puerto 8285 mediante una regla UDP. Finalmente, se añaden las reglas TCP sobre los puertos que afectan a la aplicación, 9292 para el servidor puma y 5432 para el servidor PostgreSQL.
 
 \subsection{Configuración del fichero user-data}
 
@@ -1623,12 +1656,14 @@ Así, al fichero \kode{Vagrantfile} se le añade lo siguiente:
 .
 if (!ARGV.nil? && ARGV.join('').include?('provider=aws'))
   unless Vagrant.has_plugin?("vagrant-aws") 
-    abort("Did not detect vagrant-aws plugin... vagrant plugin install vagrant-aws")
+    abort("Did not detect vagrant-aws plugin... 
+           vagrant plugin install vagrant-aws")
   end
   unless ENV['AWS_KEY'] && ENV['AWS_SECRET'] && ENV['AWS_KEYNAME']
     abort("$AWS_KEY && $AWS_SECRET && $AWS_KEYNAME should set before...")
   end
-  FileUtils.cp_r(File.join(File.dirname(__FILE__), "user-data.sampleapp.aws"), File.join(File.dirname(__FILE__), "user-data"), :remove_destination => true)
+  FileUtils.cp_r(File.join(File.dirname(__FILE__), "user-data.sampleapp.aws"), 
+  File.join(File.dirname(__FILE__), "user-data"), :remove_destination => true)
 end
 .
 $aws_region = 'us-east-1'
@@ -1655,7 +1690,8 @@ Vagrant.configure("2") do |config|
     override.ssh.username = "core"
     override.ssh.private_key_path = ENV['AWS_KEYPATH']
     override.ssh.insert_key = false
-    override.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+    override.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/
+                           dummy.box"
   end
   .
   (1..$num_instances).each do |i|
@@ -1700,7 +1736,7 @@ Una vez terminado se accede a la instancia mediante:
 $ vagrant ssh core-01
 \end{code}
 
-Ahora se prueba que la salud del cluster es positiva:
+Ahora se prueba que la salud del clúster es positiva:
 
 %= lang:bash
 \begin{code}
@@ -1710,7 +1746,7 @@ $ etcdctl cluster-health
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/cluster-health-aws-1.png}
-\caption{Comprobación de la salud del cluster con 1 máquina virtual.\label{fig:figure_placement_example}}
+\caption{Comprobación de la salud del clúster con 1 máquina virtual.}
 \end{figure}
 
 Además se comprueba que la red virtual que une a los contenedores mediante direcciones IP virtuales funcione correctamente:
@@ -1723,7 +1759,7 @@ $ sudo systemctl status flanneld
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/flanneld-aws-1.png}
-\caption{Comprobación de la red virtual - \kode{core01}.\label{fig:figure_placement_example}}
+\caption{Comprobación de la red virtual - \kode{core01}.}
 \end{figure}
 
 Por último se comprueba desde la consola de comandos que se puede acceder al servicio correctamente con el comando \kode{curl}:
@@ -1736,7 +1772,7 @@ $ curl http://localhost:80 | tail -n 15
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/curl-aws-1.png}
-\caption{Acceso al servicio por consola de comandos - \kode{core01}.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por consola de comandos - \kode{core01}.}
 \end{figure}
 
 Además, se utiliza la IP elástica para acceder a través del navegador web:
@@ -1744,14 +1780,14 @@ Además, se utiliza la IP elástica para acceder a través del navegador web:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/access-aws-1.png}
-\caption{Acceso al servicio por el navegador web - \kode{core01}.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por el navegador web - \kode{core01}.}
 \end{figure}
 
 Desde la consola de AWS se puede apreciar dicha instancia:
 
 \begin{figure}[H]
 \image{images/figures/aws-console-1.png}
-\caption{Consola AWS EC2 Instances - \kode{core-01}.\label{fig:figure_placement_example}}
+\caption{Consola AWS EC2 Instances - \kode{core-01}.}
 \end{figure}
 
 Para eliminar la infraestructura desplegada, así como los recursos asociados a ella, se ejecuta lo siguiente:
@@ -1763,7 +1799,7 @@ $ vagrant destroy core-01 -f
 
 \subsection{Despliegue de tres instancias}
 
-Para poder realizar un despliegue de un cluster con varias máquinas virtuales se cambia el valor de la variable \kode{num\_instances} a 3. Este cambio se realiza tanto en \kode{cloud-config} como en \kode{config.rb}. En cuanto al servicio, lo que se consigue es tener en cada una de las instancias una copia del mismo.
+Para poder realizar un despliegue de un clúster con varias máquinas virtuales se cambia el valor de la variable \kode{num\_instances} a 3. Este cambio se realiza tanto en \kode{cloud-config} como en \kode{config.rb}. En cuanto al servicio, lo que se consigue es tener en cada una de las instancias una copia del mismo.
 
 A continuación se despliega esta infraestructura:
 
@@ -1772,7 +1808,7 @@ A continuación se despliega esta infraestructura:
 $ vagrant up --provider=aws
 \end{code}
 
-Ahora se prueba, desde el sistema anfitrión, que la salud del cluster es positiva en todas las máquinas:
+Ahora se prueba, desde el sistema anfitrión, que la salud del clúster es positiva en todas las máquinas:
 
 %= lang:bash
 \begin{code}
@@ -1782,7 +1818,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'etcdctl cluster-health'; done
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/cluster-health-aws-3.png}
-\caption{Comprobación de la salud del clúster en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
+\caption{Comprobación de la salud del clúster en \kode{core-01}, \kode{core-02} y \kode{core-03}.}
 \end{figure}
 
 Además, se comprueba que la red virtual que une a los contenedores mediante direcciones IP virtuales funciona correctamente. En la siguiente imagen se puede apreciar, aunque el resultado del comando no devuelva colores, que el estado está activo y en ejecución:
@@ -1796,7 +1832,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'sudo systemctl flanneld \
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/flanneld-aws-3.png}
-\caption{Comprobación de la red virtual en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
+\caption{Comprobación de la red virtual en \kode{core-01}, \kode{core-02} y \kode{core-03}.}
 \end{figure}
 
 Para probar que las máquinas virtuales tienen conexión con los contenedores de otras máquinas virtuales se obtiene, en primer lugar, la dirección IP del contenedor \kode{some-postgres} de la máquina virtual \kode{core-03}:
@@ -1809,7 +1845,7 @@ $ docker inspect some-postgres
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/docker-inspect-3.png}
-\caption{Obtención de la dirección IP de un contenedor en core-03.\label{fig:figure_placement_example}}
+\caption{Obtención de la dirección IP de un contenedor en core-03.}
 \end{figure}
 
 Luego se prueba que haya conexión desde la máquina virtual \kode{core-01}:
@@ -1817,7 +1853,7 @@ Luego se prueba que haya conexión desde la máquina virtual \kode{core-01}:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/ping-1.png}
-\caption{Prueba de conexión a un contenedor de core-03 desde core-01.\label{fig:figure_placement_example}}
+\caption{Prueba de conexión a un contenedor de core-03 desde core-01.}
 \end{figure}
 
 Por último se comprueba desde la consola de comandos que se puede acceder al servicio correctamente con el comando \kode{curl}. 
@@ -1831,7 +1867,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 \
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/curl-aws-3.png}
-\caption{Acceso al servicio por consola de comandos en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por consola de comandos en \kode{core-01}, \kode{core-02} y \kode{core-03}.}
 \end{figure}
 
 Además, se utiliza la IP elástica de las instancias para acceder a través del navegador web:
@@ -1839,26 +1875,26 @@ Además, se utiliza la IP elástica de las instancias para acceder a través del
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/nav-1.png}
-\caption{Acceso al servicio por el navegador web desde \kode{core-01}.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por el navegador web desde \kode{core-01}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/nav-2.png}
-\caption{Acceso al servicio por el navegador web desde \kode{core-02}.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por el navegador web desde \kode{core-02}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/nav-3.png}
-\caption{Acceso al servicio por el navegador web desde \kode{core-03}.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por el navegador web desde \kode{core-03}.}
 \end{figure}
 
 Desde la consola de AWS se pueden apreciar las 3 instancias y algunas de sus características con las que se ha trabajado:
 
 \begin{figure}[H]
 \image{images/figures/aws-console-3.png}
-\caption{Consola AWS EC2 Instances - \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
+\caption{Consola AWS EC2 Instances - \kode{core-01}, \kode{core-02} y \kode{core-03}.}
 \end{figure}
 
 \subsection{Cambio de las unidades systemd a fleet}
@@ -1926,7 +1962,7 @@ write_files:
       ExecStart=/usr/bin/docker run --rm --name some-postgres \
       -e "POSTGRES_USER=${POSTGRES_USER}" \
       -e "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" \
-      -v "volume-public:/var/lib/posgresql" -p "5432:5432" postgres 
+      -v "volume-public:/var/lib/postgresql" -p "5432:5432" postgres 
       ExecStop=/usr/bin/docker stop some-postgres
       [X-Fleet]
       Global=true
@@ -2087,7 +2123,7 @@ La infraestructura desplegada es la siguiente:
 
 \begin{figure}[H]
 \image{images/figures/aws-console-fleet.png}
-\caption{Consola AWS EC2 Instances - \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
+\caption{Consola AWS EC2 Instances - \kode{core-01}, \kode{core-02} y \kode{core-03}.}
 \end{figure}
 
 Una vez terminado, gracias al uso del parámetro \kode{Global=true} bastará con entrar en la máquina \kode{core-01} para comprobar que las unidades funcionan correctamente:
@@ -2101,7 +2137,7 @@ $ vagrant ssh core-01
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/fleetctl-list-units.png}
-\caption{Listado de unidades fleet en cada una de las máquinas.\label{fig:figure_placement_example}}
+\caption{Listado de unidades fleet en cada una de las máquinas.}
 \end{figure}
 
 Como se puede apreciar, cada una de las máquinas, con sus relativas direcciones IP, tiene una copia de cada servicio. Las unidades \kode{app-job.service} y \kode{volume-public.service} aparecen inactivas porque se tratan de contenedores ejecutables, cuando acaban su cometido terminan.
@@ -2117,14 +2153,14 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 \
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/curl-fleet.png}
-\caption{Acceso al servicio por consola de comandos en \kode{core-01}, \kode{core-02} y \kode{core-03}.\label{fig:figure_placement_example}}
+\caption{Acceso al servicio por consola de comandos en \kode{core-01}, \kode{core-02} y \kode{core-03}.}
 \end{figure}
 
 \subsection{Configuración DNS usando SkyDNS}
 
 Con el objetivo de aislar la base de datos en una sola máquina se va a hacer uso de un servidor de sistema de nombres de dominio (DNS). Este servidor es necesario puesto que los contenedores \kode{app-job}, encargado de crear, migrar y poblar la base de datos, y \kode{app-task}, el propio servicio web, necesitan acceder al contenedor \kode{some-postgres}. Este contenedor, al no estar alojado en la misma máquina, tendrá que ser registrado en el servidor DNS para que pueda ser descubierto desde las otras máquinas. Así, los contenedor \kode{app-job} y \kode{app-task} resolverán la base de datos mediante dicho servidor DNS, que tendrá presencia en todas las máquinas como un nuevo contenedor, llamado \kode{skydns}. El servidor DNS a usar es SkyDNS, servicio distribuido para el anuncio y el descubrimiento de servicios construidos sobre etcd. De está manera crea registros en etcd y los lee desde el mismo sitio. Se trata de un proyecto de código abierto que puede ser encontrado en GitHub, bajo el repositorio \kode{skynetservices/skydns}\footnotettt{SkyDNS}{https://github.com/skynetservices/skydns}.
 
-Así, el primer paso consistirá en la división de la infraestructura de forma que los contenedores \kode{volume-public}, \kode{app-job}, \kode{app-task} y \kode{some-ningx} sean creados en la máquina \kode{core-01}. Por otro lado, el contenedor \kode{some-postgres} será creado en la máquina \kode{core-02}. Esto se consigue usando la opción \textit{metadata} presente en las unidades fleet. Para especificarlo es necesario añadir al fichero \kode{Vagrantfile} un metadato diferente para cada una de las máquinas, de manera que \kode{core-01} reciba \textit{compute=web} y \kode{core-02} {compute=db}. Esto ha de ser añadido bajo la carga de cada una de las líneas que contiene el fichero \kode{user-data}, en el momento en que detecta la sección de configuración fleet, bajo coreos.
+Así, el primer paso consistirá en la división de la infraestructura de forma que los contenedores \kode{volume-public}, \kode{app-job}, \kode{app-task} y \kode{some-ningx} sean creados en la máquina \kode{core-01}. Por otro lado, el contenedor \kode{some-postgres} será creado en la máquina \kode{core-02}. Esto se consigue usando la opción \textit{metadata} presente en las unidades fleet. Para especificarlo es necesario añadir al fichero \kode{Vagrantfile} un metadato diferente para cada una de las máquinas, de manera que \kode{core-01} reciba \textit{compute=web} y \kode{core-02} \textit{compute=db}. Esto ha de ser añadido bajo la carga de cada una de las líneas que contiene el fichero \kode{user-data}, en el momento en que detecta la sección de configuración fleet, bajo coreos.
 
 \begin{codelisting}
 \label{code:vagrantfile2}
@@ -2144,6 +2180,8 @@ end
 \end{codelisting}
 
 Ahora será necesario añadir el metadato a los ficheros de las unidades de servicio pertenecientes a los contenedores nombrados. Para la máquina \kode{core-01} el parámetro \textit{MachineMetadata=compute=web} y en el fichero correspondiente a la base de datos el parámetro \textit{MachineMetadata=compute=db}, en la máquina \kode{core-02}. Ambos en la sección \textit{[X-Fleet]}.
+
+Como el contenedor \kode{some-postgres} ya no se encontrará en la misma máquina que el resto de contenedores no es posible compartir el volumen \kode{volume-public} con ellos. Por lo tanto se eliminará en su definición el comando \textit{-v}, que permite exportarlo, así como su inclusión en los parámentros \textit{After} y \textit{Require}.
 
 Lo siguiente será crear el contenedor que se corresponde con el servidor DNS, presente en todas las máquinas. Este último hecho es posible no añadiendo ningún metadato en la sección \textit{[X-Fleet]}. Para ello se escribe un nuevo fichero llamado \kode{/home/core/skydns.service} antes del fichero \kode{/home/core/volumen-public.service}. Además se le indica que será iniciado después de docker y etcd2. Luego se procede de la misma manera que con las otras unidades de servicio. Antes de comenzar el servicio borrará el contenedor si existe previamente y luego descargará la imagen desde DockerHub. Antes de empezar el servicio se establece la configuración de SkyDNS de forma que se especifica la dirección IP y puerto en la que debe escuchar, que será la local a la máquina por el puerto 53: \kode{0.0.0.0:53}. También se establece el dominio para el que es autoritario, escogiéndose \kode{sampleapp.local.}, y el tiempo de vida (TTL) de las respuestas a 30 segundos. A la hora de comenzar el servicio restará indicarle que las máquinas etcd se comunican para los clientes en la dirección IP privada en uso y puerto 2379. Como se trata de una unidad fleet, será necesario añadir el servicio global \kode{fleet-skydns.service} antes de \kode{fleet-volume-public.service} para comenzar el servicio. Así habrá que añadir lo siguiente a \kode{user-data.sampleapp.aws}.
 
@@ -2277,7 +2315,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'etcdctl cluster-health'; done
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-health.png}
-\caption{Salud del clúster contemplado por las 3 máquinas.\label{fig:figure_placement_example}}
+\caption{Salud del clúster contemplada por las 3 máquinas.}
 \end{figure}
 
 Luego se listan las máquinas y se comprueba que han recibido el metadato pertinente:
@@ -2290,7 +2328,7 @@ for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-machines'; done
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-machines.png}
-\caption{Información de las máquinas contemplado por las 3 instancias.\label{fig:figure_placement_example}}
+\caption{Información de las máquinas contemplada por las 3 instancias.}
 \end{figure}
 
 También se comprueba que las unidades de servicio se han creado donde se indicó:
@@ -2302,7 +2340,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-units'; done
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-units.png}
-\caption{Información de las unidades contemplado por las 3 máquinas.\label{fig:figure_placement_example}}
+\caption{Información de las unidades contemplada por las 3 máquinas.}
 \end{figure}
 
 Se comprueba que los registros se hayan establecido correctamente:
@@ -2317,7 +2355,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c '/usr/bin/etcdctl get \
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-gets.png}
-\caption{Lectura de los registros en SkyDNS contemplado por las 3 máquinas.\label{fig:figure_placement_example}}
+\caption{Lectura de los registros en SkyDNS contemplada por las 3 máquinas.}
 \end{figure}
 
 La máquina \kode{core-01} resuelve tanto \textit{db} como \textit{some-postgres}:
@@ -2331,7 +2369,7 @@ docker exec -it app-task sh -c 'ping -c 1 some-postgres'
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-ping.png}
-\caption{Conexión a \textit{db} como \textit{some-postgres} desde \kode{app-task}.\label{fig:figure_placement_example}}
+\caption{Conexión a \textit{db} como \textit{some-postgres} desde \kode{app-task}.}
 \end{figure}
 
 De esta manera, los registros ingresados han quedado como se pretendía:
@@ -2344,7 +2382,7 @@ docker exec -it skydns sh -c 'dig @localhost db.sampleapp.local. A'
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-dig.png}
-\caption{Registros DNS desde el contenedor \kode{skydns}.\label{fig:figure_placement_example}}
+\caption{Registros DNS desde el contenedor \kode{skydns}.}
 \end{figure}
 
 Así, el servicio funciona correctamente en la máquina \kode{core-01}:
@@ -2357,7 +2395,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 | \
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-curl.png}
-\caption{Conexión al servicio mediante consola desde \kode{core-01}.\label{fig:figure_placement_example}}
+\caption{Conexión al servicio mediante consola desde \kode{core-01}.}
 \end{figure}
 
 Y mediante la web y la dirección IP elástica se ingresa con uno de los usuarios poblados en la base de datos, comprobando que sigue funcionando correctamente hasta este punto:
@@ -2365,12 +2403,441 @@ Y mediante la web y la dirección IP elástica se ingresa con uno de los usuario
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/figures/skydns-web.png}
-\caption{Inicio de sesión con uno de los usuarios mediante navegador web desde la dirección IP elástica de \kode{core-01}.\label{fig:figure_placement_example}}
+\caption{Inicio de sesión con uno de los usuarios mediante navegador web desde la dirección IP elástica de \kode{core-01}.}
 \end{figure}
 
+\subsection{Balanceo de carga con Nginx usando Confd}
+
+Con el propósito de implementar la infraestructura final, en la que en cada una de las máquinas que conforma el clúster hay un servidor de la aplicación, en la primera máquina se sitúa el proxy que balanceará la carga entre los anteriores y en la segunda máquina se encontrará la base de datos a la que acudirán los servidores de aplicación se van a realizar los siguientes cambios. 
+
+En primer lugar, al no encontrarse los distintos contenedores en la misma máquina la opción de tener el volumen Docker \kode{volume-public} compartido entre ellos no es posible en la manera en la que se ha ido haciendo, así que se elimina su definición en el fichero \kode{user-data.sampleapp.aws}, en \kode{/home/core/volume-public.service}, su inclusión en los parámetros \textit{After} y \textit{Requires} en los servicios que lo implementan, el parámetro \textit{-v} que lo exporta en los contenedores \kode{app-job}, \kode{app-task} y \kode{some-nginx}, así como la unidad global \kode{fleet-volume-public.service}.
+
+El despliegue de la infraestructura será controlado, una vez más, con metadatos. Para ello se mantiene a la máquina \kode{core-02} con el metadato \textit{compute=db} y se modifica en el fichero \kode{Vagrantfile}, bajo la carga de la línea que contiene la sección de configuración fleet en el fichero \kode{user-data}, el metadato para la máquina \kode{core-01}, cambiándolo por \textit{compute=proxy}.
+
+\begin{codelisting}
+\label{code:vagrantfile2}
+\codecaption{Fichero \kode{Vagrantfile}}
+%= lang:ruby
+\begin{code}
+.
+data = YAML.load(IO.readlines(CLOUD_CONFIG_PATH)[1..-1].join)
+if data['coreos'].key? 'fleet' and i==1
+ data['coreos']['fleet']['metadata'] = 'compute=proxy'
+end
+.
+\end{code}
+\end{codelisting}
+
+Ahora será necesario modificar el metadato de la unidad de servicio \kode{postgresql.service} a \textit{MachineMetadata=compute=proxy}, en la sección \textit{[X-Fleet]}. Además, se quita  en las unidades de servicio \kode{app-job.service} y \kode{app-task.service}, para que sean ubicadas en cada una de las máquinas que conforme el clúster.
+
+Como el servicio \kode{nginx.service} tendrá que balancear la carga entre los distintos servidores web disponibles, será necesario que el servidor \kode{app-task} se registre tras crearse. Este registro se va a realizar en etc2, por lo tanto, éste se añade en los parámetros \textit{After} y \textit{Requires} como \kode{etcd2.service} tras \kode{docker.service}. Así, el registro se añade en la sección \textit{ExecStartPost} con clave \kode{/services/app/<dirección IP de la máquina en la que se encuentra>} y valor correspondiente con la dirección IP del contenedor y puerto 9292, pues se hace referencia al servidor puma. Para poder interpretar la dirección IP de la máquina es necesario que en la definición de esta unidad de servicio se indique el fichero de variables de entorno \kode{/etc/environment}. Esto permitirá tener tantas entradas \kode{/services/app/*} como máquinas en las que se ejecute hayan. También es importante añadir que cuando el contenedor deje de ejecutarse dicho registro sea borrado.
+
+\begin{codelisting}
+\label{code:execstartpost-app-task}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/home/core/app-task.service"
+    .
+    [Service] 
+      .     
+      EnvironmentFile=/etc/environment
+      .
+      ExecStartPost=/bin/bash -c 'while ! [ $(/usr/bin/docker inspect \
+      -f ="{{.State.Running}}" app-task) == "=true" ]; do sleep 1; done; \
+      etcdctl set /services/app/${COREOS_PRIVATE_IPV4} $(/usr/bin/docker \
+      inspect -f "{{ .NetworkSettings.IPAddress }}" app-task):9292'
+      ExecStop=/usr/bin/etcdctl rm /services/app/${COREOS_PRIVATE_IPV4}
+      .
+.
+\end{code}
+\end{codelisting}
+
+Para que el servicio \kode{nginx.service} pueda registrar los servidores web puma se va a utilizar el servicio confd. Esta utilidad se encarga de controlar los cambios que se produzcan en etc2, vigilando las claves que se le indique. Cuando hay un nuevo registro o baja transfiere estos cambios a la configuración de nginx, por medio de una plantilla, modificando el fichero \kode{/etc/nginx.conf} del contenedor \kode{some-nginx}. Luego, hace efectivo el cambio reiniciando el servicio nginx. Este servicio puede ser encontrado en el repositorio \kode{kelseyhightower/confd}\footnotettt{confd}{https://github.com/kelseyhightower/confd} en GitHub, del que se hará una configuración especifica para este uso.
+
+Como se pretende compartir el fichero de configuración \kode{nginx.conf} entre el contenedor \kode{some-nginx} y el futuro contenedor \kode{confd} se crea un volumen Docker, llamado \kode{conf-data}, que compartirá el directorio \kode{/etc/nginx} entre ambos. En su definición se indica requiere y ha de ser lanzado después del servicio \kode{docker.service}. Se indica que el servicio será de tipo \textit{oneshot}, lo que significa que el parámetro \textit{ExecStart} ha de ejecutarse solo una vez, sin reintentarlo. También se especifica la opción \textit{RemainAfterExit=yes} para que cuando el contenedor termine permanezca activo. Si el volumen existe en su lanzamiento se detiene y elimina. La imagen que se usa para el contenedor es la de nginx, para poder tener la misma disposición de directorios. Este volumen deberá ubicarse en la máquina \kode{core-01}, por lo que se le añade el metadato \kode{compute=proxy}. Además. será necesario crear la unidad global \kode{fleet-conf-data.service} que de comienzo a este servicio fleet.
+
+\begin{codelisting}
+\label{code:conf-data}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/home/core/conf-data.service"
+    permissions: "0644"
+    content: |
+      [Unit] 
+      Description=conf data container to share files between confd and some-nginx
+      After=docker.service
+      Requires=docker.service
+      [Service] 
+      Type=oneshot
+      RemainAfterExit=yes
+      ExecStartPre=-/usr/bin/docker kill conf-data 
+      ExecStartPre=-/usr/bin/docker rm conf-data
+      ExecStartPre=/usr/bin/docker pull nginx 
+      ExecStart=/usr/bin/docker run -v /etc/nginx --name conf-data nginx \
+      echo "conf-data container created" 
+      [X-Fleet]
+      Global=true
+      MachineMetadata=compute=proxy
+  .
+coreos:
+  .
+  units:
+  .
+  - name: fleet-conf-data.service
+    command: start
+    content: |
+      [Unit]
+      Description=Start conf-data.service using fleet
+      [Service]
+      ExecStart=/usr/bin/fleetctl start /home/core/conf-data.service
+  .
+\end{code}
+\end{codelisting}
+
+El servicio confd a implementar necesitará disponer de tres ficheros, que serán escritos en la máquina y exportados al contenedor a través del volumen \kode{conf-data}.
+
+El primero de ellos es la plantilla \kode{nginx.conf.tmpl}, correspondiente a la configuración de nginx. Al incorporarlo a \kode{user-data.sampleapp.app} puede borrarse la definición del fichero \kode{/etc/nginx.conf}, presente en la sección \textit{write-files}. La información que se añade a la configuración que se ha trabajado anteriormente es la englobada en el bloque \textit{upstream}. Esta sección es utilizada para definir los servidores a los cuales nginx puede enviar peticiones. Nginx seleccionará uno de ellos dependiendo del método de distribución escogido, en este caso \textit{Round Robin}, del primero al último, que por defecto es el que se implementa. Mediante una plantilla en formato \textit{Go}, que permite gestionar contenido dinámico, se define este nuevo bloque, que ha de estar, a su vez, dentro del bloque \textit{http} y requiere la existencia del bloque \textit{events} para gestionar eventos, aunque no sea utilizado. Así, cuando confd analice etc2 en busca de cambios para las claves \kode{/services/app/*} sustituirá dinámicamente su contenido por las líneas \textit{server <dirección IP del contenedor \kode{app-task}>:9292}, en lugar de tener que definirlos estáticamente. Esta información será luego sustituida con el servidor escogido en la línea \textit{proxy\_pass http://app;}.
+
+\begin{codelisting}
+\label{code:nginx.conf.tmpl}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/etc/nginx.conf.tmpl"
+    permissions: "0644"
+    content: |
+      events {
+      }
+      http {
+        upstream app {
+        {{ range getvs "/services/app/*" }}
+          server {{ . }};
+        {{ end }}
+        }
+
+        server {
+          listen 80;
+          root /usr/src/app/public;
+          location / {
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_redirect off;
+            try_files $uri /page_cache/$uri /page_cache/$uri.html @app;
+          }
+          location @app{
+            proxy_pass http://app;
+            break;
+          }
+        }
+      }
+.
+\end{code}
+\end{codelisting}
+
+El siguiente, llamado \kode{nginx.toml}, representa el fichero de configuración de confd. Está escrito en formato TOML y permite comprobar el valor de las claves registradas bajo \kode{/services/app} y realizar la acción del cambio del archivo \kode{/etc/nginx/nginx.conf}, tomando como fuente la plantilla anterior, \kode{nginx.conf.tmpl}. Por último, el servicio confd ha de encargarse de reiniciar el servicio nginx. Para ello ejecuta el fichero \kode{/reload.sh}, un script que permitirá ejecutar una orden, mediante el comando curl, haciendo uso del socket de Docker, puesto que este servicio no estará instalado en el contenedor \kode{confd}. Esta orden hará que capture el identificador del contenedor \kode{some-nginx}, a través del lenguaje de gestión de flujos de datos JSON \textit{jq}, y mande a detener el proceso. 
+
+\begin{codelisting}
+\label{code:nginx.conf.tmpl}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/home/core/reload.sh"
+    permissions: "0644"
+    content: |
+      #!/bin/sh
+      curl --unix-socket /var/run/docker.sock -XPOST \
+      "http://v1.26/containers/$(curl --unix-socket /var/run/docker.sock \
+      'http://v1.26/containers/json' | jq -r '.[] | \
+       select(.Names[0] == "/some-nginx") .Id')/kill"
+  - path: "/etc/nginx.toml"
+    permissions: "0644"
+    content: |
+      [template]
+      src = "nginx.conf.tmpl"
+      dest = "/etc/nginx/nginx.conf"
+      keys = [ "/services/app" ] 
+      reload_cmd = "sh /reload.sh"
+.
+\end{code}
+\end{codelisting}
+
+Para poder disponer de una imagen Docker propia de confd, con una configuración determinada, se crea una nueva, llamada \kode{confd\_image}, a partir del fichero Dockerfile. Así, se utiliza una imagen Docker mínima basada en \textit{Alpine Linux}\footnotettt{Alpine Linux}{https://www.alpinelinux.org/about} con un índice de paquetes completo y solo 5 MB de tamaño, en su versión 3.3. Sobre esta imagen se instalarán los paquetes \textit{curl}, para poder hacer la recarga del servicio, y el \textit{jq}, para poder obtener el identificador del contenedor \kode{some-nginx}. Cuando están descargados se obtiene del repositorio GitHub comentado la herramienta confd, para sistemas Linux con CPUs AMD de 64 bits, se le dan permisos de lectura, escritura y ejecución al propietario en \kode{/usr/bin/confd} para poder realizar las operaciones y se limpia la memoria caché utilizada. Además, se añade el directorio vacío \kode{/etc/confd} que será utilizado para alojar los ficheros. Por último, se indica que una vez arrancado un contenedor con esta imagen, el servicio confd vigilará los cambios producidos en etc2, en todo el clúster, cada 5 segundos.
+
+\begin{codelisting}
+\label{code:dockerfile-confd}
+\codecaption{Contenido de \kode{Dockerfile}}
+%= lang:ruby
+\begin{code}
+FROM alpine:3.3
+LABEL confd_image.version="0.1" confd_image.release-date="2017-05-02"
+MAINTAINER Carolina Santana "c.santanamartel@gmail.com"
+RUN apk add --update curl && apk add --update jq && \
+    curl -o /usr/bin/confd -L https://github.com/kelseyhightower/confd/releases/
+            download/v0.7.1/confd-0.7.1-linux-amd64 && \
+    chmod 755 /usr/bin/confd && rm -rf /var/cache/apk/*
+ADD etc/confd/ /etc/confd
+CMD /usr/bin/confd -interval=5 -node=http://$COREOS_PRIVATE_IPV4:4001
+\end{code}
+\end{codelisting}
+
+De esta manera, será necesario crear en local el directorio vacío \kode{etc/confd}, construir la imagen y subirla a DockerHub para poder usarla:
+
+%= lang:bash
+\begin{code}
+$ mkdir etc/confd
+$ docker login
+$ docker build -t confd_image .
+$ docker tag <image-id> carolina/confd_image:latest
+$ sudo docker push carolina/confd_image
+\end{code}
+
+Cuando el proceso de subida ha terminado, se define el fichero \kode{/home/core/confd.service} que creará el contenedor \kode{confd}. Así, requiere y ha de ser creado tras los servicios \kode{docker.service}, \kode{etcd2.service}, pues leerá de él, y \kode{conf-data.service}. Se indica que comience automáticamente los intentos de ejecución de \textit{ExecStart} y se añade el fichero de variables de entorno \kode{/etc/environment} para que pueda conocer las direcciones IP de las máquinas que conforman el clúster. Si en el momento de ser lanzado ya existiera se manda a detener el proceso y se elimina el contenedor. Antes de crear el mismo se descarga la última versión de la imagen \kode{confd\_image}, si no se tiene. Además de pasarle la variable de entorno comentada, se exporta el socket de Docker, para poder hacer uso del mismo a la hora de ejecutar la recarga del servicio nginx y los tres archivos escritos, donde los destinos finales serán \kode{/etc/confd/templates/nginx.conf.tmpl}, \kode{/reload.sh} y \kode{/etc/confd/conf.d/nginx.toml}. Por último se añade el volumen \kode{conf-data}. Este contenedor deberá ubicarse en la máquina \kode{core-01}, por lo que se le añade el metadato \kode{compute=proxy}. También se crea la unidad global \kode{fleet-confd.service} que de comienzo a este servicio fleet.
+
+\begin{codelisting}
+\label{code:confd}
+\codecaption{Fichero \kode{user-data.sampleapp.aws}}
+%= lang:yaml
+\begin{code}
+.
+write_files:
+.
+  - path: "/home/core/confd.service"
+    permissions: "0644"
+    content: |
+      [Unit] 
+      Description=confd container that updates nginx.conf file and kill 
+                  some-nginx container to restart nginx service when detects
+                  a new rails server has been registered
+      After=docker.service etcd2.service conf-data.service
+      Requires=docker.service etcd2.service conf-data.service
+      [Service] 
+      TimeoutStartSec=0 
+      EnvironmentFile=/etc/environment
+      ExecStartPre=-/usr/bin/docker kill confd 
+      ExecStartPre=-/usr/bin/docker rm confd
+      ExecStartPre=/usr/bin/docker pull carolina/confd_image:latest 
+      ExecStart=/bin/bash -c '/usr/bin/docker run --rm --name confd \
+      -e COREOS_PRIVATE_IPV4=${COREOS_PRIVATE_IPV4} \
+      -v "/var/run/docker.sock:/var/run/docker.sock" \
+      -v "/etc/nginx.conf.tmpl:/etc/confd/templates/nginx.conf.tmpl" \
+      -v "/home/core/reload.sh:/reload.sh" \
+      -v "/etc/nginx.toml:/etc/confd/conf.d/nginx.toml" \
+      --volumes-from=conf-data carolina/confd_image '
+      ExecStop=/usr/bin/docker stop confd
+      [X-Fleet]
+      Global=true
+      MachineMetadata=compute=proxy
+  .
+coreos:
+  .
+  units:
+  .
+  - name: fleet-confd.service
+    command: start
+    content: |
+      [Unit]
+      Description=Start confd.service using fleet
+      [Service]
+      ExecStart=/usr/bin/fleetctl start /home/core/confd.service
+  .
+\end{code}
+\end{codelisting}
+
+En último lugar se realizan modificaciones en la definición del fichero \kode{/home/core/nginx.service} de manera que se especifique en las opciones \textit{After} y \textit{Requires} que requiere y ha de ir tras los servicios \kode{docker.service}, \kode{conf-data.service} y \kode{confd.service}. Como el servicio confd se encargará de detener el proceso de \kode{some-nginx} se añade la opción \textit{Restart=always} que, junto a la opción \textit{TimeoutStartSec=0} hará que la unidad de servicio vuelva a ejecutarse con la nueva configuración nginx. Además, en la creación del contenedor, \textit{ExecStart}, se elimina la opción \kode{--link app-task:app} y el fichero de configuración que se exportaba anteriormente \kode{-v /etc/nginx.conf:/etc/nginx/nginx.conf} y se añade la opción \kode{--volumes-from=conf-data}.
+
+A continuación se despliega la infraestructura:
+
+%= lang:bash
+\begin{code}
+$ . ~/.aws-credentials/aws-credentials
+$ vagrant up --provider=aws
+\end{code}
+
+En primer lugar se comprueba la salud del clúster:
+
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'etcdctl cluster-health'; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/health-confd.png}
+\caption{Salud del clúster contemplada por las 3 máquinas.}
+\end{figure}
+
+También, se visualizan las máquinas que conforman el clúster, con los metadatos asignados, así como las unidades fleet presentes en cada una de las máquinas:
+
+%= lang:bash
+\begin{code}
+for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-machines'; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/machines-confd.png}
+\caption{Información de las máquinas contemplada por las 3 máquinas.}
+\end{figure}
+
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-units'; done
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/units-confd.png}
+\caption{Información de las unidades fleet contemplada por las 3 máquinas.}
+\end{figure}
+
+Para continuar con las pruebas se escoge la máquina \kode{core-01}.
+
+Se comprueban los registros existentes bajo la clave \kode{services/app/<dirección IP de \kode{app-task}>}. Las claves se averiguan con el comando \kode{etcdctl ls --recursive /services/app} y luego los valores con el comando \kode{etcdctl get /services/app/<dirección IP de \kode{app-task}>}:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/recursive-confd.png}
+\caption{Obtención de claves y valores para \kode{services/app/<dirección IP de \kode{app-task}}.}
+\end{figure}
+
+Ahora que los contenedores \kode{app-task} se han registrado se puede comprobar como el servicio confd ha actualizado el fichero de configuración nginx, a medida que ha ido detectando cada uno de los tres. Esto es observado tanto desde los registros de operación del servicio \kode{confd.service} como entrando dentro del contenedor \kode{some-nginx} y viendo el contenido del fichero \kode{/etc/nginx/nginx.conf}:
+
+%= lang:bash
+\begin{code}
+$ journalctl -u confd.service
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/figures/update-journal-confd.png}
+\caption{Información de operaciones del contenedor \kode{confd} de actualización de la configuración nginx.}
+\end{figure}
+
+%= lang:bash
+\begin{code}
+$ docker exec -it some-nginx sh
+# cat /etc/nginx/nginx.conf
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/update-nginx-confd.png}
+\caption{Fichero \kode{nginx.conf} actualizado.}
+\end{figure}
+
+Tras ver el orden en el que se han colocado las distintas direcciones IP de los contenedores \kode{app-task} puede conocerse de qué máquina proviene cada uno inspeccionando el contenedor en cada máquina:
+
+%= lang:bash
+\begin{code}
+$ docker inspect app-task -f "{{ .NetworkSettings.IPAddress }}"
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/IP1-confd.png}
+\caption{Dirección IP del contenedor \kode{app-task} en la máquina \kode{core-01}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/IP2-confd.png}
+\caption{Dirección IP del contenedor \kode{app-task} en la máquina \kode{core-02}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/IP3-confd.png}
+\caption{Dirección IP del contenedor \kode{app-task} en la máquina \kode{core-03}.}
+\end{figure}
+
+De esta manera se comprueba que el orden establecido ha sido: \kode{core-03}, \kode{core-01} y \kode{core-02}.
+
+Así mismo, si se realizan 3 peticiones de servicio prácticamente juntas, desde la máquina \kode{core-01} en el que se encuentra el proxy, se puede comprobar por la hora marcada como las peticiones se envían en dicho orden.
+
+%= lang:bash
+\begin{code}
+$ for i in 1 2 3; do curl http://localhost:80 | tail -n 15; done
+\end{code}
+
+El comando con el que comprobar a qué hora fueron resueltas las peticiones es el siguiente:
+
+%= lang:bash
+\begin{code}
+$ docker logs app-task
+\end{code}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/logs3-confd.png}
+\caption{Registros de información de \kode{app-task} sobre la resolución de una petición en \kode{core-03}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/logs1-confd.png}
+\caption{Registros de información de \kode{app-task} sobre la resolución de una petición en \kode{core-01}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/logs2-confd.png}
+\caption{Registros de información de \kode{app-task} sobre la resolución de una petición en \kode{core-02}.}
+\end{figure}
+
+Finalmente se visualiza como por comandos y por el navegador web se ofrece el servicio, balanceando la carga entre los distintos servidores web de forma transparente para el usuario.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/curl-confd.png}
+\caption{Respuesta al servicio por comandos en \kode{core-01}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/web-confd.png}
+\caption{Respuesta al servicio por el navegador web en \kode{core-01}.}
+\end{figure}
+
+Además se inicia sesión con uno de los usuarios con los que se ha alimentado la base de datos para comprobar el correcto funcionamiento de las solicitudes a la base de datos desde esta infraestructura. El usuario a usar es \textit{example@railstutorial.org} y la contraseña \textit{foobar}:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/login-confd.png}
+\caption{Inicio de sesión en el servicio con el usuario \textit{Example User}.}
+\end{figure}
+
+Haciendo una escritura desde el mismo servidor que ha iniciado la sesión:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/post-confd.png}
+\caption{Escritura de un comentario con el usuario \textit{Example User}.}
+\end{figure}
+
+Donde la información que puede ser consultada desde la consola de Amazon Web Services es la siguiente:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/figures/aws-confd.png}
+\caption{Visualización de la infraestructura desde la consola de Amazon Web Services.}
+\end{figure}
 
 \subsection{Resultados}
 
-En esta iteración se ha conseguido el despligue de, en primer lugar, un cluster compuesto de una única instancia y, en segundo lugar, un cluster compuesto de tres instancias. Todo ello ha sido posible añadiendo la configuración específica para el proveedor AWS.
+En esta iteración se ha conseguido el despligue de, en primer lugar, un clúster compuesto de una única instancia y, en segundo lugar, un clúster compuesto de tres instancias. Todo ello ha sido posible añadiendo la configuración específica para el proveedor AWS.
 
-
+\section{AWS Calculator}
