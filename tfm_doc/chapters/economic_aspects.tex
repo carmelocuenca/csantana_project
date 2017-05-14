@@ -1,0 +1,95 @@
+\chapter{Aspectos Económicos}
+\label{cha:economic}
+
+En este capítulo se muestran los aspectos económicos de la implementación en el proveedor Amazon Web Services. 
+
+En primer lugar, se presenta el coste anual que supondría mantener una instancia, encendida las 24 horas del día durante todo el año. 
+
+En segundo lugar, se indica el coste anual por instancia que supondría realizar un determinado número de peticiones, teniendo en cuenta la cantidad de transferencia de datos con direcciones IP elásticas o públicas. 
+
+En tercer y último lugar, se exponen formas de reducir costes con una serie de estrategias que permiten personalizar y establecer los recursos a utilizar con anterioridad, a favor de una considerable menor inversión.
+
+Para el cálculo de ambas estimaciones se utiliza la herramienta AWS Calculator\footnotettt{AWS Calculator}{https://calculator.s3.amazonaws.com/index.html}. Esta utilidad permite conocer el coste mensual del uso de los servicios de Amazon Web Services con diversas configuraciones.
+
+La opción de facturación escogida es bajo demanda, es decir, pago por uso. También se tienen en cuenta como parámetros la región EE.UU. Este (Virginia) y clase de instancia Linux.
+
+Amazon EC2 proporciona una amplia selección de tipos de instancias optimizadas para adaptarse a diferentes casos de uso. Los tipos abarcan varias combinaciones de capacidad de CPU, memoria, almacenamiento y redes. 
+
+En el caso de almacenamiento este proveedor posee el servicio Amazon Elastic Block Store (Amazon EBS)\footnotettt{Amazon EBS}{https://aws.amazon.com/es/ebs} que proporciona volúmenes de almacenamiento de bloques persistentes. Cada volumen de Amazon EBS se replica automáticamente dentro de una zona de disponibilidad para protegerse frente a los errores de componentes, ofreciendo alta disponibilidad y durabilidad. Amazon EBS está diseñado para las cargas de trabajo de aplicaciones que se benefician de los ajustes precisos para lograr mayores niveles de rendimiento, costo y capacidad.
+
+Entre los tipos de instancias existentes se escogen las de uso general, entre las que se encuentra el tipo T2, utilizado en la fase de implementación. Así, se exponen brevemente tanto las características principales de cada una, como los casos comunes de uso:
+
+\begin{itemize}
+\item \textbf{T2}: Procesadores Intel Xeon de alta frecuencia y CPU en ráfagas que se rigen por créditos, acumulándolos cuando están inactivas y utilizándolos cuando están activas. Esta configuración es una buena opción para cargas de trabajo que no usan la CPU por completo, a menudo o de manera constante, pero que de vez en cuando tienen que alcanzar ráfagas. Los casos de uso contemplan aplicaciones web, entornos de desarrollo, servidores de versiones, repositorios de código, microservicios, entornos de pruebas y reproducción y aplicaciones empresariales.
+\item \textbf{M3}: Procesadores Intel Xeon E5-2670 v2 (Ivy Bridge) de frecuencia alta y  almacenamiento basado en SSD. Los casos de uso contemplan bases de datos, tareas de procesamiento de datos que requieren memoria adicional, flotas de almacenamiento en caché, ejecución de servidores \textit{back-end}, clústeres y aplicaciones empresariales.
+\item \textbf{M4}: Última generación de instancias de uso general. Procesadores Intel Xeon E5-2686 v4 (Broadwell) de 2,3 GHz o Intel Xeon E5-2676 v3 (Haswell) de 2,4 GHz. Optimizadas para EBS de manera predeterminada sin coste adicional. Mismos casos de uso que el tipo M3 con soporte para redes mejoradas.
+\end{itemize}
+
+Cada tipo de instancia incluye uno o varios tamaños, lo que permite escalar los recursos según los requisitos de carga de trabajo. Para la presente estimación se tienen en cuenta, únicamente, los principales tamaños que se corresponden con \textit{micro, small, medium, large y extra large}.
+
+A continuación se presentan los costes anuales para los tamaños escogidos de los tres diferentes tipos de instancia, teniendo en cuenta que estén encendidas las 24 horas del día:
+
+\FloatBarrier
+
+\begin{table}
+\begin{tabular}{cccccc}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+\multicolumn{1}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Tipo}}                 & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Modelo}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{CPU}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Memoria\\ GiB\end{tabular}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Almacenamiento\\ GB\end{tabular}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Coste anual\\ €\end{tabular}}} \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}}                              & \multicolumn{1}{c|}{micro}                                   & \multicolumn{1}{c|}{1}                                    & \multicolumn{1}{c|}{1}                                                                                      & \multicolumn{1}{c|}{EBS}                                                                                          & \multicolumn{1}{c|}{96,96}                                                                              \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}}                              & \multicolumn{1}{c|}{small}                                   & \multicolumn{1}{c|}{1}                                    & \multicolumn{1}{c|}{2}                                                                                      & \multicolumn{1}{c|}{EBS}                                                                                          & \multicolumn{1}{c|}{181,80}                                                                             \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}}                              & \multicolumn{1}{c|}{medium}                                  & \multicolumn{1}{c|}{2}                                    & \multicolumn{1}{c|}{4}                                                                                      & \multicolumn{1}{c|}{EBS}                                                                                          & \multicolumn{1}{c|}{412,92}                                                                             \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}}                              & \multicolumn{1}{c|}{large}                                   & \multicolumn{1}{c|}{2}                                    & \multicolumn{1}{c|}{8}                                                                                      & \multicolumn{1}{c|}{EBS}                                                                                          & \multicolumn{1}{c|}{755,38}                                                                             \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\multirow{-5}{*}{\cellcolor[HTML]{EFEFEF}\textbf{T2}}} & \multicolumn{1}{c|}{xlarge}                                  & \multicolumn{1}{c|}{4}                                    & \multicolumn{1}{c|}{16}                                                                                     & \multicolumn{1}{c|}{EBS}                                                                                          & \multicolumn{1}{c|}{1.518,15}                                                                           \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}}                              & \multicolumn{1}{c|}{medium}                                  & \multicolumn{1}{c|}{1}                                    & \multicolumn{1}{c|}{3,75}                                                                                   & \multicolumn{1}{c|}{SSD 1 x 4}                                                                                        & \multicolumn{1}{c|}{538,49}                                                                             \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}}                              & \multicolumn{1}{c|}{large}                                   & \multicolumn{1}{c|}{2}                                    & \multicolumn{1}{c|}{7,5}                                                                                    & \multicolumn{1}{c|}{SSD 1 x 32}                                                                                       & \multicolumn{1}{c|}{1.068,85}                                                                           \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\multirow{-3}{*}{\cellcolor[HTML]{EFEFEF}\textbf{M3}}} & \multicolumn{1}{c|}{xlarge}                                  & \multicolumn{1}{c|}{4}                                    & \multicolumn{1}{c|}{15}                                                                                     & \multicolumn{1}{c|}{SSD 2 x 40}                                                                                       & \multicolumn{1}{c|}{2.137,69}                                                                           \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}}                              & \multicolumn{1}{c|}{large}                                   & \multicolumn{1}{c|}{2}                                    & \multicolumn{1}{c|}{8}                                                                                      & \multicolumn{1}{c|}{EBS}                                                                                          & \multicolumn{1}{c|}{867,94}                                                                             \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{M4}}} & \multicolumn{1}{c|}{xlarge}                                  & \multicolumn{1}{c|}{4}                                    & \multicolumn{1}{c|}{16}                                                                                     & \multicolumn{1}{c|}{EBS}                                                                                          & \multicolumn{1}{c|}{1.727,76}                                                                           \\ \hline
+                                                                          
+\end{tabular}
+\caption{Coste anual por tipo de instancia}
+\end{table}
+
+Con la intención de conocer el tamaño de una petición a la aplicación para calcular el coste de su transferencia, se utiliza, como ejemplo, la página inicial. Para medirlo se utiliza el comando \textit{wc -c}, que expresa el tamaño en \textit{bytes}, junto con la solicitud de la página, con el comando \textit{curl}, en la máquina \kode{core-01}:
+
+\begin{figure}[hp]
+\centering
+\includegraphics[width=0.75\textwidth]{images/figures/curl-wc.png}
+\caption{Tamaño de la página principal solicitada en B.}
+\end{figure}
+
+El resultado es de 3983 B, que serán tomados como 4 kB a efectos de la estimación.
+
+Cada instancia que se ejecute dispone del uso de una dirección IP elástica gratuita. La presente infraestructura no necesita hacer uso de direcciones IP públicas adicionales por lo que la utilización de este recurso no supone un coste adicional.
+
+A continuación se presenta el coste del tráfico externo anual proveniente de la transferencia de datos con direcciones IP elásticas para un determinado número de peticiones por hora, con un valor individual de 4 kB:
+
+\FloatBarrier
+
+\begin{table}
+\begin{tabular}{ccc}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+\multicolumn{1}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Peticiones/Hora}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Transferencia de Datos/Hora\\ GB\end{tabular}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Coste anual\\ €\end{tabular}}} \\ \hline
+\multicolumn{1}{|c|}{$1 * 10^6$}                                       & \multicolumn{1}{c|}{4}                                                                                                         & \multicolumn{1}{c|}{321,42}                                                                                   \\ \hline
+\multicolumn{1}{|c|}{$2 * 10^6$}                                       & \multicolumn{1}{c|}{8}                                                                                                         & \multicolumn{1}{c|}{642,87}                                                                                   \\ \hline
+\multicolumn{1}{|c|}{$4 * 10^6$}                                       & \multicolumn{1}{c|}{16}                                                                                                        & \multicolumn{1}{c|}{1.285,69}                                                                                 \\ \hline
+\multicolumn{1}{|c|}{$8 * 10^6$}                                       & \multicolumn{1}{c|}{32}                                                                                                        & \multicolumn{1}{c|}{2.571,39}                                                                                 \\ \hline
+\multicolumn{1}{|c|}{$16 * 10^6$}                                      & \multicolumn{1}{c|}{64}                                                                                                        & \multicolumn{1}{c|}{5.142,78}                                                                                 \\ \hline
+\multicolumn{1}{|c|}{$32 * 10^6$}                                      & \multicolumn{1}{c|}{128}                                                                                                       & \multicolumn{1}{c|}{10.285,55}                                                                                \\ \hline
+\multicolumn{1}{|c|}{$64 * 10^6$}                                      & \multicolumn{1}{c|}{256}                                                                                                       & \multicolumn{1}{c|}{22.628,31}                                                                                \\ \hline
+\multicolumn{1}{|c|}{$128 * 10^6$}                                     & \multicolumn{1}{c|}{512}                                                                                                       & \multicolumn{1}{c|}{45.035,53} \\ \hline
+\end{tabular}
+\caption{Coste anual por instancia según el número de peticiones}
+\end{table}
+
+Todo ello se mide sin tener en cuenta la capa de uso gratuito de un año, de la que los usuarios nuevos pueden beneficiarse durante los primeros 12 meses.
+
+Existe la posibilidad de abaratar costes estableciendo una estrategia diferente a la del pago por uso. Entre ellas cabe destacar las siguientes:
+\begin{itemize}
+\item \textbf{Instancias de subasta}: Se puede pujar por capacidad informática libre en Amazon EC2 con descuentos de hasta el 90\% en comparación con el precio bajo demanda. Preferible para  aplicaciones solo viables con precios de computación muy bajos o para usuarios con necesidades de computación muy urgentes y voluminosas.
+\item \textbf{Instancias reservadas}: Ofrece un descuento hasta del 75\% comparado con los precios de las instancias bajo demanda. Además, cuando se asignan instancias reservadas a una zona de disponibilidad específica, se proporciona una reserva de capacidad que se traduce en confianza adicional sobre la capacidad de lanzar instancias cuando se necesite. Son recomendadas cuando las aplicaciones tengan necesidades de estado constante o uso previsible y para usuarios que pueden comprometerse a utilizar Amazon EC2 durante un plazo de 1 o 3 años.
+\item \textbf{Hosts dedicados}: Servidor físico de Amazon EC2 dedicado para su uso. Reduce costos permitiendo usar las licencias existentes de software enlazado al servidor. Se puede adquirir bajo demanda, por hora, o como reserva con un descuento de hasta el 70\% en comparación con el precio bajo demanda.
+\end{itemize}
+
