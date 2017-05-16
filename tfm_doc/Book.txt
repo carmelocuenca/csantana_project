@@ -10,4 +10,3 @@ implementation.tex
 economic_aspects.tex
 result_and_conclusions.tex
 bibliography.tex
-anexos.tex
