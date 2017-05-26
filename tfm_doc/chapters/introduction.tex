@@ -1,28 +1,52 @@
-\chapter{Acerca de este trabajo fin de máster}
+\chapter{Acerca de este Trabajo de Fin de Máster}
 \label{cha:introduction}
 
+\section{Resumen del Trabajo de Fin de Máster}
 
-\section{Resumen del trabajo fin de máster}
+Este Trabajo de Fin de Máster trata la utilización de distintas tecnologías de virtualización, contenedores y orquestación sobre una aplicación web para generar una infraestructura como código reproducible, tanto en local como en la nube. Así, se toma una aplicación Ruby on Rails, se le realizan una serie de cambios y se redefine a una arquitectura de microservicios encapsulados en contenedores Docker. Además, se prepara para la integración y despliegue continuos con el uso de Travis CI, DockerHub y GitHub. Ésta será alojada en el sistema operativo CoreOS, que contiene las funcionalidades mínimas necesarias para la implementación de aplicaciones basadas en contenedores, y distribuida en un clúster. La infraestructura resultante se despliega haciendo uso de Vagrant en sistemas virtuales y en una nube pública, en los proveedores VirtualBox y Amazon Web Services, respectivamente. 
 
-Al final del proyecto
+\section{Abstract}
 
 \section{Objetivos}
 
+En esta sección se exponen los objetivos específicos y generales a alcanzar.
+
 \subsection{Objetivos específicos}
 
-Aquí algún diagrama pdf explicando la arquitectura
+Los objetivos específicos concretan el alcance del presente trabajo.
+
+En primer lugar se ha de realizar el estudio del estado del arte, que contempla las tecnologías, sistemas operativos y herramientas para la orquestación orientadas a contenedores, así como proveedores de infraestructura como servicio y otras herramientas tecnológicas necesarias para la implementación. 
+
+En segundo lugar se ha de efectuar un análisis de la aplicación Ruby on Rails en estudio.
+
+La metodología a llevar a cabo implica el desarrollo iterativo e incremental, donde se planifican 5 iteraciones. Los resultados de una iteración serán validados y utilizados como punto de partida para el desarrollo y ampliación de la siguiente. Éstas son:
+\begin{itemize}
+\item Conversión de la aplicación a una arquitectura de microservicios con el uso de Docker, tecnología que automatiza el despliegue de aplicaciones dentro de contenedores de software.
+\item Subida de la imagen resultante de la aplicación al repositorio de imágenes, basado en la nube, DockerHub.
+\item Integración y Despliegue continuos de la aplicación con Travis CI, servicio distribuido para construir y probar proyectos de software alojados en GitHub que, a su vez, es una plataforma de desarrollo software colaborativo para alojar proyectos utilizando el sistema de control de versiones Git.
+\item Despliegue monomáquina con VirtualBox, herramienta de virtualización de código abierto multiplataforma, Vagrant, herramienta para la creación y configuración de entornos de desarrollo virtualizados, y CoreOs, sistema operativo basado en el kernel de Linux con las funcionalidades mínimas necesarias para la implementación de aplicaciones dentro de contenedores de software.
+\item Despliegue en la nube pública de Amazon Web Services, colección de servicios de computación en la nube que forman una infraestructura y plataforma como servicio.
+\end{itemize}
 
 \subsection{Objetivos generales}
 
+Los propósitos generales del presente trabajo se detallan seguidamente.
+
+Se aplicarán distintas tecnologías de virtualización, contenedores y orquestación a una aplicación web para generar un entorno reproducible de desarrollo, tanto en local como en la nube, haciendo uso de tecnologías actuales y emergentes. Todo ello, destacando las cualidades y beneficios del uso de tecnologías de virtualización y computación en la nube como herramientas para desarrollar infraestructuras robustas, flexibles y escalables.
+
+La arquitectura basada en contenedores permitirá que si uno de los servicios de la aplicación falla no repercuta en que los otros servicios puedan funcionar por separado. Esto permite detectar, aislar y corregir fallos de una manera directa y eficiente, donde cada contenedor dispone, únicamente, de los recursos que necesita para llevar a cabo sus funciones.
+
+Otro de los objetivos es la introducción y configuración de nuevas unidades de servicio que permitan gestionar y controlar el correcto funcionamiento de cada componente de la infraestructura de manera efectiva.
+
+Los servidores web de la aplicación serán ubicados en todos los miembros del clúster, apreciando la característica de redundancia. Un servidor proxy inverso será encargo de gestionar las peticiones entre los anteriores, utilizando el balanceo de carga. En el caso de despliegue en la nube se dispondrá, además, de servicios en alta disponibilidad.
+
 \section{Aportaciones}
 
-\section{Justificación de las competencias específicas cubiertas}
+El presente trabajo presenta un arquetipo de infraestructura de aplicación que enlaza el uso de varias tecnologías emergentes como propuesta formal de desarollo. Esta propuesta se basa en la división de cada uno de los servicios que la componen y permiten su funcionamiento, de forma que queden encapsulados en contenedores de software, realizando el despliegue final en la nube. Para ello se utiliza Docker, que se ha convertido en una tecnología robusta para la construcción y operación con contenedores, en la compañía de herramientas como Travis CI, DockerHub y GitHub, que posibilitan un desarrollo controlado con integración y despliegue continuos. Además, se propone el uso del sistema operativo CoreOS que permite manejar y operar con contenedores de forma que se disponga de máquinas que automaticen su tratamiento. A su vez, se muestra el despliegue en la nube de Amazon Web Services, como infraestructura y plataforma competente, que ofrece grandes servicios, capacidades y recursos.
+
+\section{Justificación de la competencia específica cubierta}
+
+Este Trabajo de Fin de Máster, además de incluir las competencias generales recogidas en la Guía Docente de la asignatura 50915 - Trabajo Fin de Máster, ha cubierto la competencia específica del Máster en Ingeniería Informática TI01 - "Capacidad para modelar, diseñar, definir la arquitectura, implantar, gestionar, operar, administrar y mantener aplicaciones, redes, sistemas, servicios y contenidos informáticos". El presente trabajo modela, diseña y define una nueva arquitectura, basada en contenedores, de una aplicación. A partir de ella se implementa una infraestructura distribuida que gestiona, opera, administra y mantiene la aplicación, la información que manipula, los servicios por los que está compuesta y permiten su funcionamiento, y las redes en las que opera en los sistemas local y remoto en los que se ha realizado su despliegue.
 
 \section{Planificación temporal}
-
-Aquí cada una de las iteraciones, quizás diagramas de trello o url a ellos.
-
-1) Documentar el estado del arte del proyecto.
-2)
-
 

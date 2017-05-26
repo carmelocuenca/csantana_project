@@ -14,10 +14,10 @@ Así, la aplicación tendrá usuarios que crearán \textit{microposts} dentro de
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/sampleapp.png}
-\caption{Integración entre características y componentes de Ruby on Rails.}
+\caption{Aplicación web \kode{sample\_app\_rails\_4}.}
 \end{figure}
 
-Las características de la arquitectura Ruby on Rails que implementa la aplicación son:
+Las características de la arquitectura Ruby on Rails de la aplicación son:
 \begin{itemize}
 \item Arquitectura Modelo-Vista-Controlador (MVC): Mejora la capacidad de mantenimiento, desacoplamiento y pruebas de la aplicación.
 \item Arquitectura \textit{Representational State Transfer} (REST) para servicios web.
@@ -43,8 +43,10 @@ Las características de la arquitectura Ruby on Rails que implementa la aplicaci
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/rubyonrails.png}
-\caption{Integración entre características y componentes de Ruby on Rails.}
+\caption{Integración entre características y componentes de Ruby on Rails.\footnotemark}
 \end{figure}
+
+\footnotetext{Mejia (2011). Ruby on Rails Architectural Design [Figura]. Recuperado de \url{http://adrianmejia.com/blog/2011/08/11/ruby-on-rails-architectural-design}}
 
 Una vez vistas las características y componentes, tanto de una aplicación Ruby on Rails genérica como de la aplicación en actual estudio, se elabora un trabajo adicional a partir de ella, aplicando una serie de cambios y adiciones para la consecución de los objetivos inicialmente propuestos.
 
@@ -61,11 +63,11 @@ La aplicación \kode{sample\_app\_rails\_4} está disponible en un repositorio G
 
 Mediante Docker se obtienen las imágenes pertenecientes a dos servicios. El primero implementa la funcionalidad de la base de datos \kode{PostgreSQL} y el segundo el servidor web y proxy inverso \kode{Nginx}. El proxy inverso es un proxy que aparenta ser un servidor web ante los clientes, pero que en realidad reenvía las solicitudes que recibe a uno o más servidores de origen. Se escoge \kode{Nginx} por ser multiplataforma, ligero, de alto rendimiento y software libre.
 
-La aplicación en su origen utiliza una base de datos \kode{SQLite}\footnotettt{SQLite}{https://sqlite.org} que va a ser cambiada por la base de datos \kode{PostgreSQL}, provisionada por el contenedor \kode{some-postgres}. 
+La aplicación en su origen utiliza una base de datos \kode{SQLite}\footnotettt{SQLite}{https://sqlite.org} que se cambia por \kode{PostgreSQL}, presente en el contenedor \kode{some-postgres}. 
 
 Otro de los cambios a implementar es la sustitución del servidor web \kode{rails s} por \kode{puma}\footnotettt{Servidor Web Puma}{http://puma.io}, construido para ofrecer mayor velocidad y paralelismo.
 
-Para poder crear un contenedor que contenga la aplicación web habrá que crear su imagen Docker, que se llamará \kode{sample\_app\_rails\_4\_image}. A efectos de mantenerla remotamente se subirá al repositorio DockerHub con la etiqueta \kode{initial}.
+Para poder crear un contenedor que contenga la aplicación web habrá que crear su imagen Docker, que se llamará \kode{sample\_app\_rails\_4\_image}. A efectos de mantenerla remotamente se subirá al repositorio de imágenes DockerHub\footnotettt{DockerHub}{https://hub.docker.com} con la etiqueta \kode{initial}.
 
 El principal propósito de este despliegue es que pueda realizarse automáticamente tras la ejecución de un \textit{script}. Este fichero comprobará que las variables de entorno que especifican el nombre y la contraseña del usuario de las distintas bases de datos PostgreSQL existentes (test, desarrollo y producción) están correctamente establecidas.
 
@@ -1319,9 +1321,10 @@ La distribución de las unidades de servicio y, por tanto, de los contenedores q
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/aws-1-iteration.png}
 \caption{Distribución de la infraestructura a desplegar en AWS.}
+\label{fig:aws-1-iteration}
 \end{figure}
 
-En ella puede distinguirse el proxy, presente en el contenedor \kode{some-nginx}, que redirige al servidor web de la aplicación se encuentra en la máquina \kode{core-01}. Nginx será el servicio al cual los clientes y usuarios finales realizan las peticiones para acceder a la aplicación. No solo se va a tener un servidor de la aplicación, éste puede estar replicado desde en una a todas las instancias de la infraestructura y el servicio Nginx deberá balancear la carga entre ellos. Para controlar los servidores web que se registran y/o dejan de estar en el sistema se implementará un nuevo contenenedor, \kode{confd}, y un nuevo volumen Docker, \kode{conf-data}. A su vez, el contenedor \kode{some-postgres} para la base de datos se ubicará en la máquina \kode{core-02}. A él tiene que acceder tanto el contenedor \kode{app-job}, que la crea, migra y alimenta, como el contenedor \kode{app-task} que se dirige al mismo para obtener y escribir la información solicitada y añadida en la aplicación web. Ello se consigue con la implementación del contenedor \kode{skydns} que les servirá como servidor DNS, trabajando con las claves y valores de etc2.
+En ella puede distinguirse el proxy, presente en el contenedor \kode{some-nginx}, que redirige al servidor web de la aplicación, en la máquina \kode{core-01}. Nginx será el servicio al cual los clientes y usuarios finales realizan las peticiones para acceder a la aplicación. No solo se va a tener un servidor de la aplicación, éste puede estar replicado desde en una a todas las instancias de la infraestructura y el servicio Nginx deberá balancear la carga entre ellos. Para controlar los servidores web que se registran y/o dejan de estar en el sistema se implementará un nuevo contenenedor, \kode{confd}, y un nuevo volumen Docker, \kode{conf-data}. A su vez, el contenedor \kode{some-postgres} para la base de datos se ubicará en la máquina \kode{core-02}. A él tiene que acceder tanto el contenedor \kode{app-job}, que la crea, migra y alimenta, como el contenedor \kode{app-task} que se dirige al mismo para obtener y escribir la información solicitada y añadida en la aplicación web. Ello se consigue con la implementación del contenedor \kode{skydns} que les servirá como servidor DNS, trabajando con las claves y valores de etc2.
 
 La relación entre los contenedores, independientemente de su ubicación y replicación en otras instancias, en la manera en la que se ha comentado, puede apreciarse con mayor detalle en la siguiente figura:
 
@@ -1331,7 +1334,7 @@ La relación entre los contenedores, independientemente de su ubicación y repli
 \caption{Relación entre los contenedores de la Infraestructura.}
 \end{figure}
 
-Cuando la infraestructura se despliega, el contenedor \kode{some-postgres} se registra en \kode{skydns}, que utiliza etc2 para almacenar las claves y valores. De esta manera, \kode{some-postgres} puede ser descubierto por los contenedores \kode{app-job}, donde el primero, creará, migrará y alimentará la base de datos. Cuando arrancan los contenedores \kode{app-task}, servidores web de la aplicación, se registran en etc2. El contenedor \kode{confd} vigila estos cambios cada 5 segundos para actualizar la configuración de \kode{some-nginx} y éste pueda resolver hacia ellos. Puesto que se comparte un fichero entre dos contenedores se utiliza el volumen \kode{conf-data}. Así, cuando un cliente realiza una petición a través de Internet a \kode{some-nginx}, éste puede redirigirle a uno de los servidores \kode{app-task}, el cuál consultará \kode{skydns} para poder obtener y escribir información en la base de datos. La política para redireccionar a los servidores web será \textit{Round Robin}, del primero al último.
+Cuando la infraestructura se despliega, el contenedor \kode{some-postgres} se registra en \kode{skydns}, que utiliza etc2 para almacenar las claves y valores. De esta manera, \kode{some-postgres} puede ser descubierto por los contenedores \kode{app-job}, donde el primero en iniciarse creará, migrará y alimentará la base de datos. Cuando arrancan los contenedores \kode{app-task}, servidores web de la aplicación, se registran en etc2. El contenedor \kode{confd} vigila estos cambios cada 5 segundos para actualizar la configuración de \kode{some-nginx} y éste pueda resolver hacia ellos. Puesto que se comparte un fichero entre dos contenedores se utiliza el volumen \kode{conf-data}. Así, cuando un cliente realiza una petición a través de Internet a \kode{some-nginx}, éste puede redirigirle a uno de los servidores \kode{app-task}, el cuál consultará \kode{skydns} para poder obtener y escribir información en la base de datos. La política para redireccionar a los servidores web será \textit{Round Robin}, del primero al último.
 
 Al ya no estar los contenedores en la misma instancia, compartir el volumen Docker \kode{volume-public} de la manera en la que se ha ido haciendo no es posible. Como no es el propósito directo su implementación se descontinúa y será incorporado en la sección de Trabajos Futuros \ref{trabajosfuturos}.
 
@@ -2615,7 +2618,7 @@ La información sobre las instancias puede ser consultada desde la consola de AW
 
 \subsection{Resultado}
 
-En esta iteración se ha conseguido el despligue de un clúster compuesto de tres instancias en la nube pública de Amazon Web Services.
+En esta iteración se ha conseguido el despliegue de la aplicación distribuida en un clúster, compuesto de tres instancias, en la nube pública de Amazon Web Services.
 
 De esta manera se posee una infraestructura con servicios web de la aplicación replicados en una o tantas instancias como existan en el clúster, apreciando la característica de redundancia. 
 

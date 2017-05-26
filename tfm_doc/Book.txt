@@ -1,6 +1,7 @@
-cover
+#cover
 frontmatter:
-maketitle
+#maketitle
+cover.tex
 tableofcontents
 preface.md
 mainmatter:
