@@ -2,6 +2,7 @@
 frontmatter:
 #maketitle
 cover.tex
+acknowledgments.tex
 tableofcontents
 preface.md
 mainmatter:

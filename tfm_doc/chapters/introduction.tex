@@ -1,15 +1,29 @@
 \chapter{Acerca de este Trabajo de Fin de Máster}
 \label{cha:introduction}
 
-\section{Resumen del Trabajo de Fin de Máster}
-
-Este Trabajo de Fin de Máster trata la utilización de distintas tecnologías de virtualización, contenedores y orquestación sobre una aplicación web para generar una infraestructura como código reproducible, tanto en local como en la nube. Así, se toma una aplicación Ruby on Rails, se le realizan una serie de cambios y se redefine a una arquitectura de microservicios encapsulados en contenedores Docker. Además, se prepara para la integración y despliegue continuos con el uso de Travis CI, DockerHub y GitHub. Ésta será alojada en el sistema operativo CoreOS, que contiene las funcionalidades mínimas necesarias para la implementación de aplicaciones basadas en contenedores, y distribuida en un clúster. La infraestructura resultante se despliega haciendo uso de Vagrant en sistemas virtuales y en una nube pública, en los proveedores VirtualBox y Amazon Web Services, respectivamente. 
-
-\section{Abstract}
+\section{Motivación}
 
 \section{Objetivos}
 
-En esta sección se exponen los objetivos específicos y generales a alcanzar.
+En esta sección se exponen los objetivos inicialmente planteados, generales y específicos a alcanzar.
+
+\subsection{Objetivos iniciales}
+
+El objetivo prinicipal es la aplicación de distintas tecnologías de virtualización, contenedores y orquestación a una aplicación web para generar un entorno reproducible de desarrollo tanto en local como en la nube.
+
+Además otro objetivo del trabajo es que la estudiante se forme en tecnologías actuales y emergentes de virtualización y computación en la nube.
+
+\subsection{Objetivos generales}
+
+Los propósitos generales del presente trabajo se detallan seguidamente.
+
+Se aplicarán distintas tecnologías de virtualización, contenedores y orquestación a una aplicación web para generar un entorno reproducible de desarrollo, tanto en local como en la nube, haciendo uso de tecnologías actuales y emergentes. Todo ello, destacando las cualidades y beneficios del uso de tecnologías de virtualización y computación en la nube como herramientas para desarrollar infraestructuras robustas, flexibles y escalables.
+
+La arquitectura basada en contenedores permitirá que si uno de los servicios de la aplicación falla no repercuta en que los otros servicios puedan funcionar por separado. Esto permite detectar, aislar y corregir fallos de una manera directa y eficiente, donde cada contenedor dispone, únicamente, de los recursos que necesita para llevar a cabo sus funciones.
+
+Otro de los objetivos es la introducción y configuración de nuevas unidades de servicio que permitan gestionar y controlar el correcto funcionamiento de cada componente de la infraestructura de manera efectiva.
+
+Los servidores web de la aplicación serán ubicados en todos los miembros del clúster, apreciando la característica de redundancia. Un servidor proxy inverso será encargo de gestionar las peticiones entre los anteriores, utilizando el balanceo de carga. En el caso de despliegue en la nube se dispondrá, además, de servicios en alta disponibilidad.
 
 \subsection{Objetivos específicos}
 
@@ -28,17 +42,7 @@ La metodología a llevar a cabo implica el desarrollo iterativo e incremental, d
 \item Despliegue en la nube pública de Amazon Web Services, colección de servicios de computación en la nube que forman una infraestructura y plataforma como servicio.
 \end{itemize}
 
-\subsection{Objetivos generales}
-
-Los propósitos generales del presente trabajo se detallan seguidamente.
-
-Se aplicarán distintas tecnologías de virtualización, contenedores y orquestación a una aplicación web para generar un entorno reproducible de desarrollo, tanto en local como en la nube, haciendo uso de tecnologías actuales y emergentes. Todo ello, destacando las cualidades y beneficios del uso de tecnologías de virtualización y computación en la nube como herramientas para desarrollar infraestructuras robustas, flexibles y escalables.
-
-La arquitectura basada en contenedores permitirá que si uno de los servicios de la aplicación falla no repercuta en que los otros servicios puedan funcionar por separado. Esto permite detectar, aislar y corregir fallos de una manera directa y eficiente, donde cada contenedor dispone, únicamente, de los recursos que necesita para llevar a cabo sus funciones.
-
-Otro de los objetivos es la introducción y configuración de nuevas unidades de servicio que permitan gestionar y controlar el correcto funcionamiento de cada componente de la infraestructura de manera efectiva.
-
-Los servidores web de la aplicación serán ubicados en todos los miembros del clúster, apreciando la característica de redundancia. Un servidor proxy inverso será encargo de gestionar las peticiones entre los anteriores, utilizando el balanceo de carga. En el caso de despliegue en la nube se dispondrá, además, de servicios en alta disponibilidad.
+\section{Planificación inicial}
 
 \section{Aportaciones}
 
@@ -48,5 +52,4 @@ El presente trabajo presenta un arquetipo de infraestructura de aplicación que 
 
 Este Trabajo de Fin de Máster, además de incluir las competencias generales recogidas en la Guía Docente de la asignatura 50915 - Trabajo Fin de Máster, ha cubierto la competencia específica del Máster en Ingeniería Informática TI01 - "Capacidad para modelar, diseñar, definir la arquitectura, implantar, gestionar, operar, administrar y mantener aplicaciones, redes, sistemas, servicios y contenidos informáticos". El presente trabajo modela, diseña y define una nueva arquitectura, basada en contenedores, de una aplicación. A partir de ella se implementa una infraestructura distribuida que gestiona, opera, administra y mantiene la aplicación, la información que manipula, los servicios por los que está compuesta y permiten su funcionamiento, y las redes en las que opera en los sistemas local y remoto en los que se ha realizado su despliegue.
 
-\section{Planificación temporal}
 
