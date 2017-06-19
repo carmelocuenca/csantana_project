@@ -3,9 +3,11 @@
 
 \section{Motivación}
 
+La motivación para la realización del presente trabajo reside en el desarrollo e implementación de nuevas infraestructuras orientadas a la realización de despliegues automatizados. Para ello se quiere hacer uso de tecnologías emergentes que permiten crear medios más robustos, flexibles y escalables en la tendencia de la computación en la nube, la computación de altas prestaciones y la virtualización.
+
 \section{Objetivos}
 
-En esta sección se exponen los objetivos inicialmente planteados, generales y específicos a alcanzar.
+En esta sección se exponen los objetivos iniciales y generales a alcanzar.
 
 \subsection{Objetivos iniciales}
 
@@ -15,9 +17,7 @@ Además otro objetivo del trabajo es que la estudiante se forme en tecnologías 
 
 \subsection{Objetivos generales}
 
-Los propósitos generales del presente trabajo se detallan seguidamente.
-
-Se aplicarán distintas tecnologías de virtualización, contenedores y orquestación a una aplicación web para generar un entorno reproducible de desarrollo, tanto en local como en la nube, haciendo uso de tecnologías actuales y emergentes. Todo ello, destacando las cualidades y beneficios del uso de tecnologías de virtualización y computación en la nube como herramientas para desarrollar infraestructuras robustas, flexibles y escalables.
+Se trabajarán distintas tecnologías destacando las cualidades y beneficios del uso de tecnologías de virtualización y computación en la nube como herramientas para desarrollar infraestructuras robustas, flexibles y escalables.
 
 La arquitectura basada en contenedores permitirá que si uno de los servicios de la aplicación falla no repercuta en que los otros servicios puedan funcionar por separado. Esto permite detectar, aislar y corregir fallos de una manera directa y eficiente, donde cada contenedor dispone, únicamente, de los recursos que necesita para llevar a cabo sus funciones.
 
@@ -25,28 +25,40 @@ Otro de los objetivos es la introducción y configuración de nuevas unidades de
 
 Los servidores web de la aplicación serán ubicados en todos los miembros del clúster, apreciando la característica de redundancia. Un servidor proxy inverso será encargo de gestionar las peticiones entre los anteriores, utilizando el balanceo de carga. En el caso de despliegue en la nube se dispondrá, además, de servicios en alta disponibilidad.
 
-\subsection{Objetivos específicos}
+\section{Metodología}
 
-Los objetivos específicos concretan el alcance del presente trabajo.
+La metodología a llevar a cabo implica el desarrollo iterativo e incremental, donde se planifican 5 bloques o iteraciones. De esta forma los resultados de una iteración se utilizarán como punto de partida para el desarrollo y ampliación en la siguiente. 
 
-En primer lugar se ha de realizar el estudio del estado del arte, que contempla las tecnologías, sistemas operativos y herramientas para la orquestación orientadas a contenedores, así como proveedores de infraestructura como servicio y otras herramientas tecnológicas necesarias para la implementación. 
-
-En segundo lugar se ha de efectuar un análisis de la aplicación Ruby on Rails en estudio.
-
-La metodología a llevar a cabo implica el desarrollo iterativo e incremental, donde se planifican 5 iteraciones. Los resultados de una iteración serán validados y utilizados como punto de partida para el desarrollo y ampliación de la siguiente. Éstas son:
-\begin{itemize}
-\item Conversión de la aplicación a una arquitectura de microservicios con el uso de Docker, tecnología que automatiza el despliegue de aplicaciones dentro de contenedores de software.
-\item Subida de la imagen resultante de la aplicación al repositorio de imágenes, basado en la nube, DockerHub.
-\item Integración y Despliegue continuos de la aplicación con Travis CI, servicio distribuido para construir y probar proyectos de software alojados en GitHub que, a su vez, es una plataforma de desarrollo software colaborativo para alojar proyectos utilizando el sistema de control de versiones Git.
-\item Despliegue monomáquina con VirtualBox, herramienta de virtualización de código abierto multiplataforma, Vagrant, herramienta para la creación y configuración de entornos de desarrollo virtualizados, y CoreOs, sistema operativo basado en el kernel de Linux con las funcionalidades mínimas necesarias para la implementación de aplicaciones dentro de contenedores de software.
-\item Despliegue en la nube pública de Amazon Web Services, colección de servicios de computación en la nube que forman una infraestructura y plataforma como servicio.
-\end{itemize}
+Las iteraciones a realizar, con las herramientas o tecnologías a usar en cada una de ellas, son:
+\begin{enumerate}
+\item Conversión de la aplicación a una arquitectura de microservicios con el uso de Docker (automatiza el despliegue de aplicaciones dentro de contenedores de software).
+\item Subida de la imagen resultante de la aplicación al repositorio de imágenes DockerHub (repositorio de imágenes Docker basado en la nube).
+\item Integración y Despliegue continuos de la aplicación con Travis CI (servicio distribuido de integración y despliegue continuos para construir y probar proyectos de software alojados en GitHub) y GitHub (plataforma colaborativa para alojar proyectos utilizando el sistema de control de versiones Git).
+\item Despliegue monomáquina con VirtualBox (herramienta de virtualización de código abierto multiplataforma), Vagrant (herramienta para la creación y configuración de entornos de desarrollo virtualizados), y CoreOS (sistema operativo basado en el kernel de Linux con las funcionalidades mínimas necesarias para la implementación de aplicaciones dentro de contenedores de software).
+\item Despliegue en la nube pública de Amazon Web Services (colección de servicios de computación en la nube que forman una infraestructura como servicio y una plataforma como servicio).
+\end{enumerate}
 
 \section{Planificación inicial}
 
+La planificación inicial contempla 4 fases con una duración estimada de 300 horas:
+\begin{enumerate}
+\item Estudio previo del estado del arte que contempla las tecnologías, sistemas operativos y herramientas para la orquestación orientadas a contenedores, así como proveedores de infraestructura como servicio y otras herramientas tecnológicas necesarias para la implementación. También se realiza el análisis de la aplicación Ruby on Rails. Duración estimada de 80 horas.
+\item Diseño, desarrollo e implementación de las 5 iteraciones propuestas. Duración estimada 145 horas.
+\item Evaluación, validación y prueba de las funcionalidades añadidas en cada una de las iteraciones. Duración estimada de 25 horas.
+\item Preparación de la documentación y memoria del presente trabajo. Duración estimada de 50 horas.
+\end{enumerate}
+
 \section{Aportaciones}
 
-El presente trabajo presenta un arquetipo de infraestructura de aplicación que enlaza el uso de varias tecnologías emergentes como propuesta formal de desarollo. Esta propuesta se basa en la división de cada uno de los servicios que la componen y permiten su funcionamiento, de forma que queden encapsulados en contenedores de software, realizando el despliegue final en la nube. Para ello se utiliza Docker, que se ha convertido en una tecnología robusta para la construcción y operación con contenedores, en la compañía de herramientas como Travis CI, DockerHub y GitHub, que posibilitan un desarrollo controlado con integración y despliegue continuos. Además, se propone el uso del sistema operativo CoreOS que permite manejar y operar con contenedores de forma que se disponga de máquinas que automaticen su tratamiento. A su vez, se muestra el despliegue en la nube de Amazon Web Services, como infraestructura y plataforma competente, que ofrece grandes servicios, capacidades y recursos.
+Este trabajo se centra en presentar un nuevo arquetipo de infraestructura de aplicación, que enlaza el uso de varias tecnologías emergentes, para generar un entorno reproducible de desarrollo, tanto en local como en la nube. 
+
+Este tipo de práctica no se lleva a cabo durante los estudios de Máster ni de Grado y representa el estudio de nuevas nociones presentes en el mercado. 
+
+Estas actividades son llevadas a cabo por DevOps, acrónimo inglés de \textit{development} y \textit{operations}, que se refiere a un movimiento que se centra en la comunicación, colaboración e integración entre desarrolladores de software y profesionales en las tecnologías de la información. Así, con estos procedimientos se automatiza el proceso de entrega del software y los cambios en la infraestructura para crear entornos donde la construcción, prueba y lanzamiento de un software pueda ser más rápido y fiable. 
+
+A su vez, otra nueva disciplina como es SRE, proveniente de \textit{Site Reliability Engineering}, incorpora y aplica aspectos de la ingeniería de software a operaciones destinadas a crear sistemas de software ultra escalables y altamente confiables. 
+
+Estos perfiles no están tan presentes en Canarias como internacionalmente, pero representan un fuerte nicho de mercado que comienza a potenciarse y a ser muy demandados para la aplicación de soluciones como el propuesto despliegue automatizado de la infraestructura implementada.
 
 \section{Justificación de la competencia específica cubierta}
 

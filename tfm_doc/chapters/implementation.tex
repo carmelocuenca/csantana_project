@@ -5,32 +5,42 @@ En este capítulo se expone el análisis de la aplicación web Ruby on Rails, de
 
 \section{Análisis de la aplicación Ruby on Rails}
 
-La aplicación web \kode{sample\_app\_rails\_4}, escrita en lenguaje Ruby\footnotettt{Ruby}{https://www.ruby-lang.org/es}, es parte de un tutorial sobre el uso del \textit{framework} de desarrollo de aplicaciones web Ruby on Rails\footnotettt{Ruby on Rails}{http://www.rubyonrails.org.es}. Se trata de una aplicación de muestra, desarrollada mediante una combinación de simulaciones, pruebas de desarrollo TDD\footnotettt{TDD}{http://agiledata.org/essays/tdd.html} y pruebas de integración. 
-
-Tiene una arquitectura de 3 capas: cliente, aplicación y base de datos. Está creada a partir de páginas estáticas con contenido dinámico, tiene un diseño de sitio web, un modelo de datos de usuario y un sistema completo de registro y autenticación, incluida la activación de cuentas y restablecimiento de contraseñas. Además, cuenta con funciones de \textit{microblogging} y redes sociales. 
-
-Así, la aplicación tendrá usuarios que crearán \textit{microposts} dentro de un marco de autenticación e inicio de sesión, donde la interfaz gráfica de la página principal de un usuario concreto se visualizará como sigue:
+La aplicación web \kode{sample\_app\_rails\_4}, escrita en lenguaje Ruby, es parte de un tutorial\cite{rubytutorial} sobre el uso del \textit{framework} de desarrollo de aplicaciones web Ruby on Rails. Está desarrollada mediante una combinación de simulaciones, pruebas de desarrollo TDD y pruebas de integración. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/sampleapp.png}
-\caption{Aplicación web \kode{sample\_app\_rails\_4}.}
+\caption{Aplicación web \kode{sample\_app\_rails\_4}. \label{fig:sampleapp}}
 \end{figure}
 
-Las características de la arquitectura Ruby on Rails de la aplicación son:
+Tiene una arquitectura de 3 capas: cliente, aplicación y base de datos. Está creada a partir de páginas estáticas con contenido dinámico, tiene un diseño de sitio web, un modelo de datos de usuario y un sistema completo de registro y autenticación, incluida la activación de cuentas y restablecimiento de contraseñas. Además, cuenta con funciones de \textit{microblogging} y redes sociales. 
+
+Así, la aplicación tendrá usuarios que crearán \textit{microposts} dentro de un marco de autenticación e inicio de sesión, donde la interfaz gráfica de la página principal de un usuario concreto se visualizará como muestra la Figura \ref{fig:sampleapp}.
+
+La arquitectura Ruby on Rails de esta aplicación se pueden apreciar en la Figura \ref{fig:architecturesampleapp}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/rubyonrails.png}
+\caption{Integración entre características y componentes de Ruby on Rails.\footnotemark \label{fig:architecturesampleapp}}
+\end{figure}
+
+\footnotetext{Mejia (2011). Ruby on Rails Architectural Design [Figura]. Recuperado de \url{http://adrianmejia.com/blog/2011/08/11/ruby-on-rails-architectural-design}}
+
+Sus características son:
 \begin{itemize}
 \item Arquitectura Modelo-Vista-Controlador (MVC): Mejora la capacidad de mantenimiento, desacoplamiento y pruebas de la aplicación.
 \item Arquitectura \textit{Representational State Transfer} (REST) para servicios web.
-\item Soporta las principales bases de datos como MySQL\footnotettt{MySQL}{https://www.mysql.com}, Oracle\footnotettt{Oracle}{https://www.oracle.com/es/database/index.html} y PostgreSQL\footnotettt{PostgreSQL}{http://www.postgresql.org.es}, entre otras.
+\item Soporta las principales bases de datos como MySQL y PostgreSQL.
 \item Generadores de \textit{scripts} para automatizar tareas.
-\item Uso de \textit{YAML}, formato de serialización de datos inspirado en lenguajes como \textit{XML} y \textit{C}.
+\item Uso del formato de serialización de datos \textit{YAML}.
 \end{itemize}
 
-Éstas se distribuyen en los siguientes componentes de Rails:
+Las características se distribuyen en los siguientes componentes de Rails:
 \begin{itemize}
 \item \textit{Action Mailer}: Proporciona servicios de correo electrónico. 
 \item \textit{Action Pack}: Capta las solicitudes de usuario realizadas por el navegador y las asigna a acciones definidas en la capa de controladores.
-\subitem-- \textit{Action Controller}: Enruta solicitudes a su controlador correspondiente. 
+\subitem-- \textit{Action Controller}: Enruta solicitudes al controlador. 
 \subitem-- \textit{Action Dispatcher}: Controla, analiza y procesa el enrutamiento de la solicitud del navegador web.
 \subitem-- \textit{Action View}: Realiza la presentación de la página web solicitada.
 \item \textit{Active Model}: Define la interfaz entre el \textit{Action Pack} y los módulos \textit{Active Record}.
@@ -40,19 +50,11 @@ Las características de la arquitectura Ruby on Rails de la aplicación son:
 \item \textit{Railties}: Código básico de Rails que construye nuevas aplicaciones. 
 \end{itemize}	 
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{images/figures/rubyonrails.png}
-\caption{Integración entre características y componentes de Ruby on Rails.\footnotemark}
-\end{figure}
-
-\footnotetext{Mejia (2011). Ruby on Rails Architectural Design [Figura]. Recuperado de \url{http://adrianmejia.com/blog/2011/08/11/ruby-on-rails-architectural-design}}
-
 Una vez vistas las características y componentes, tanto de una aplicación Ruby on Rails genérica como de la aplicación en actual estudio, se elabora un trabajo adicional a partir de ella, aplicando una serie de cambios y adiciones para la consecución de los objetivos inicialmente propuestos.
 
 \section[Iteración 1: Arquitectura de microservicios]{Iteración 1: Conversión a una arquitectura de microservicios con el uso de Docker}
 
-La primera iteración consiste en adecuar la aplicación para que utilice contenedores en su funcionamiento. Esta tarea supone el uso de la tecnología de contenedores Docker para realizar el despliegue, en una máquina física, de la siguiente infraestructura:
+Como se muestra en la Figura \ref{fig:figure_docker_microservices}, la primera iteración consiste en adecuar la aplicación para que utilice contenedores en su funcionamiento. Esta tarea supone el uso de la tecnología de contenedores Docker para realizar el despliegue, en una máquina física, de la siguiente infraestructura:
 
 \begin{figure}[H]
 \image{images/figures/iteration1.png}
@@ -63,11 +65,11 @@ La aplicación \kode{sample\_app\_rails\_4} está disponible en un repositorio G
 
 Mediante Docker se obtienen las imágenes pertenecientes a dos servicios. El primero implementa la funcionalidad de la base de datos \kode{PostgreSQL} y el segundo el servidor web y proxy inverso \kode{Nginx}. El proxy inverso es un proxy que aparenta ser un servidor web ante los clientes, pero que en realidad reenvía las solicitudes que recibe a uno o más servidores de origen. Se escoge \kode{Nginx} por ser multiplataforma, ligero, de alto rendimiento y software libre.
 
-La aplicación en su origen utiliza una base de datos \kode{SQLite}\footnotettt{SQLite}{https://sqlite.org} que se cambia por \kode{PostgreSQL}, presente en el contenedor \kode{some-postgres}. 
+La aplicación en su origen utiliza una base de datos \kode{SQLite} que se cambia por \kode{PostgreSQL}, presente en el contenedor \kode{some-postgres}. 
 
-Otro de los cambios a implementar es la sustitución del servidor web \kode{rails s} por \kode{puma}\footnotettt{Servidor Web Puma}{http://puma.io}, construido para ofrecer mayor velocidad y paralelismo.
+Otro de los cambios a implementar es la sustitución del servidor web \kode{rails s} por \kode{puma}, construido para ofrecer mayor velocidad y paralelismo.
 
-Para poder crear un contenedor que contenga la aplicación web habrá que crear su imagen Docker, que se llamará \kode{sample\_app\_rails\_4\_image}. A efectos de mantenerla remotamente se subirá al repositorio de imágenes DockerHub\footnotettt{DockerHub}{https://hub.docker.com} con la etiqueta \kode{initial}.
+Para poder crear un contenedor que contenga la aplicación web habrá que crear su imagen Docker, que se llamará \kode{sample\_app\_rails\_4\_image}. A efectos de mantenerla remotamente se subirá al repositorio de imágenes Docker Hub con la etiqueta \kode{initial}.
 
 El principal propósito de este despliegue es que pueda realizarse automáticamente tras la ejecución de un \textit{script}. Este fichero comprobará que las variables de entorno que especifican el nombre y la contraseña del usuario de las distintas bases de datos PostgreSQL existentes (test, desarrollo y producción) están correctamente establecidas.
 
@@ -77,12 +79,12 @@ Con la intención de utilizar como servidor web de la aplicación un contenedor 
 
 También se crea un volumen Docker de datos, llamado \kode{volume-public}, para compartirlo entre la aplicación web, la base de datos y el servidor proxy.
 
-Con todo ello, quedará construir, migrar y poblar la base de datos para, finalmente, ejecutar el servidor \kode{puma} dentro del contenedor \kode{some-app} y comprobar desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080. Esto producirá el siguiente resultado:
+Con todo ello, quedará construir, migrar y poblar la base de datos para, finalmente, ejecutar el servidor \kode{puma} dentro del contenedor \kode{some-app} y comprobar desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080. Esto producirá el resultado de la Figura \ref{fig:resultado1}:
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/resultado1.png}
-\caption{Resultado de la Iteración 1 con el uso de Docker.}
+\caption{Resultado de la Iteración 1 con el uso de Docker. \label{fig:resultado1}}
 \end{figure}
 
 \subsection{Preparación del repositorio local y remoto}
@@ -115,7 +117,7 @@ Con la intención de realizar el cambio de la base de datos se elimina del fiche
 $ bundle install --without production
 \end{code}
 
-La instalación de \kode{PostgreSQL} requiere credenciales de usuario con contraseña para acceder. y se especifica mediante las variables de entorno \kode{\$POSTGRES\_USER} y \kode{\$POSTGRES\_PASSWORD} en el fichero local \kode{\textasciitilde{}/.postgres/credentials}, cuyo contenido es:
+La instalación de \kode{PostgreSQL} requiere credenciales de usuario con contraseña para acceder y se especifica mediante las variables de entorno \kode{\$POSTGRES\_USER} y \kode{\$POSTGRES\_PASSWORD} en el fichero local \kode{\textasciitilde{}/.postgres/credentials}, cuyo contenido es:
 
 \begin{codelisting}
 \label{code:credentials}
@@ -226,7 +228,7 @@ Para acceder a la aplicación se escoge cambiar el servidor web \kode{rails s} p
 $ bundle install --without production
 \end{code}
 
-\subsection{Configuración automatizada para la creación de los contenedores}
+\subsection{Configuración para la creación de los contenedores}
 
 En primer lugar se configuran los registros o \textit{logs} que crearán los contenedores añadiendo en el fichero \kode{config/application.rb} lo siguiente:
 
@@ -315,7 +317,7 @@ Ahora se crea el contenedor \textit{job} de la aplicación web, llamado \kode{ap
 
 El siguiente paso crea el contenedor \textit{task} de la aplicación web, llamado \kode{app-task}. Se construye como el anterior sin el \textit{entrypoint}, configurando y preparando las bases de datos, el \textit{token} de prueba y ejecutando el servidor \kode{puma} en el puerto \kode{9292}. Todo ello a través de \textit{/bin/bash \--c}
 
-Para crear el contenedor \kode{some-nginx} que proporciona el servidor \kode{Nginx} se indica la imagen con \textit{\--d}, que el tráfico del puerto 8080 en el sistema anfitrión se redirija al 80 del contenedor, \textit{\--p}, y se enlaza la aplicación web con el contenedor en el que se ejecuta, a través del indicador \textit{\---link}. Además se monta el volumen \kode{volume-public} con el indicador \textit{\--v}. Por último, se crea localmente el fichero de configuración \kode{/etc/nginx/conf.d/nginx.conf} en el que se especifica que este servidor escuchará en el puerto 80, hará uso del directorio \kode{/usr/src/app/public}, se agregan los campos de redirección y nombre del servidor al encabezado de solicitud, se deshabilita la redirección a otra ruta, se indican los ficheros para el procesamiento de solicitudes, así como que ha de resolver la aplicación en el puerto 9292, usado por \kode{puma}.  
+Para crear el contenedor \kode{some-nginx} que proporciona el servidor Nginx se indica la imagen con \textit{\--d}, que el tráfico del puerto 8080 en el sistema anfitrión se redirija al 80 del contenedor, \textit{\--p}, y se enlaza la aplicación web con el contenedor en el que se ejecuta, a través del indicador \textit{\---link}. Además se monta el volumen \kode{volume-public} con el indicador \textit{\--v}. Por último, se crea localmente el fichero de configuración \kode{/etc/nginx/conf.d/nginx.conf} en el que se especifica que este servidor escuchará en el puerto 80, hará uso del directorio \kode{/usr/src/app/public}, se agregan los campos de redirección y nombre del servidor al encabezado de solicitud, se deshabilita la redirección a otra ruta, se indican los ficheros para el procesamiento de solicitudes, así como que ha de resolver la aplicación en el puerto 9292, usado por \kode{puma}.  
 
 \begin{codelisting}
 \label{code:nginxconf}
@@ -406,9 +408,9 @@ $ curl http://localhost:8080
 \caption{Resultado de la petición \kode{curl http://localhost:8080}.}
 \end{figure}
 
-\section[Iteración 2: Subida de la imagen a DockerHub]{Iteración 2: Subida de la imagen resultante de la aplicación al repositorio de imágenes DockerHub}
+\section[Iteración 2: Subida de la imagen a Docker Hub]{Iteración 2: Subida de la imagen resultante de la aplicación al repositorio de imágenes Docker Hub}
 
-A efectos de mantener la imagen remotamente se sube al repositorio DockerHub, previa creación de una cuenta en él. Para ello se inicia sesión por consola y se añade una etiqueta a la imagen \kode{sample\_app\_rails\_4\_image}, especificando su identificador y el repositorio escogido dentro de la cuenta:
+A efectos de mantener la imagen remotamente se sube al repositorio Docker Hub, previa creación de una cuenta en él. Para ello se inicia sesión por consola y se añade una etiqueta a la imagen \kode{sample\_app\_rails\_4\_image}, especificando su identificador y el repositorio escogido dentro de la cuenta:
 
 %= lang:bash
 \begin{code}
@@ -434,28 +436,28 @@ La imagen etiquetada como \kode{initial} se aprecia ahora en Docker Hub:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/figures/dockerhubinitial.png}
-\caption{Versión \textit{initial} de la imagen \kode{sample\_a\_rails\_4} en DockerHub.}
+\caption{Versión \textit{initial} de la imagen \kode{sample\_a\_rails\_4} en Docker Hub.}
 \end{figure}
 
-\section[Iteración 3: Integración y Despliegue continuos]{Iteración 3: Integración y Despliegue continuos de la aplicación con Travis CI, DockerHub y GitHub}
+\section[Iteración 3: Integración y Despliegue continuos]{Iteración 3: Integración y Despliegue continuos de la aplicación con Travis CI, Docker Hub y GitHub}
 
 En esta iteración se busca adaptar la aplicación Ruby on Rails para que funcione con Travis CI. Esta herramienta se conectará al repositorio de GitHub \kode{sample\_app\_rails\_4-1} con la intención de poder generar una imagen Docker de la aplicación tras cada cambio. Esto permite trabajar en un entorno de desarrollo en el que la integración de los cambios en el proyecto es continua, así como también su despliegue es automatizado.
 
-Para ello se realiza el siguiente proceso:
+Para ello se define la estructura presentada en la Figura \ref{fig:iteration2} .
 \begin{figure}[H]
 \image{images/figures/iteration2.png}
-\caption{Integración y Despliegue continuos con Travis CI.}
+\caption{Integración y Despliegue continuos con Travis CI. \label{fig:iteration2}}
 \end{figure}
 
-Las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática se especifican en el fichero \kode{.travis.yml}. A este fichero se le añadirán, además, las credenciales de la cuenta de DockerHub y GitHub mediante variables de entorno encriptadas. Las acciones a realizar serán la comprobación de que los tests pasan satisfactoriamente, la construcción de una nueva imagen Docker y su subida al repositorio DockerHub.
+Las precondiciones, condiciones y postcondiciones necesarias para construir y desplegar la aplicación en uso de manera automática se especifican en el fichero \kode{.travis.yml}. A este fichero se le añadirán, además, las credenciales de la cuenta de Docker Hub y GitHub mediante variables de entorno encriptadas. Las acciones a realizar serán la comprobación de que los tests pasan satisfactoriamente, la construcción de una nueva imagen Docker y su subida al repositorio Docker Hub.
 
 Para llevarlo a cabo es necesario añadir una configuración de base de datos específica. En este caso se llamará \kode{travis\_ci\_test}.
 
-Finalmente, el resultado permitirá que cuando se haga un nuevo cambio o \textit{commit} acompañado de una subida del mismo al repositorio GitHub comenzará, también, la construcción en Travis CI. Tanto en caso de fallo como de éxito se configura el envío de un correo electrónico que lo anuncie. Al repositorio en DockerHub se subirán 3 copias comprimidas de la imagen. La primera etiquetada con el hash del \textit{commit}, la segunda con el número de construcción en Travis CI y la tercera como la última versión, \textit{latest}:
+Finalmente, el resultado permitirá que cuando se haga un nuevo cambio o \textit{commit} acompañado de una subida del mismo al repositorio GitHub comenzará, también, la construcción en Travis CI. Tanto en caso de fallo como de éxito se configura el envío de un correo electrónico que lo anuncie. Al repositorio en Docker Hub se subirán 3 copias comprimidas de la imagen. La primera etiquetada con el hash del \textit{commit}, la segunda con el número de construcción en Travis CI y la tercera como la última versión, \textit{latest}:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/figures/dockerhubimages.png}
+\includegraphics[width=0.7\textwidth]{images/figures/dockerhubimages.png}
 \caption{Repositorio de \kode{sample\_app\_rails\_4\_image}.\label{fig:dockerhub_images}}
 \end{figure}
 
@@ -464,27 +466,14 @@ Finalmente, el resultado permitirá que cuando se haga un nuevo cambio o \textit
 En primer lugar hay que ingresar en el sitio Travis CI con la cuenta de GitHub y añadir el repositorio con el que se trabaja actualmente:
 
 \begin{figure}[H]
-\image{images/figures/travis_github.png}
+\centering
+\includegraphics[width=0.7\textwidth]{images/figures/travis_github.png}
 \caption{Vinculación de GitHub con Travis CI.\label{fig:travis_github}}
 \end{figure}
 
-\subsection{Configuración y establecimiento de precondiciones, condiciones y postcondiciones}
+\subsection{Configuración de condiciones}
 
-En segundo lugar se procede a instalar la nueva gema. Para ello se edita el fichero \kode{Gemfile}, incluyendo:
-
-\begin{codelisting}
-\label{code:addtravis}
-\codecaption{Fichero \kode{Gemfile}}
-%= lang:ruby
-\begin{code}
-.
-group :development, :test do
-  gem 'travis'
-.
-end
-.
-\end{code}
-\end{codelisting} 
+En segundo lugar se procede a instalar la gema \kode{travis}. Para ello se edita el fichero \kode{Gemfile}, incluyéndola en el grupo de desarrollo y test.
 
 Luego se instala mediante:
 
@@ -514,7 +503,7 @@ Para configurar Travis CI se crea el fichero \kode{.travis.yml}.
 $ touch .travis.yml
 \end{code}
 
-Tras ello, se establecen las variables de entorno de las credenciales de DockerHub. Esto se especifica localmente mediante los comandos:
+Tras ello, se establecen las variables de entorno de las credenciales de Docker Hub. Esto se especifica localmente mediante los comandos:
 
 %= lang:bash
 \begin{code}
@@ -524,7 +513,7 @@ $ travis env set DOCKER_PASSWORD **************
 
 También se agrega una variable de entorno que contenga los 8 primeros caracteres del \textit{hash} del \textit{git commit}, justo debajo de las anteriores.
 
-En la sección \kode{after\_success} del fichero se inicia sesión en DockerHub y luego se construye la imagen. Al repositorio en DockerHub se subirán 3 copias comprimidas de la imagen. La primera etiquetada con el hash del \textit{commit} correspondiente, la segunda con el número de construcción en Travis CI y la tercera como la última versión, \textit{latest}. Además se le indica la base de datos de prueba para la ejecución de los tests y la versión de Ruby en uso.
+En la sección \kode{after\_success} del fichero se inicia sesión en Docker Hub y luego se construye la imagen. Al repositorio en Docker Hub se subirán 3 copias comprimidas de la imagen. La primera etiquetada con el hash del \textit{commit} correspondiente, la segunda con el número de construcción en Travis CI y la tercera como la última versión, \textit{latest}. Además se le indica la base de datos de prueba para la ejecución de los tests y la versión de Ruby en uso.
 
 \begin{codelisting}
 \label{code:travis}
@@ -603,7 +592,7 @@ Dirigiendo a Travis CI donde se comenta el fallo o el éxito:
 \caption{Caso de éxito en Travis CI.}
 \end{figure}
 
-Esta construcción terminará con la creación y subida de las tres imágenes, comentadas en el planteamiento de esta iteración, en el repositorio de DockerHub.
+Esta construcción terminará con la creación y subida de las tres imágenes, comentadas en el planteamiento de esta iteración, en el repositorio de Docker Hub.
 
 \section[Iteración 4: Despliegue en VirtualBox]{Iteración 4: Despliegue monomáquina con unidades de servicio usando Vagrant, VirtualBox y CoreOS}
 
@@ -653,7 +642,7 @@ Además puede visualizarse la máquina mediante VirtualBox:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/vboxcore01.png}
+\includegraphics[width=0.6\textwidth]{images/figures/vboxcore01.png}
 \caption{Máquina virtual \kode{core-01} desde VirtualBox.}
 \end{figure}
 
@@ -717,7 +706,7 @@ coreos:
 
 \subsection{Interpretación del fichero config.rb}
 
-El segundo fichero importante para este despliegue es \kode{config.rb}. Dicho fichero especifica el número de nodos CoreOS y proporciona una opción para generar automáticamente el \textit{discovery token}, valor que se reemplaza automáticamente cuando se inicia el despliegue o levantamiento de una máquina. Además permite la necesaria corrección del valor del parámetro perteneciente a la estrategia de reinicio de CoreOS, al tener que ser la entrada en el fichero \kode{user-data} de una manera distinta a como es traducido por YAML.
+El segundo fichero importante para este despliegue es \kode{config.rb}. Especifica el número de nodos CoreOS y proporciona una opción para generar automáticamente el \textit{discovery token}, valor que se reemplaza automáticamente cuando se inicia el despliegue o levantamiento de una máquina. Además permite la necesaria corrección del valor del parámetro perteneciente a la estrategia de reinicio de CoreOS, al tener que ser la entrada en el fichero \kode{user-data} de una manera distinta a como es traducido por YAML.
 
 \begin{codelisting}
 \label{code:cloud-config1}
@@ -854,7 +843,7 @@ end
 \end{code}
 \end{codelisting}
 
-\subsection{Configuración y despliegue manual de las unidades de servicio systemd}
+\subsection{Despliegue manual de las unidades systemd}
 
 El primer paso consiste en permitir que exista almacenamiento NFS compartido entre la máquina local y la máquina virtual CoreOS, para pasar a esta última las unidades de servicio a implementar. Para ello es necesario descomentar la siguiente línea, dentro del fichero \kode{Vagrantfile}:
 
@@ -1129,7 +1118,7 @@ Finalmente, se accede a la aplicación desde la máquina CoreOS y desde el siste
 \caption{Acceso a la aplicación desde el sistema anfitrión.}
 \end{figure}
 
-\subsection{Configuración y despliegue automático de las unidades de servicio systemd}
+\subsection{Despliegue automático de las unidades systemd}
 
 Para realizar el despliegue de manera automática se hace uso del fichero \kode{cloud-config} denominado \kode{user-data.sampleapp.vbox}. Este fichero especifica el orden de las unidades a desplegar y las acciones de habilitación y comienzo de los servicios a los que hacen referencia.
 
@@ -1315,23 +1304,21 @@ El resultado en ambos casos ha sido positivo:
 
 En esta iteración se pretende desplegar la infraestructura en la nube pública de Amazon Web Services. Para ello se trabajará el mismo fichero \kode{config.rb}, el nuevo fichero \kode{user-data.sampleapp.aws} y el fichero \kode{Vagrantfile} en el que se introducirá el tratamiento e integración de este proveedor.
 
-La distribución de las unidades de servicio y, por tanto, de los contenedores quedará de la siguiente forma:
+En la Figura \ref{fig:aws-1-iteration} puede distinguirse la distribución de las unidades de servicio, y por tanto, de los contenedores. El proxy, presente en el contenedor \kode{some-nginx}, que redirige al servidor web de la aplicación, en la máquina \kode{core-01}. Nginx será el servicio al cual los clientes y usuarios finales realizan las peticiones para acceder a la aplicación. No solo se va a tener un servidor de la aplicación, éste puede estar replicado desde en una a todas las instancias de la infraestructura y el servicio Nginx deberá balancear la carga entre ellos. Para controlar los servidores web que se registran y/o dejan de estar en el sistema se implementará un nuevo contenenedor, \kode{confd}, y un nuevo volumen Docker, \kode{conf-data}. A su vez, el contenedor \kode{some-postgres} para la base de datos se ubicará en la máquina \kode{core-02}. A él tiene que acceder tanto el contenedor \kode{app-job}, que la crea, migra y alimenta, como el contenedor \kode{app-task} que se dirige al mismo para obtener y escribir la información solicitada y añadida en la aplicación web. Ello se consigue con la implementación del contenedor \kode{skydns} que les servirá como servidor DNS, trabajando con las claves y valores de etc2.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/figures/aws-1-iteration.png}
-\caption{Distribución de la infraestructura a desplegar en AWS.}
+\caption{Distribución de la infraestructura a desplegar en AWS. \label{fig:aws-1-iteration}}
 \label{fig:aws-1-iteration}
 \end{figure}
 
-En ella puede distinguirse el proxy, presente en el contenedor \kode{some-nginx}, que redirige al servidor web de la aplicación, en la máquina \kode{core-01}. Nginx será el servicio al cual los clientes y usuarios finales realizan las peticiones para acceder a la aplicación. No solo se va a tener un servidor de la aplicación, éste puede estar replicado desde en una a todas las instancias de la infraestructura y el servicio Nginx deberá balancear la carga entre ellos. Para controlar los servidores web que se registran y/o dejan de estar en el sistema se implementará un nuevo contenenedor, \kode{confd}, y un nuevo volumen Docker, \kode{conf-data}. A su vez, el contenedor \kode{some-postgres} para la base de datos se ubicará en la máquina \kode{core-02}. A él tiene que acceder tanto el contenedor \kode{app-job}, que la crea, migra y alimenta, como el contenedor \kode{app-task} que se dirige al mismo para obtener y escribir la información solicitada y añadida en la aplicación web. Ello se consigue con la implementación del contenedor \kode{skydns} que les servirá como servidor DNS, trabajando con las claves y valores de etc2.
-
-La relación entre los contenedores, independientemente de su ubicación y replicación en otras instancias, en la manera en la que se ha comentado, puede apreciarse con mayor detalle en la siguiente figura:
+La relación entre los contenedores, independientemente de su ubicación y replicación en otras instancias, en la manera en la que se ha comentado, puede apreciarse con mayor detalle en la Figura \ref{fig:aws-2-iteration}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{images/figures/aws-2-iteration.png}
-\caption{Relación entre los contenedores de la Infraestructura.}
+\caption{Relación entre los contenedores de la Infraestructura. \label{fig:aws-2-iteration}}
 \end{figure}
 
 Cuando la infraestructura se despliega, el contenedor \kode{some-postgres} se registra en \kode{skydns}, que utiliza etc2 para almacenar las claves y valores. De esta manera, \kode{some-postgres} puede ser descubierto por los contenedores \kode{app-job}, donde el primero en iniciarse creará, migrará y alimentará la base de datos. Cuando arrancan los contenedores \kode{app-task}, servidores web de la aplicación, se registran en etc2. El contenedor \kode{confd} vigila estos cambios cada 5 segundos para actualizar la configuración de \kode{some-nginx} y éste pueda resolver hacia ellos. Puesto que se comparte un fichero entre dos contenedores se utiliza el volumen \kode{conf-data}. Así, cuando un cliente realiza una petición a través de Internet a \kode{some-nginx}, éste puede redirigirle a uno de los servidores \kode{app-task}, el cuál consultará \kode{skydns} para poder obtener y escribir información en la base de datos. La política para redireccionar a los servidores web será \textit{Round Robin}, del primero al último.
@@ -1662,7 +1649,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'sudo systemctl flanneld \
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/flanneld-aws-3.png}
+\includegraphics[width=0.8\textwidth]{images/figures/flanneld-aws-3.png}
 \caption{Comprobación de la red virtual.}
 \end{figure}
 
@@ -1702,7 +1689,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 \
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/figures/curl-aws-3.png}
+\includegraphics[width=0.8\textwidth]{images/figures/curl-aws-3.png}
 \caption{Acceso al servicio por consola de comandos.}
 \end{figure}
 
@@ -1931,7 +1918,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'curl http://localhost:80 \
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{images/figures/curl-fleet.png}
+\includegraphics[width=0.75\textwidth]{images/figures/curl-fleet.png}
 \caption{Acceso al servicio por consola de comandos.}
 \end{figure}
 
@@ -1962,7 +1949,7 @@ Ahora será necesario añadir el metadato a los ficheros de las unidades de serv
 
 Como el contenedor \kode{some-postgres} ya no se encontrará en la misma máquina que el resto de contenedores no es posible compartir el volumen \kode{volume-public} con ellos. Por lo tanto se eliminará en su definición el comando \textit{-v}, que permite exportarlo, así como su inclusión en los parámentros \textit{After} y \textit{Require}.
 
-Lo siguiente será crear el contenedor que se corresponde con el servidor DNS, presente en todas las máquinas. Este último hecho es posible no añadiendo ningún metadato en la sección \textit{[X-Fleet]}. Se escribe un nuevo fichero llamado \kode{/home/core/skydns.service} antes del fichero \kode{/home/core/volumen-public.service}. Además se le indica que será iniciado después de Docker y etcd2. Luego se procede de la misma manera que con las otras unidades de servicio. Antes de comenzar el servicio borrará el contenedor si existe previamente y luego descargará la imagen desde DockerHub. Antes de empezar el servicio se establece la configuración de SkyDNS de forma que se especifica la dirección IP y puerto en la que debe escuchar, que será la local a la máquina por el puerto 53. También se establece el dominio para el que es autoritario, escogiéndose \kode{sampleapp.local.}, y el tiempo de vida (TTL) de las respuestas a 30 segundos. A la hora de comenzar el servicio restará indicarle que las máquinas etcd se comunican en la dirección IP privada en uso y puerto 2379. Como se trata de una unidad fleet, será necesario añadir el servicio global \kode{fleet-skydns.service} antes de \kode{fleet-volume-public.service} para comenzar el servicio. 
+Lo siguiente será crear el contenedor que se corresponde con el servidor DNS, presente en todas las máquinas. Este último hecho es posible no añadiendo ningún metadato en la sección \textit{[X-Fleet]}. Se escribe un nuevo fichero llamado \kode{/home/core/skydns.service} antes del fichero \kode{/home/core/volumen-public.service}. Además se le indica que será iniciado después de Docker y etcd2. Luego se procede de la misma manera que con las otras unidades de servicio. Antes de comenzar el servicio borrará el contenedor si existe previamente y luego descargará la imagen desde Docker Hub. Antes de empezar el servicio se establece la configuración de SkyDNS de forma que se especifica la dirección IP y puerto en la que debe escuchar, que será la local a la máquina por el puerto 53. También se establece el dominio para el que es autoritario, escogiéndose \kode{sampleapp.local.}, y el tiempo de vida (TTL) de las respuestas a 30 segundos. A la hora de comenzar el servicio restará indicarle que las máquinas etcd se comunican en la dirección IP privada en uso y puerto 2379. Como se trata de una unidad fleet, será necesario añadir el servicio global \kode{fleet-skydns.service} antes de \kode{fleet-volume-public.service} para comenzar el servicio. 
 
 Así, habrá que añadir a \kode{user-data.sampleapp.aws}:
 
@@ -2132,7 +2119,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c '/usr/bin/etcdctl get \
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{images/figures/skydns-gets.png}
+\includegraphics[width=0.9\textwidth]{images/figures/skydns-gets.png}
 \caption{Lectura de los registros en SkyDNS contemplada por las 3 máquinas.}
 \end{figure}
 
@@ -2146,7 +2133,7 @@ La máquina \kode{core-01} resuelve tanto \textit{db} como \textit{some-postgres
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{images/figures/skydns-ping.png}
+\includegraphics[width=0.9\textwidth]{images/figures/skydns-ping.png}
 \caption{Conexión a \textit{db} como \textit{some-postgres} desde \kode{app-task}.}
 \end{figure}
 
@@ -2186,7 +2173,7 @@ Y mediante la web y la dirección IP elástica se ingresa con uno de los usuario
 
 \subsection{Balanceo de carga con Nginx usando Confd}
 
-Con el propósito de implementar la infraestructura final, en la que en cada una de las máquinas que conforma el clúster hay un servidor de la aplicación, en la primera máquina se sitúa el proxy que balanceará la carga entre ellos y en la segunda máquina se encontrará la base de datos a la que acudirán los servidores de aplicación, se van a realizar los siguientes cambios. 
+Con el propósito de implementar la infraestructura final, en la que en cada una de las máquinas que conforma el clúster hay un servidor de la aplicación, se van a realizar una serie de cambios. En la primera máquina se sitúa el proxy, que balanceará la carga entre ellos. En la segunda máquina se encontrará la base de datos a la que acudirán los servidores de aplicación.
 
 En primer lugar, al no encontrarse los distintos contenedores en la misma máquina la opción de tener el volumen Docker \kode{volume-public} compartido entre ellos no es posible en la manera en la que se ha ido haciendo, así que se elimina su definición en el fichero \kode{user-data.sampleapp.aws}, en \kode{/home/core/volume-public.service}, su inclusión en los parámetros \textit{After} y \textit{Requires} en los servicios que lo implementan, el parámetro \textit{-v} que lo exporta en los contenedores \kode{app-job}, \kode{app-task} y \kode{some-nginx}, así como la unidad global \kode{fleet-volume-public.service}.
 
@@ -2375,7 +2362,7 @@ CMD /usr/bin/confd -interval=5 -node=http://$COREOS_PRIVATE_IPV4:4001
 \end{code}
 \end{codelisting}
 
-De esta manera, será necesario crear en local el directorio vacío \kode{etc/confd}, construir la imagen y subirla a DockerHub para poder usarla:
+De esta manera, será necesario crear en local el directorio vacío \kode{etc/confd}, construir la imagen y subirla a Docker Hub para poder usarla:
 
 %= lang:bash
 \begin{code}
@@ -2456,7 +2443,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'etcdctl cluster-health'; done
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{images/figures/health-confd.png}
+\includegraphics[width=0.75\textwidth]{images/figures/health-confd.png}
 \caption{Salud del clúster contemplada por las 3 máquinas.}
 \end{figure}
 
@@ -2469,7 +2456,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-machines'; done
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/figures/machines-confd.png}
+\includegraphics[width=0.75\textwidth]{images/figures/machines-confd.png}
 \caption{Información de las máquinas contemplada por las 3 máquinas.}
 \end{figure}
 
@@ -2480,7 +2467,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'fleetctl list-units'; done
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.55\textwidth]{images/figures/units-confd.png}
+\includegraphics[width=0.65\textwidth]{images/figures/units-confd.png}
 \caption{Información de las unidades fleet contemplada por las 3 máquinas.}
 \end{figure}
 
@@ -2503,7 +2490,7 @@ Ahora que los contenedores \kode{app-task} se han registrado se comprueba que el
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/figures/update-journal-confd.png}
+\includegraphics[width=0.75\textwidth]{images/figures/update-journal-confd.png}
 \caption{Actualización de la configuración Nginx desde \kode{confd}.}
 \end{figure}
 
@@ -2515,7 +2502,7 @@ Ahora que los contenedores \kode{app-task} se han registrado se comprueba que el
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{images/figures/update-nginx-confd.png}
+\includegraphics[width=0.6\textwidth]{images/figures/update-nginx-confd.png}
 \caption{Fichero \kode{nginx.conf} actualizado.}
 \end{figure}
 
@@ -2528,19 +2515,19 @@ $ docker inspect app-task -f "{{ .NetworkSettings.IPAddress }}"
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/IP1-confd.png}
+\includegraphics[width=0.8\textwidth]{images/figures/IP1-confd.png}
 \caption{Dirección IP del contenedor \kode{app-task} en la máquina \kode{core-01}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/IP2-confd.png}
+\includegraphics[width=0.8\textwidth]{images/figures/IP2-confd.png}
 \caption{Dirección IP del contenedor \kode{app-task} en la máquina \kode{core-02}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/figures/IP3-confd.png}
+\includegraphics[width=0.8\textwidth]{images/figures/IP3-confd.png}
 \caption{Dirección IP del contenedor \kode{app-task} en la máquina \kode{core-03}.}
 \end{figure}
 
@@ -2553,7 +2540,7 @@ Así mismo, si se realizan 3 peticiones de servicio prácticamente juntas, desde
 $ for i in 1 2 3; do curl http://localhost:80 | tail -n 15; done
 \end{code}
 
-El comando con el que comprobar a qué hora fueron resueltas las peticiones es:
+Para comprobar cuándo fueron resueltas las peticiones se ejecuta:
 
 %= lang:bash
 \begin{code}
@@ -2562,19 +2549,19 @@ $ docker logs app-task
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{images/figures/logs3-confd.png}
+\includegraphics[width=0.7\textwidth]{images/figures/logs3-confd.png}
 \caption{Información de \kode{app-task} sobre una petición en \kode{core-03}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{images/figures/logs1-confd.png}
+\includegraphics[width=0.7\textwidth]{images/figures/logs1-confd.png}
 \caption{Información de \kode{app-task} sobre una petición en \kode{core-01}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{images/figures/logs2-confd.png}
+\includegraphics[width=0.7\textwidth]{images/figures/logs2-confd.png}
 \caption{Información de \kode{app-task} sobre una petición en \kode{core-02}.}
 \end{figure}
 
@@ -2660,7 +2647,7 @@ $ for i in 1 2 3; do vagrant ssh core-0$i -c 'etcdctl cluster-health'; done
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/figures/health-vbox.png}
+\includegraphics[width=0.7\textwidth]{images/figures/health-vbox.png}
 \caption{Salud del clúster contemplada por las 3 máquinas.}
 \end{figure}
 
@@ -2674,7 +2661,7 @@ $ vagrant ssh core-03
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/figures/machines-vbox.png}
+\includegraphics[width=0.7\textwidth]{images/figures/machines-vbox.png}
 \caption{Información de las máquinas del clúster.}
 \end{figure}
 
@@ -2686,7 +2673,7 @@ $ vagrant ssh core-02
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/figures/units-vbox.png}
+\includegraphics[width=0.7\textwidth]{images/figures/units-vbox.png}
 \caption{Información de las unidades de servicio del clúster.}
 \end{figure}
 
@@ -2700,12 +2687,12 @@ $ vagrant ssh core-01
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/figures/curl-vbox.png}
+\includegraphics[width=0.7\textwidth]{images/figures/curl-vbox.png}
 \caption{Acceso al servicio desde \kode{core-01}.}
 \end{figure}
 
 El resultado final está presentado en los siguientes repositorios GitHub:
 \begin{itemize}
 \item \kode{CarolinaSantana/sample\_app\_rails\_4-1}: a partir del que se construye la imagen de la aplicación.
-\item \kode{CarolinaSantana/coreos-vagrant}: la Infraestructura como Código a desplegar en los proveedores VirtualBox o Amazon Web Services.
+\item \kode{CarolinaSantana/coreos-vagrant}: Infraestructura como Código a desplegar en los proveedores VirtualBox o Amazon Web Services.
 \end{itemize}

@@ -1,15 +1,15 @@
 \chapter{Resultados y Conclusiones}
 \label{cha:results}
 
-En este capítulo se presentan los resultados obtenidos tras la fase de desarrollo e implementación y las conclusiones alcanzadas del presente Trabajo de Fin de Máster.
+En este capítulo se presentan los resultados obtenidos, tras la fase de desarrollo, y las conclusiones alcanzadas del presente Trabajo de Fin de Máster.
 
 \section{Resultados}
 
 A continuación se presentan los resultados obtenidos.
 
-La arquitectura de la aplicación está basada, ahora, en la filosofía de contenedores, utilizando Docker para su construcción y tratamiento, donde cada servicio se encapsula con las mínimas funcionalidades necesarias para desempeñar su actividad.
+La arquitectura de la aplicación está basada, ahora, en la filosofía de contenedores, utilizando Docker para su construcción y tratamiento. Cada servicio se encapsula con las mínimas funcionalidades necesarias.
 
-La aplicación ha sido dotada con las configuraciones oportunas para implementar los servicios con posterioridad a la construcción de su imagen Docker. Ésta se produce con cada cambio o añadido en el repositorio GitHub en el que se desarrolla por medio de Travis CI, que se encarga de realizar la subida de la imagen resultante en el repositorio DockerHub.
+La aplicación ha sido configurada para implementar los servicios con posterioridad a la construcción de su imagen Docker. Ésta vuelve a generarse con cada cambio o añadido en el repositorio GitHub en el que se desarrolla por medio de Travis CI, encargado de realizar la subida de la imagen resultante en el repositorio DockerHub.
 
 Los contenedores que implementan los servicios que permiten el funcionamiento de la aplicación son:
 \begin{itemize}
@@ -22,7 +22,7 @@ Los contenedores que implementan los servicios que permiten el funcionamiento de
 \item \kode{conf-data}: Almacenamiento compartido entre \kode{some-nginx} y \kode{confd} para poder hacer el cambio de configuración de Nginx.
 \end{itemize}
 
-Estos contenedores se distribuyen en un clúster dentro de máquinas CoreOS, como se observa en la Figura \ref{fig:aws-1-iteration}, página \pageref{fig:aws-1-iteration}. En ella se muestra cómo se configura el despliegue para $n$ máquinas. Éste es posible realizarlo localmente en VirtualBox o remotamente en Amazon Web Services. 
+Estos contenedores se distribuyen en un clúster dentro de máquinas CoreOS, como se observa en la Figura \ref{fig:aws-1-iteration}, para $n$ máquinas. Éste es posible realizarlo localmente en VirtualBox o remotamente en Amazon Web Services. 
 
 En todo caso deben haber 2 máquinas como mínimo. En la instancia \kode{core-01} se ubica el contenedor \kode{some-nginx}, \kode{confd} y \kode{conf-data}. Por su parte, el contenedor \kode{some-postgres} se encuentra en la máquina \kode{core-02}. Los contenedores \kode{skydns}, \kode{app-job} y \kode{app-task} están replicados en todas las máquinas del clúster. 
 
@@ -32,8 +32,7 @@ En el caso de VirtualBox:
 
 %= lang:bash
 \begin{code}
-$ vagrant up
-$ vagrant ssh core-01
+$ vagrant up && vagrant ssh core-01
 # curl http://localhost:80
 \end{code}
 
@@ -42,32 +41,31 @@ En el caso de Amazon Web Services:
 %= lang:bash
 \begin{code}
 $ . ~/.aws-credentials/aws-credentials
-$ vagrant up --provider=aws
-$ vagrant ssh core-01
+$ vagrant up --provider=aws && vagrant ssh core-01
 # curl http://localhost:80
 \end{code}
 
 \section{Conclusiones}
 
-Las conclusiones del presente trabajo se expresan en relación a la consecución de los objetivos inicialmente propuestos, los trabajos futuros por realizar y la valoración personal.
+Las conclusiones del presente trabajo se expresan en relación a la consecución de los objetivos, los trabajos futuros por realizar y la valoración personal.
 
 \subsection{Consecución de objetivos}
 
-Al término del presente trabajo los objetivos específicos y generales definidos al inicio han sido logrados. 
+Los objetivos específicos y generales definidos al inicio han sido logrados.
 
-Tras realizar el estudio del estado del arte, que permitió conocer las tecnologías de virtualización, contenedores y orquestación actuales más relevantes y obtener mayor información sobre las propuestas para su uso, así como el análisis de la aplicación objeto se comenzó la fase de implementación, respetando el orden y contemplando la inclusión de todas las iteraciones definidas inicialmente. 
+El estudio del estado del arte permitió conocer las tecnologías de virtualización, contenedores y orquestación actuales más relevantes, así como obtener mayor información sobre las propuestas para su uso. Por su parte, el análisis de la aplicación objeto hizo conocer las diferentes capas, características y componentes que permitieron comenzar la fase de implementación, respetando el orden y contemplando la inclusión de todas las iteraciones definidas inicialmente. 
 
-El desarrollo iterativo e incremental permitió ir constantando que cada uno de los cambios aplicados funcionaba correctamente y su integración seguía posibilitando el funcionamiento de la aplicación, pudiendo añadir nuevos servicios que no existían antes y que suponen una mejoría en cada bloque.
+El desarrollo iterativo e incremental permitió ir constantando que cada uno de los cambios aplicados funcionaba correctamente y su integración seguía posibilitando el funcionamiento de la aplicación, pudiendo añadir nuevos servicios que no existían antes y que suponen una mejora en cada bloque.
 
-Así, se ha conseguido implementar una infraestructura en desarrollo robusta, flexible y escalable. Todo ello bajo uno de los objetivos primordiales de la tecnología de contenedores que es el aislamiento, de manera que unos servicios no puedan repercutir en el funcionamiento de otros. También se ha logrado implementar un diseño que facilita la distribución en un clúster para, posteriormente, aplicar el balanceo de carga y la alta disponibilidad de los servicios.
+Así, se ha conseguido implementar una infraestructura en desarrollo robusta, flexible y escalable. Todo ello bajo uno de los objetivos primordiales de la tecnología de contenedores, el aislamiento de manera que unos servicios no puedan repercutir en el funcionamiento de otros. También se ha logrado implementar un diseño que facilita la distribución en un clúster para aplicar el balanceo de carga y la alta disponibilidad de los servicios.
 
-Todas las fases permitieron llegar al propósito final que es la generación de un entorno reproducible de desarrollo, tanto en local como en la nube, a través de la infraestructura como código para el despliegue de una aplicación Ruby on Rails utilizando las tecnologías de virtualización Docker y CoreOS en la nube pública de Amazon Web Services.
+Todas las fases permitieron llegar al propósito final. Éste es la generación de un entorno reproducible de desarrollo, tanto en local como en la nube, a través de la infraestructura como código para el despliegue de una aplicación Ruby on Rails, utilizando las tecnologías de virtualización Docker y CoreOS en la nube pública de Amazon Web Services.
 
 \subsection{Trabajos futuros} \label{trabajosfuturos}
 
-En la presente sección se realiza una serie de propuestas y líneas futuras con el fin de retroalimentar el presente trabajo y considerar su paso del entorno de desarrollo al de producción.
+En la presente sección se realizan propuestas con el fin de retroalimentar el presente trabajo y considerar su paso del entorno de desarrollo al de producción.
 
-El contenedor \kode{volume-public} no pudo continuar siendo compartido, de la manera en la que se había hecho, por los contenedores \kode{some-postgres}, \kode{app-job}, \kode{app-task} y \kode{some-nginx}. Para disponer de almacenamiento compartido entre ellos se propone la aplicación del protocolo iSCSI. Este protocolo utiliza TCP/IP para sus transferencias de datos, requiriendo una interfaz Ethernet para funcionar y permitiendo disponer de almacenamiento centralizado de bajo coste. iSCSI tiene una arquitectura cliente-servidor donde el primero se denomina \textit{initiator} y el segundo \textit{target}. Un \textit{target} puede ofrecer uno o más recursos iSCSI por la red y el \textit{initiator} consta de dos partes: los módulos o \textit{drivers} que proveen soporte para que el sistema operativo pueda reconocer discos de tipo iSCSI y un programa que gestiona las conexiones a dichos discos. Para ello Amazon Web Services dispone del servicio \textit{AWS Storage Gateway}\footnotettt{AWS Storage Gateway}{https://aws.amazon.com/es/storagegateway}.
+El contenedor \kode{volume-public} no pudo continuar siendo compartido, de la manera en la que se había hecho, por los contenedores \kode{some-postgres}, \kode{app-job}, \kode{app-task} y \kode{some-nginx}. Para disponer de almacenamiento compartido entre ellos se propone la aplicación del protocolo iSCSI. Este protocolo utiliza TCP/IP para sus transferencias de datos, requiriendo una interfaz Ethernet para funcionar y permitiendo disponer de almacenamiento centralizado de bajo coste. iSCSI tiene una arquitectura cliente-servidor donde el primero se denomina \textit{initiator} y el segundo \textit{target}. Un \textit{target} puede ofrecer uno o más recursos iSCSI por la red. El \textit{initiator} consta de los módulos o \textit{drivers} que proveen soporte para que el sistema operativo pueda reconocer discos iSCSI y un programa que gestiona las conexiones a dichos discos. Para ello Amazon Web Services dispone del servicio \textit{AWS Storage Gateway}.
 
 La aplicación implementa el modo de autenticación por medio de \textit{tokens}. En el actual entorno de desarrollo se utiliza un determinado \textit{token} de prueba que se pasa a los contenedors \kode{app-job} y \kode{app-task}. Esto podría ser cambiado de manera que el contenedor \kode{confd} transmita el \textit{token}, generado por el primer servidor web en realizar la petición, a los contenedores nombrados.
 
@@ -79,17 +77,15 @@ Actualmente, en el caso del despliegue en la nube, cada instancia recibe una dir
 
 \subsection{Valoración personal}
 
-En esta sección expongo una serie de impresiones sobre la realización del presente trabajo.
+En esta sección expongo mi valoración personal sobre el presente trabajo.
 
-El desarrollo de esta propuesta de Trabajo de Fin de Máster me ha permitido profundizar en mayor medida en tecnologías actuales y emergentes de virtualización, contenedores y orquestación de aplicaciones.
+El desarrollo de esta propuesta de Trabajo de Fin de Máster me ha permitido profundizar en tecnologías actuales y emergentes de virtualización, contenedores y orquestación de aplicaciones.
 
-Su realización al completo me ha permitido consolidar algunas de las tecnologías vistas a lo largo del presente Máster estudiado, como son Vagrant, Travis CI, Docker y Amazon Web Services.
-
-Además, he trabajado con una tecnología, no tan conocida como prometedora, que es el sistema operativo orientado a contenedores CoreOS cuya codificación de la configuración, tanto del sistema como del despliegue, ha aportado singularidad y riqueza al resultado final del trabajo y aportaciones personales.
+Su realización al completo me ha permitido consolidar algunas de las tecnologías vistas a lo largo del presente Máster estudiado, como son Vagrant, Travis CI, Docker y Amazon Web Services. Además, he trabajado con una tecnología no tan conocida como prometedora, el sistema operativo orientado a contenedores CoreOS. Su codificación y configuración, tanto del sistema como del despliegue, ha aportado tanto singularidad y riqueza al resultado final del trabajo como grandes aportaciones personales.
 
 Reconozco la importancia y relevancia de los trabajos futuros a realizar para la mejora hacia un entorno de producción. Estos trabajos no han podido ser llevados a cabo por una cuestión de tiempo, pues su aplicación requeriría una mayor duración a la contemplada por la asignatura correspondiente al Trabajo Fin de Máster.
 
-A través de la definición inicial, reuniones virtuales y presenciales, he experimentado el hipotético caso del desarrollo de un arquetipo en base a las peticiones de clientes conocedores de en qué tecnologías y herramientas quieren que el mismo se base, representados en este caso por los tutores del trabajo. 
+A través de la definición inicial, reuniones virtuales y presenciales, he experimentado el hipotético caso del desarrollo de un arquetipo en base a las peticiones de clientes conocedores de qué tecnologías y herramientas quieren que use el mismo. Representados por los tutores del trabajo. 
 
 Este proyecto contribuye a la filosofía de uso y desarrollo de software libre, encontrándose disponible en la plataforma GitHub y DockerHub, valorándolo como una de las herramientas de aprendizaje más potente y de transmisión efectiva de conocimiento y resultados hacia la presente y futura comunidad de informáticos. Todo ello esperando que, en la medida de lo posible, este trabajo pueda servir de ejemplo a otras personas para la construcción de arquetipos, basados en las tecnologías seleccionadas, con propósitos similares.
 
