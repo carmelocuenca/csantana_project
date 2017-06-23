@@ -3,25 +3,13 @@
 
 En este capítulo se muestran los aspectos económicos de la implementación en el proveedor Amazon Web Services. 
 
-En primer lugar, se presenta el coste anual que supondría mantener una instancia, teniéndola encendida las 24 horas del día durante todo el año, según los tipos de instancia escogidos y sus tamaños correspondientes.
+En primer lugar, se presenta el coste anual que supondría mantener una instancia las 24 horas del día, según los tipos de instancia escogidos y sus tamaños correspondientes. En segundo lugar, se indica el coste anual por instancia que supondría realizar un determinado número de peticiones a la aplicación, teniendo en cuenta la transferencia de datos con direcciones IP elásticas o públicas. En tercer y último lugar, se exponen otras formas de reducir costes con una serie de estrategias que permiten establecer los recursos a utilizar con anterioridad a hacerlo.
 
-En segundo lugar, se indica el coste anual por instancia que supondría realizar un determinado número de peticiones a la aplicación, teniendo en cuenta la transferencia de datos con direcciones IP elásticas o públicas. 
+Para el cálculo de ambas estimaciones se utiliza la herramienta AWS Calculator\cite{AWS Calculator}. Esta utilidad permite conocer el coste mensual del uso de los servicios de AWS con diversas configuraciones. La opción de facturación escogida es la de pago por uso. También se tienen en cuenta como parámetros la región EE.UU. Este (Virginia) y clase de instancia Linux.
 
-En tercer y último lugar, se exponen otras formas de reducir costes con una serie de estrategias que permiten personalizar y establecer los recursos a utilizar con anterioridad a hacerlo. Suponiendo una considerable menor inversión.
+Amazon Elastic Compute Cloud (Amazon EC2) proporciona una amplia selección de tipos de instancias optimizadas para diferentes casos de uso. Los tipos abarcan varias combinaciones de capacidad de CPU, memoria, almacenamiento y redes. En el caso de almacenamiento, este proveedor posee el servicio Amazon Elastic Block Store (Amazon EBS)\cite{AWS EBS} que proporciona volúmenes de bloques persistentes.
 
-Para el cálculo de ambas estimaciones se utiliza la herramienta AWS Calculator\cite{AWS Calculator}. Esta utilidad permite conocer el coste mensual del uso de los servicios de Amazon Web Services con diversas configuraciones.
-
-La opción de facturación escogida es bajo demanda, es decir, pago por uso. También se tienen en cuenta como parámetros la región EE.UU. Este (Virginia) y clase de instancia Linux.
-
-Amazon Elastic Compute Cloud (Amazon EC2) proporciona una amplia selección de tipos de instancias optimizadas para adaptarse a diferentes casos de uso. Los tipos abarcan varias combinaciones de capacidad de CPU, memoria, almacenamiento y redes. 
-
-En el caso de almacenamiento, este proveedor posee el servicio Amazon Elastic Block Store (Amazon EBS)\cite{AWS EBS} que proporciona volúmenes de bloques persistentes. Cada volumen se replica automáticamente ofreciendo alta disponibilidad y durabilidad. 
-
-Entre los tipos de instancias existentes se escogen las de uso general: \textbf{T2}, \textbf{M3} y \textbf{M4}. El tipo de instancia \textbf{T2} es el utilizado en la fase de implementación. 
-
-Cada tipo de instancia incluye uno o varios tamaños, lo que permite escalar los recursos según los requisitos de carga de trabajo. Para la presente estimación se tienen en cuenta, únicamente, los principales tamaños que se corresponden con \textit{micro, small, medium, large y extra large}.
-
-En la Tabla \ref{tab:costeinstancia} se presentan los costes anuales para los tamaños escogidos de los tres diferentes tipos de instancia, teniendo en cuenta que estén encendidas las 24 horas del día.
+Entre los tipos de instancias existentes se escogen las de uso general. El tipo de instancia \textbf{T2} es el utilizado en la fase de implementación. Cada tipo de instancia incluye uno o varios tamaños, lo que permite escalar los recursos según la carga de trabajo. Para la presente estimación se tienen en cuenta los principales tamaños: \textit{micro, small, medium, large y extra large}.
 
 \begin{table}
 \begin{tabular}{cccccc}
@@ -43,33 +31,30 @@ En la Tabla \ref{tab:costeinstancia} se presentan los costes anuales para los ta
 \caption{Coste anual por tipo de instancia \label{tab:costeinstancia}}
 \end{table}
 
+
+En la Tabla \ref{tab:costeinstancia} se presentan los costes anuales para los tamaños escogidos de los tres diferentes tipos de instancia, teniendo en cuenta que estén encendidas las 24 horas del día.
+
 A continuación se exponen brevemente las características principales de cada tipo de instancia y los casos comunes de uso:
 
 \begin{itemize}
-\item \textbf{T2}: Cuenta con procesadores Intel Xeon de alta frecuencia y CPU en ráfagas que se rigen por créditos, acumulándolos cuando están inactivas y utilizándolos cuando están activas. Esta configuración es una buena opción para cargas de trabajo que no usan la CPU por completo, a menudo o de manera constante, pero que de vez en cuando tienen que alcanzar ciertas ráfagas. Los casos de uso contemplan aplicaciones web, entornos de desarrollo, servidores de versiones, repositorios de código, microservicios, entornos de pruebas y reproducción y aplicaciones empresariales.
-\item \textbf{M3}: Cuenta con procesadores Intel Xeon \textit{E5-2670 v2} (Ivy Bridge) de frecuencia alta y almacenamiento basado en SSD. Los casos de uso contemplan bases de datos, tareas de procesamiento de datos que requieren memoria adicional, flotas de almacenamiento en caché, ejecución de servidores \textit{back-end}, clústeres y aplicaciones empresariales.
-\item \textbf{M4}: Este tipo corresponde a la última generación de instancias de uso general. Cuenta con procesadores Intel Xeon \textit{E5-2686 v4} (Broadwell) de 2,3 GHz o Intel Xeon \textit{E5-2676 v3} (Haswell) de 2,4 GHz. Las instancias están optimizadas para el uso de volúmenes de almacenamiento Amazon EBS de manera predeterminada sin coste adicional. Los casos de uso contemplan los mismos que el tipo \textbf{M3}, con el soporte para redes mejoradas añadido.
+\item \textbf{T2}: Procesadores Intel Xeon de alta frecuencia y CPU en ráfagas que se rigen por créditos, acumulándolos cuando están inactivas y utilizándolos cuando están activas. Los casos de uso contemplan aplicaciones web, entornos de desarrollo, servidores de versiones, repositorios de código, microservicios, entornos de pruebas y reproducción y aplicaciones empresariales.
+\item \textbf{M3}: Procesadores Intel Xeon \textit{E5-2670 v2} (Ivy Bridge) de frecuencia alta y almacenamiento basado en SSD. Los casos de uso contemplan bases de datos, tareas de procesamiento de datos que requieren memoria adicional, flotas de almacenamiento en caché, ejecución de servidores \textit{back-end}, clústeres y aplicaciones empresariales.
+\item \textbf{M4}: Procesadores Intel Xeon \textit{E5-2686 v4} (Broadwell) de 2,3 GHz o Intel Xeon \textit{E5-2676 v3} (Haswell) de 2,4 GHz. Las instancias están optimizadas para el uso de volúmenes de almacenamiento Amazon EBS de manera predeterminada sin coste adicional. Los casos de uso contemplan los mismos que el tipo \textbf{M3}, con soporte para redes mejoradas.
 \end{itemize}
 
-Aparte del coste que supone mantener una instancia en Amazon Web Services también hay que tener en cuenta el coste del tráfico externo que se produzca con el uso de la aplicación.
-
-Con la intención de conocer el tamaño de una petición a la aplicación para calcular el coste de su transferencia, se utiliza, como ejemplo, la página de inicio. Para medirlo se utiliza el comando \textit{wc -c}, que expresa el tamaño en \textit{bytes}, junto con la solicitud de la página de inicio, con el comando \textit{curl}, en la máquina \kode{core-01}:
+Con la intención de conocer el tamaño de una petición a la aplicación para calcular el coste de su transferencia, se utiliza, como ejemplo, la página de inicio. Para medirlo se utiliza el comando \textit{wc -c}, que expresa el tamaño en \textit{bytes}, con el comando \textit{curl}, en la máquina \kode{core-01}:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{images/figures/curl-wc.png}
+\includegraphics[width=0.6\textwidth]{images/figures/curl-wc.png}
 \caption{Tamaño de la página principal solicitada en B.}
 \end{figure}
 
-El resultado es de 3983 B, que serán tomados como 4 kB a efectos de la estimación.
+El resultado es de 3983 B, que serán tomados como 4 kB a efectos de la estimación del coste.
 
 Cada instancia que se ejecute dispone del uso de una dirección IP elástica gratuita. La presente infraestructura no necesita hacer uso de direcciones IP públicas adicionales por lo que la utilización de este recurso no supone un coste adicional.
 
 En la Tabla \ref{tab:costepeticiones} se presenta el coste del tráfico externo anual proveniente de la transferencia de datos con direcciones IP elásticas para un determinado número de peticiones por hora, con un valor individual de 4 kB.
-
-Para ello se estudia el coste anual desde 1 millón hasta 128 millones de peticiones por hora a la aplicación. También se presenta la cantidad de GB que supone dicha transferencia de datos en una hora.
-
-Todo ello se mide sin tener en cuenta la capa de uso gratuito de un año, de la que los usuarios nuevos pueden beneficiarse durante los primeros 12 meses de registro.
 
 \FloatBarrier
 

@@ -99,7 +99,7 @@ CoreOS es un sistema operativo ligero de código abierto, de la compañía con e
 
 CoreOS está diseñado para implementar una aplicación distribuida en un clúster de nodos. Así, se encarga de proporcionar la infraestructura necesaria para los despliegues en clúster, automatización, seguridad, fiabilidad y escalabilidad. CoreOS ofrece las funcionalidades mínimas necesarias para la implementación de aplicaciones dentro de contenedores de software, junto con mecanismos incorporados para el descubrimiento de servicios y el intercambio de configuración.
 
-Los principales componentes que conforman la arquitectura de CoreOS, presente en la Figura \ref{fig:CoreOSarchitecture}, son su núcleo, systemd\cite{systemd}, etcd\cite{etcd}, fleet\cite{fleet} y flannel\cite{flannel}.
+Los principales componentes que conforman la arquitectura de CoreOS, presente en la Figura \ref{fig:CoreOSarchitecture}, son su núcleo, systemd\cite{coreossystemd}, etcd\cite{etcd}, fleet\cite{fleet} y flannel\cite{flannel}.
 
 \begin{figure}[H]
 \centering
@@ -152,7 +152,7 @@ Las operaciones principales que se pueden hacer usando etcd son:
 
 \subsubsection{Fleet} \label{fleet}
 
-El servicio fleet es un gestor o planificador que controla la creación de servicios a nivel de clúster. Mientras que systemd actua como sistema de inicio para un nodo, fleet es el sistema de inicio para el clúster y usa el servicio etcd para la comunicación entre nodos.
+El servicio fleet es un gestor o planificador que controla la creación de servicios a nivel de clúster. Mientras que systemd actúa como sistema de inicio para un nodo, fleet es el sistema de inicio para el clúster y usa el servicio etcd para la comunicación entre nodos.
 
 Al tratarse de una herramienta para la orquestación de contenedores será descrita con mayor detalle en el punto \ref{sec:herramientas}.
 
@@ -311,7 +311,7 @@ Entre las ventajas de \textit{IaaS} se encuentran:
 \item Mayor seguridad y protección de los recursos de información.
 \end{itemize}
 
-Los ejemplos más conocidos son Amazon Web Services y DigitalOcean.
+Los ejemplos más conocidos son Amazon Web Services\cite{aws wiki} y DigitalOcean\cite{digitaloceanwiki}.
 
 DigitalOcean, creado en 2011 por Ben y Moisey Uretsky, es un proveedor Estadounidense de servidores virtuales privados.
 
@@ -343,19 +343,20 @@ AWS está situado en distintas regiones geográficas. Cada región está totalme
 
 Este proveedor dispone de una capa gratuita diseñada para permitir obtener experiencia práctica con los servicios en la nube de AWS. Ésta incluye 12 meses a partir de la fecha de inscripción, así como ofertas de servicios adicionales que no vencen al final de este período. No obstante existen límites de uso. A partir de este primer año se empieza a pagar por horas de uso.
 
-Ofrece una gran cantidad de recursos y servicios, innovando y creando nuevos constantemente. Concretamente, en la elaboración de este proyecto se utilizarán los siguientes servicios:
+En la elaboración de este trabajo se utilizarán los siguientes servicios:
 
 \subsubsection{AWS Identity and Access Management (IAM)}
 
-AWS Identity and Access Management (IAM)\cite{iam} es un servicio web gratuito que permite controlar de forma segura el acceso a los recursos de AWS por parte de los usuarios. Las dos principales características a usar que ofrece son el acceso compartido a la cuenta AWS, concediendo permisos a otros usuarios para administrar y utilizar los recursos sin tener que compartir la clave de acceso, y la concesión de permisos diferentes a distintos usuarios para diferentes recursos.
+AWS Identity and Access Management (IAM)\cite{iam} es un servicio web gratuito que permite controlar de forma segura el acceso a los recursos de AWS por parte de los usuarios. Facilita el acceso compartido a la cuenta AWS, concediendo permisos a otros usuarios para administrar y utilizar los recursos sin tener que compartir la clave de acceso, y la concesión de permisos diferentes a distintos usuarios para diferentes recursos.
 
 \subsubsection{Amazon Elastic Compute Cloud (Amazon EC2)}
 
-Amazon Elastic Compute Cloud (Amazon EC2)\cite{ec2} proporciona la capacidad de computación escalable en la nube de AWS. Su uso elimina la necesidad de invertir en hardware por adelantado, por lo que se pueden desarrollar e implementar aplicaciones más rápido. Se puede realizar el despliegue de tantos servidores virtuales como se necesite, configurar seguridad, redes y administrar el almacenamiento. Este servicio permite escalar o reducir los requisitos bajo demanda o picos de popularidad. La principal característica es el entorno virtual de computación o instancia. Además, ofrece otras funciones como plantillas preconfiguradas, varios tipos de instancias o configuraciones de CPU, memoria, almacenamiento, capacidad de red, inicio de sesión seguro utilizando pares de claves, volúmenes de almacenamiento de datos temporales que se eliminan al detener o finalizar la instancia, múltiples ubicaciones físicas para los recursos, conocidos como regiones y zonas de disponibilidad y un \textit{firewall} que permite especificar los protocolos, puertos y rangos de direcciones IP usando grupos de seguridad.
+Amazon Elastic Compute Cloud (Amazon EC2)\cite{ec2} proporciona la capacidad de computación escalable en la nube de AWS. Permite realizar el despliegue de servidores virtuales, configurar seguridad, redes y administrar el almacenamiento. Este servicio permite escalar o reducir los requisitos bajo demanda o picos de popularidad. La principal característica es el entorno virtual de computación o instancia. Además, ofrece otras funciones como plantillas preconfiguradas, varios tipos de instancias o configuraciones, inicio de sesión seguro utilizando pares de claves, volúmenes de almacenamiento temporales, regiones y zonas de disponibilidad y grupos de seguridad.
 
 \subsubsection{Amazon Virtual Private Cloud (Amazon VPC)}
 
 Amazon Virtual Private Cloud (Amazon VPC)\cite{vpc} permite lanzar los servicios AWS en una red virtual definida. Una nube virtual privada (VPC) es una red virtual dedicada a la cuenta de AWS. Está aislada de otras redes virtuales en la nube AWS y permite iniciar los recursos en ella. Permite seleccionar un rango de direcciones IP, crear subredes, configurar tablas de rutas, pasarelas de red y realizar otras configuraciones de seguridad. Otro elemento a usar es la subred que es un rango de direcciones IP en la VPC. Los grupos de seguridad se utilizan para proteger los recursos de AWS en cada subred.
+
 
 \section{Otras herramientas tecnológicas}
 
@@ -439,4 +440,5 @@ Entre los beneficios que aporta están la reducción de riesgos y tiempo, de pro
 \subsection{Softcover}
 
 Para la elaboración de la memoria se utiliza la gema Ruby Softcover\cite{softcover} que es un sistema de composición de libros electrónicos para autores técnicos. Depende de otra gema, polytexnic, para convertir la entrada de \textit{Markdown} o \textit{PolyTeX} a \textit{HTML} y \textit{LaTeX}, y de ahí a \textit{EPUB}, \textit{MOBI} y \textit{PDF}.
+
 
