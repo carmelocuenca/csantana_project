@@ -1,0 +1,54 @@
+% Place additional custom commands below.
+% NOTE: These commands will generally be available across output formats.
+% For commands (such as hyphenation) that only pertain to PDF output, use the
+% file `custom_pdf.sty` instead.
+
+% Examples:
+%   No arguments:
+%     Insert '\emph{The Ruby on Rails Tutorial}' wherever '\tutorial' occurs:
+%
+% \newcommand{\tutorial}{\emph{The Ruby on Rails Tutorial}}
+%
+%   One argument:
+%     Convert '\bfi{text}' to '\textbf{\textit{text}}' (boldface italic):
+%
+% \newcommand{\bfi}[1]{\textbf{\textit{{#1}}}}
+
+% Include a command for the sake of the test suite.
+
+\newcommand{\softcover}{\texttt{softcover}}
+
+% Include custom math example.
+\newcommand{\unitvec}[1]{\ensuremath{\hat #1}}
+
+\usepackage[10pt]{moresize}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\newcommand{\footnotettt}[2]{\footnote{#1. \url{#2}}}
+\usepackage{amssymb, amsmath} 
+\usepackage{etoolbox}
+\renewcommand{\bibname}{Fuentes de información}
+\usepackage{hyperref,xcolor}
+\pagestyle{headings} %solucionar encabezados
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{5pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+\renewcommand{\contentsname}{Índice}
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
+\setlist[itemize]{noitemsep, topsep=0pt}
+\setlist[enumerate]{noitemsep, topsep=0pt}
+\usepackage{fancyhdr}
+\renewcommand{\chaptername}{Capítulo}
+\usepackage{multirow}
+\usepackage{xcolor,colortbl}
+\usepackage{placeins}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\listingname}{Listado}
+\urlstyle{same}
+\usepackage{fnpct}
+\usepackage{graphicx}
+\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}} 
+

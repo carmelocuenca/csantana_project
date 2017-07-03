@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Generated LaTeX files
 *.aux
 *.log
@@ -38,7 +37,3 @@ media/
 log/
 *.bak
 .DS_Store
-
-=======
->>>>>>> e06ef6addf38b2c9608683037c63f4d77dfbf9f6
-*~

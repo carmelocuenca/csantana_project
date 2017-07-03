@@ -1,0 +1,14 @@
+#cover
+frontmatter:
+#maketitle
+cover.tex
+acknowledgments.tex
+tableofcontents
+preface.md
+mainmatter:
+introduction.tex
+state_of_art.tex
+implementation.tex
+economic_aspects.tex
+result_and_conclusions.tex
+bibliography.tex
