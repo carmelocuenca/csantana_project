@@ -1,0 +1,67 @@
+\chapter{Acerca de este Trabajo de Fin de Máster}
+\label{cha:introduction}
+
+\section{Motivación}
+
+La motivación para la realización del presente trabajo reside en el desarrollo e implementación de nuevas infraestructuras orientadas a la realización de despliegues automatizados. Para ello se quiere hacer uso de tecnologías emergentes que permiten crear medios más robustos, flexibles y escalables en la tendencia de la computación en la nube, la computación de altas prestaciones y la virtualización.
+
+\section{Objetivos}
+
+En esta sección se exponen los objetivos iniciales y generales a alcanzar.
+
+\subsection{Objetivos iniciales}
+
+El objetivo prinicipal es la aplicación de distintas tecnologías de virtualización, contenedores y orquestación a una aplicación web para generar un entorno reproducible de desarrollo tanto en local como en la nube.
+
+Además otro objetivo del trabajo es que la estudiante se forme en tecnologías actuales y emergentes de virtualización y computación en la nube.
+
+\subsection{Objetivos generales}
+
+Se trabajarán distintas tecnologías destacando las cualidades y beneficios del uso de tecnologías de virtualización y computación en la nube como herramientas para desarrollar infraestructuras robustas, flexibles y escalables.
+
+La arquitectura basada en contenedores permitirá que si uno de los servicios de la aplicación falla no repercuta en que los otros servicios puedan funcionar por separado. Esto permite detectar, aislar y corregir fallos de una manera directa y eficiente, donde cada contenedor dispone, únicamente, de los recursos que necesita para llevar a cabo sus funciones.
+
+Otro de los objetivos es la introducción y configuración de nuevas unidades de servicio que permitan gestionar y controlar el correcto funcionamiento de cada componente de la infraestructura de manera efectiva.
+
+Los servidores web de la aplicación serán ubicados en todos los miembros del clúster, apreciando la característica de redundancia. Un servidor proxy inverso será encargo de gestionar las peticiones entre los anteriores, utilizando el balanceo de carga. En el caso de despliegue en la nube se dispondrá, además, de servicios en alta disponibilidad.
+
+\section{Metodología}
+
+La metodología a llevar a cabo implica el desarrollo iterativo e incremental, donde se planifican 5 bloques o iteraciones. De esta forma los resultados de una iteración se utilizarán como punto de partida para el desarrollo y ampliación en la siguiente. 
+
+Las iteraciones a realizar, con las herramientas o tecnologías a usar en cada una de ellas, son:
+\begin{enumerate}
+\item Conversión de la aplicación a una arquitectura de microservicios con el uso de Docker (automatiza el despliegue de aplicaciones dentro de contenedores de software).
+\item Subida de la imagen resultante de la aplicación al repositorio de imágenes Docker Hub (repositorio de imágenes Docker basado en la nube).
+\item Integración y Despliegue continuos de la aplicación con Travis CI (servicio distribuido de integración y despliegue continuos para construir y probar proyectos de software alojados en GitHub) y GitHub (plataforma colaborativa para alojar proyectos utilizando el sistema de control de versiones Git).
+\item Despliegue monomáquina con VirtualBox (herramienta de virtualización de código abierto multiplataforma), Vagrant (herramienta para la creación y configuración de entornos de desarrollo virtualizados), y CoreOS (sistema operativo basado en el kernel de Linux con las funcionalidades mínimas necesarias para la implementación de aplicaciones dentro de contenedores de software).
+\item Despliegue en la nube pública de Amazon Web Services (colección de servicios de computación en la nube que forman una infraestructura como servicio y una plataforma como servicio).
+\end{enumerate}
+
+\section{Planificación inicial y seguimiento}
+
+La planificación inicial contemplaba las siguientes 4 fases, con una duración total estimada de 300 horas:
+\begin{enumerate}
+\item Estudio previo del estado del arte que contempla las tecnologías, sistemas operativos y herramientas para la orquestación orientadas a contenedores, así como proveedores de infraestructura como servicio y otras herramientas tecnológicas necesarias para la implementación. También se realiza el análisis de la aplicación Ruby on Rails. Duración estimada de 80 horas.
+\item Diseño, desarrollo e implementación de las 5 iteraciones propuestas. Duración estimada 145 horas.
+\item Evaluación, validación y prueba de las funcionalidades añadidas en cada una de las iteraciones. Duración estimada de 25 horas.
+\item Preparación de la documentación y memoria del presente trabajo. Duración estimada de 50 horas.
+\end{enumerate}
+
+Las 4 fases previstas se han llevado a cabo como han sido propuestas, organizando dicho trabajo para poder realizar la fase 3 en la finalización de cada una de las 5 iteraciones. Además, los objetivos iniciales se han mantenido como eje central del trabajo que se quería producir.
+
+\section{Aportaciones}
+
+Este trabajo se centra en presentar un nuevo arquetipo de infraestructura de aplicación, que enlaza el uso de varias tecnologías emergentes, para generar un entorno reproducible de desarrollo, tanto en local como en la nube. 
+
+Este tipo de práctica no se lleva a cabo durante los estudios de Máster ni de Grado y representa el estudio de nuevas nociones presentes en el mercado. 
+
+Estas actividades son llevadas a cabo por DevOps, acrónimo inglés de \textit{development} y \textit{operations}, que se refiere a un movimiento que se centra en la comunicación, colaboración e integración entre desarrolladores de software y profesionales en las tecnologías de la información. Así, con estos procedimientos se automatiza el proceso de entrega del software y los cambios en la infraestructura para crear entornos donde la construcción, prueba y lanzamiento de un software pueda ser más rápido y fiable. 
+
+A su vez, también son llevadas a cabo por otra nueva disciplina como es SRE, proveniente de \textit{Site Reliability Engineering}. Esta disciplina incorpora y aplica aspectos de la ingeniería de software a operaciones destinadas a crear sistemas de software ultra escalables y altamente confiables. 
+
+Estos perfiles no están tan presentes en Canarias como internacionalmente, pero representan un fuerte nicho de mercado que comienza a potenciarse y a ser muy demandados para la aplicación de soluciones como el propuesto despliegue automatizado de la infraestructura implementada.
+
+\section{Justificación de la competencia específica cubierta}
+
+Este Trabajo de Fin de Máster, además de incluir las competencias generales recogidas en la Guía Docente de la asignatura 50915 - Trabajo Fin de Máster, ha cubierto la competencia específica del Máster en Ingeniería Informática TI01 - "Capacidad para modelar, diseñar, definir la arquitectura, implantar, gestionar, operar, administrar y mantener aplicaciones, redes, sistemas, servicios y contenidos informáticos". El presente trabajo modela, diseña y define una nueva arquitectura, basada en contenedores, de una aplicación. A partir de ella se implementa una infraestructura distribuida que gestiona, opera, administra y mantiene la aplicación, la información que manipula, los servicios por los que está compuesta y permiten su funcionamiento, y las redes en las que opera en los sistemas local y remoto en los que se ha realizado su despliegue.

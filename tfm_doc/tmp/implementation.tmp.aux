@@ -1,0 +1,255 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\citation{rubytutorial}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Desarrollo}{19}{chapter.3}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lolisting}{\addvspace {10\p@ }}
+\newlabel{cha:development}{{3}{19}{Desarrollo}{chapter.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Análisis de la aplicación Ruby on Rails}{19}{section.3.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Aplicación web \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]sample\_app\_rails\_4}}}. \relax }}{19}{figure.3.1}}
+\newlabel{fig:sampleapp}{{3.1}{19}{Aplicación web \kode {sample\_app\_rails\_4}. \relax }{figure.3.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Integración entre características y componentes de Ruby on Rails.\footnotemark \relax }}{20}{figure.3.2}}
+\newlabel{fig:architecturesampleapp}{{3.2}{20}{Integración entre características y componentes de Ruby on Rails.\footnotemark \relax }{figure.3.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Iteración 1: Arquitectura de microservicios}{21}{section.3.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Infraestructura de la aplicación con contenedores Docker.\relax }}{21}{figure.3.3}}
+\newlabel{fig:figure_docker_microservices}{{3.3}{21}{Infraestructura de la aplicación con contenedores Docker.\relax }{figure.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Preparación del repositorio local y remoto}{22}{subsection.3.2.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Cambio y configuración de la base de datos}{22}{subsection.3.2.2}}
+\newlabel{postgrescredentials}{{3.2.2}{22}{Cambio y configuración de la base de datos}{subsection.3.2.2}{}}
+\newlabel{code:credentials}{{3.1}{23}{Cambio y configuración de la base de datos}{codelisting.3.1}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.1}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]\textasciitilde {}/.postgres/credentials}}}\relax }}{23}{listing.3.1}}
+\newlabel{code:database}{{3.2}{23}{Cambio y configuración de la base de datos}{codelisting.3.2}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.2}{\ignorespaces Cambios en el fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]config/database.yml}}}\relax }}{23}{listing.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Cambio del alimentador idempotente de base de datos}{23}{subsection.3.2.3}}
+\newlabel{code:idempotentseed}{{3.3}{23}{Cambio del alimentador idempotente de base de datos}{codelisting.3.3}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.3}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]lib/tasks/sample\_data.rake}}}\relax }}{23}{listing.3.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.4}Cambio y configuración del servidor web}{24}{subsection.3.2.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.5}Configuración para la creación de los contenedores}{24}{subsection.3.2.5}}
+\newlabel{code:application.rb}{{3.4}{24}{Configuración para la creación de los contenedores}{codelisting.3.4}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.4}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]config/application.rb}}}\relax }}{24}{listing.3.4}}
+\newlabel{code:.dockerignore}{{3.5}{24}{Configuración para la creación de los contenedores}{codelisting.3.5}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.5}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75].dockerignore}}}\relax }}{24}{listing.3.5}}
+\newlabel{code:dockerfile}{{3.6}{25}{Configuración para la creación de los contenedores}{codelisting.3.6}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.6}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]setup.sh}}}\relax }}{25}{listing.3.6}}
+\newlabel{code:dockerfile}{{3.7}{25}{Configuración para la creación de los contenedores}{codelisting.3.7}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.7}{\ignorespaces Contenido de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Dockerfile}}}\relax }}{25}{listing.3.7}}
+\newlabel{code:nginxconf}{{3.8}{26}{Configuración para la creación de los contenedores}{codelisting.3.8}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.8}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]nginx.conf}}}\relax }}{26}{listing.3.8}}
+\newlabel{code:scriptdocker}{{3.9}{26}{Configuración para la creación de los contenedores}{codelisting.3.9}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.9}{\ignorespaces Contenido de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]docker-microservices.sh}}}\relax }}{26}{listing.3.9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.6}Resultado}{27}{subsection.3.2.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Imágenes docker mostradas con \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]docker images}}}.\relax }}{27}{figure.3.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Contenedores docker mostrados con \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]docker ps -a}}}.\relax }}{27}{figure.3.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces Resultado de la petición \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]curl http://localhost:8080}}}.\relax }}{28}{figure.3.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Resultado de la Iteración 1 con el uso de Docker. \relax }}{28}{figure.3.7}}
+\newlabel{fig:resultado1}{{3.7}{28}{Resultado de la Iteración 1 con el uso de Docker. \relax }{figure.3.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Iteración 2: Subida de la imagen a Docker Hub}{28}{section.3.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces Versión \textit  {initial} de la imagen \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]sample\_a\_rails\_4}}} en local.\relax }}{29}{figure.3.8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Versión \textit  {initial} de la imagen \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]sample\_a\_rails\_4}}} en Docker Hub.\relax }}{29}{figure.3.9}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Iteración 3: Integración y Despliegue continuos}{29}{section.3.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces Integración y Despliegue continuos con Travis CI. \relax }}{29}{figure.3.10}}
+\newlabel{fig:iteration2}{{3.10}{29}{Integración y Despliegue continuos con Travis CI. \relax }{figure.3.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Vinculación con el repositorio remoto}{30}{subsection.3.4.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.11}{\ignorespaces Vinculación de GitHub con Travis CI.\relax }}{30}{figure.3.11}}
+\newlabel{fig:travis_github}{{3.11}{30}{Vinculación de GitHub con Travis CI.\relax }{figure.3.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Configuración de condiciones}{30}{subsection.3.4.2}}
+\newlabel{code:travisdatabase}{{3.10}{30}{Configuración de condiciones}{codelisting.3.10}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.10}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]config/database.yml.travis}}} \relax }}{30}{listing.3.10}}
+\newlabel{code:travis}{{3.11}{31}{Configuración de condiciones}{codelisting.3.11}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.11}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75].travis.yml}}} \relax }}{31}{listing.3.11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Resultado}{31}{subsection.3.4.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces Correo electrónico de Travis CI en caso de fallo.\relax }}{32}{figure.3.12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces Correo electrónico de Travis CI en caso de éxito.\relax }}{32}{figure.3.13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.14}{\ignorespaces Caso de fallo en Travis CI.\relax }}{32}{figure.3.14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.15}{\ignorespaces Motivo de fallo en Travis CI.\relax }}{32}{figure.3.15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.16}{\ignorespaces Caso de éxito en Travis CI.\relax }}{33}{figure.3.16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.17}{\ignorespaces Repositorio de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]sample\_app\_rails\_4\_image}}}.\relax }}{33}{figure.3.17}}
+\newlabel{fig:dockerhub_images}{{3.17}{33}{Repositorio de \kode {sample\_app\_rails\_4\_image}.\relax }{figure.3.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Iteración 4: Despliegue en VirtualBox}{33}{section.3.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.18}{\ignorespaces Infraestructura de la aplicación con unidades de servicio CoreOS.\relax }}{34}{figure.3.18}}
+\newlabel{fig:coreosdiagram}{{3.18}{34}{Infraestructura de la aplicación con unidades de servicio CoreOS.\relax }{figure.3.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Preparación del repositorio local y remoto}{34}{subsection.3.5.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.19}{\ignorespaces Conexión ssh a la máquina virtual \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{35}{figure.3.19}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.20}{\ignorespaces Máquina virtual \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}} desde VirtualBox.\relax }}{35}{figure.3.20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Preparación de la cabecera del fichero user-data}{35}{subsection.3.5.2}}
+\newlabel{code:cloud-config1}{{3.12}{36}{Preparación de la cabecera del fichero user-data}{codelisting.3.12}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.12}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data}}}\relax }}{36}{listing.3.12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Interpretación del fichero config.rb}{36}{subsection.3.5.3}}
+\newlabel{code:cloud-config1}{{3.13}{36}{Interpretación del fichero config.rb}{codelisting.3.13}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.13}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]config.rb}}}\relax }}{36}{listing.3.13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.4}Preparación del fichero Vagrantfile}{37}{subsection.3.5.4}}
+\newlabel{code:cloud-config1}{{3.14}{37}{Preparación del fichero Vagrantfile}{codelisting.3.14}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.14}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Vagrantfile}}}\relax }}{37}{listing.3.14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.5}Despliegue manual de las unidades systemd}{38}{subsection.3.5.5}}
+\newlabel{code:vagrantfile2}{{3.15}{39}{Despliegue manual de las unidades systemd}{codelisting.3.15}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.15}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Vagrantfile}}}\relax }}{39}{listing.3.15}}
+\@writefile{toc}{\contentsline {subsubsection}{Unidad volume-public.service}{39}{listing.3.15}}
+\newlabel{code:volume-public.service}{{3.16}{39}{Unidad volume-public.service}{codelisting.3.16}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.16}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]etc/sysctl/volume-public.service}}}.\relax }}{39}{listing.3.16}}
+\@writefile{toc}{\contentsline {subsubsection}{Unidad postgresql.service}{39}{listing.3.16}}
+\newlabel{code:postgresql.service}{{3.17}{39}{Unidad postgresql.service}{codelisting.3.17}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.17}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]etc/sysctl/postgresql.service}}}.\relax }}{39}{listing.3.17}}
+\newlabel{code:credentials}{{3.18}{40}{Unidad postgresql.service}{codelisting.3.18}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.18}{\ignorespaces Contenido del fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]/etc/postgres-credentials.env}}}\relax }}{40}{listing.3.18}}
+\@writefile{toc}{\contentsline {subsubsection}{Unidad app-job.service}{40}{listing.3.18}}
+\newlabel{code:app-job.service}{{3.19}{40}{Unidad app-job.service}{codelisting.3.19}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.19}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]etc/sysctl/app-job.service}}}.\relax }}{40}{listing.3.19}}
+\@writefile{toc}{\contentsline {subsubsection}{Unidad app-task.service}{41}{listing.3.19}}
+\newlabel{code:app-task.service}{{3.20}{41}{Unidad app-task.service}{codelisting.3.20}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.20}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]etc/sysctl/app-task.service}}}.\relax }}{41}{listing.3.20}}
+\@writefile{toc}{\contentsline {subsubsection}{Unidad nginx.service}{41}{listing.3.20}}
+\newlabel{code:nginx.service}{{3.21}{42}{Unidad nginx.service}{codelisting.3.21}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.21}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]etc/sysctl/nginx.service}}}.\relax }}{42}{listing.3.21}}
+\@writefile{toc}{\contentsline {subsubsection}{Despliegue manual}{42}{listing.3.21}}
+\newlabel{code:coreos-service-units-deploy}{{3.22}{42}{Despliegue manual}{codelisting.3.22}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.22}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]coreos-service-units-deploy.sh}}}.\relax }}{42}{listing.3.22}}
+\newlabel{code:vagrantfile3}{{3.23}{42}{Despliegue manual}{codelisting.3.23}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.23}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Vagrantfile}}}\relax }}{42}{listing.3.23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.21}{\ignorespaces Estado de la unidad \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]volume-public.service}}}.\relax }}{43}{figure.3.21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.22}{\ignorespaces Estado de la unidad \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]postgresql.service}}}.\relax }}{43}{figure.3.22}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.23}{\ignorespaces Estado de la unidad \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-job.service}}}.\relax }}{43}{figure.3.23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.24}{\ignorespaces Estado de la unidad \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task.service}}}.\relax }}{43}{figure.3.24}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.25}{\ignorespaces Estado de la unidad \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]nginx.service}}}.\relax }}{43}{figure.3.25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.26}{\ignorespaces Acceso a la aplicación desde la máquina CoreOS.\relax }}{44}{figure.3.26}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.27}{\ignorespaces Acceso a la aplicación desde el sistema anfitrión.\relax }}{44}{figure.3.27}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.6}Despliegue automático de las unidades systemd}{44}{subsection.3.5.6}}
+\newlabel{code:vagrantfile2}{{3.24}{44}{Despliegue automático de las unidades systemd}{codelisting.3.24}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.24}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.vbox}}}\relax }}{44}{listing.3.24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.7}Resultado}{46}{subsection.3.5.7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.28}{\ignorespaces Despliegue manual y automático. Acceso: máquina CoreOS.\relax }}{47}{figure.3.28}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.29}{\ignorespaces Despliegue manual y automático. Acceso: sistema anfitrión.\relax }}{47}{figure.3.29}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Iteración 5: Despliegue en Amazon Web Services}{47}{section.3.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.30}{\ignorespaces Distribución de la infraestructura a desplegar en AWS. \relax }}{48}{figure.3.30}}
+\newlabel{fig:aws-1-iteration}{{3.30}{48}{Distribución de la infraestructura a desplegar en AWS. \relax }{figure.3.30}{}}
+\newlabel{fig:aws-1-iteration}{{3.30}{48}{Distribución de la infraestructura a desplegar en AWS. \relax }{figure.3.30}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.31}{\ignorespaces Relación entre los contenedores de la Infraestructura. \relax }}{48}{figure.3.31}}
+\newlabel{fig:aws-2-iteration}{{3.31}{48}{Relación entre los contenedores de la Infraestructura. \relax }{figure.3.31}{}}
+\citation{AWS Educate}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.1}Obtención de la cuenta AWS}{49}{subsection.3.6.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.2}Creación de la red y subred virtual}{49}{subsection.3.6.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.32}{\ignorespaces Creación de la VPC \textit  {vpc-sampleapp}.\relax }}{50}{figure.3.32}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.33}{\ignorespaces Creación de la subred \textit  {subnet-sampleapp}.\relax }}{50}{figure.3.33}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.3}Creación del par de claves y del grupo de seguridad}{50}{subsection.3.6.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.4}Configuración del fichero user-data}{51}{subsection.3.6.4}}
+\newlabel{code:vagrantfile2}{{3.25}{51}{Configuración del fichero user-data}{codelisting.3.25}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.25}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{51}{listing.3.25}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.5}Configuración del fichero Vagrantfile}{51}{subsection.3.6.5}}
+\newlabel{code:vagrantfile2}{{3.26}{51}{Configuración del fichero Vagrantfile}{codelisting.3.26}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.26}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]\textasciitilde {}/.aws-credentials/aws-credentials}}}\relax }}{51}{listing.3.26}}
+\newlabel{code:vagrantfile2}{{3.27}{52}{Configuración del fichero Vagrantfile}{codelisting.3.27}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.27}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Vagrantfile}}}\relax }}{52}{listing.3.27}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.6}Despliegue de una instancia}{53}{subsection.3.6.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.34}{\ignorespaces Comprobación de la salud del clúster con 1 instancia.\relax }}{54}{figure.3.34}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.35}{\ignorespaces Comprobación de la red virtual - \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core01}}}.\relax }}{54}{figure.3.35}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.36}{\ignorespaces Acceso al servicio desde la máquina \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core01}}}.\relax }}{54}{figure.3.36}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.37}{\ignorespaces Acceso al servicio desde el sistema anfitrión.\relax }}{55}{figure.3.37}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.38}{\ignorespaces Máquina \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}} desde la consola de AWS.\relax }}{55}{figure.3.38}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.7}Despliegue de tres instancias}{55}{subsection.3.6.7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.39}{\ignorespaces Comprobación de la salud del clúster.\relax }}{56}{figure.3.39}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.40}{\ignorespaces Comprobación de la red virtual.\relax }}{56}{figure.3.40}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.41}{\ignorespaces Obtención de la dirección IP de un contenedor en \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-03}}}.\relax }}{57}{figure.3.41}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.42}{\ignorespaces Prueba de conexión a un contenedor de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-03}}} desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{57}{figure.3.42}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.43}{\ignorespaces Acceso al servicio por consola de comandos.\relax }}{58}{figure.3.43}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.44}{\ignorespaces Acceso al servicio por el navegador web desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{58}{figure.3.44}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.45}{\ignorespaces Acceso al servicio por el navegador web desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-02}}}.\relax }}{59}{figure.3.45}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.46}{\ignorespaces Acceso al servicio por el navegador web desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-03}}}.\relax }}{59}{figure.3.46}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.47}{\ignorespaces Consola AWS EC2 Instances - \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}, \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-02}}} y \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-03}}}.\relax }}{59}{figure.3.47}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.8}Cambio de las unidades systemd a fleet}{59}{subsection.3.6.8}}
+\newlabel{code:vagrantfile2}{{3.28}{60}{Cambio de las unidades systemd a fleet}{codelisting.3.28}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.28}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp-aws}}}\relax }}{60}{listing.3.28}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.48}{\ignorespaces Consola AWS EC2 Instances - \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}, \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-02}}} y \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-03}}}.\relax }}{62}{figure.3.48}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.49}{\ignorespaces Listado de unidades fleet en cada una de las máquinas.\relax }}{62}{figure.3.49}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.50}{\ignorespaces Acceso al servicio por consola de comandos.\relax }}{63}{figure.3.50}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.9}Configuración DNS usando SkyDNS}{63}{subsection.3.6.9}}
+\newlabel{code:vagrantfile2}{{3.29}{64}{Configuración DNS usando SkyDNS}{codelisting.3.29}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.29}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Vagrantfile}}}\relax }}{64}{listing.3.29}}
+\newlabel{code:user-data-skydns}{{3.30}{64}{Configuración DNS usando SkyDNS}{codelisting.3.30}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.30}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{64}{listing.3.30}}
+\newlabel{code:user-data-skydns-postgresql}{{3.31}{65}{Configuración DNS usando SkyDNS}{codelisting.3.31}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.31}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{65}{listing.3.31}}
+\newlabel{code:user-data-skydns-app}{{3.32}{66}{Configuración DNS usando SkyDNS}{codelisting.3.32}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.32}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{66}{listing.3.32}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.51}{\ignorespaces Salud del clúster contemplada por las 3 máquinas.\relax }}{66}{figure.3.51}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.52}{\ignorespaces Información de las máquinas contemplada por las 3 máquinas.\relax }}{67}{figure.3.52}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.53}{\ignorespaces Información de las unidades contemplada por las 3 máquinas.\relax }}{67}{figure.3.53}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.54}{\ignorespaces Lectura de los registros en SkyDNS contemplada por las 3 máquinas.\relax }}{68}{figure.3.54}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.55}{\ignorespaces Conexión a \textit  {db} como \textit  {some-postgres} desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task}}}.\relax }}{68}{figure.3.55}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.56}{\ignorespaces Registros DNS desde el contenedor \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]skydns}}}.\relax }}{68}{figure.3.56}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.57}{\ignorespaces Conexión al servicio mediante consola desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{69}{figure.3.57}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.58}{\ignorespaces Inicio de sesión con el usuario \textit  {Example User} desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{69}{figure.3.58}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.10}Balanceo de carga con Nginx usando Confd}{69}{subsection.3.6.10}}
+\newlabel{code:vagrantfile2}{{3.33}{70}{Balanceo de carga con Nginx usando Confd}{codelisting.3.33}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.33}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Vagrantfile}}}\relax }}{70}{listing.3.33}}
+\newlabel{code:execstartpost-app-task}{{3.34}{70}{Balanceo de carga con Nginx usando Confd}{codelisting.3.34}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.34}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{70}{listing.3.34}}
+\newlabel{code:conf-data}{{3.35}{71}{Balanceo de carga con Nginx usando Confd}{codelisting.3.35}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.35}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{71}{listing.3.35}}
+\newlabel{code:nginx.conf.tmpl}{{3.36}{72}{Balanceo de carga con Nginx usando Confd}{codelisting.3.36}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.36}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{72}{listing.3.36}}
+\newlabel{code:nginx.conf.tmpl}{{3.37}{72}{Balanceo de carga con Nginx usando Confd}{codelisting.3.37}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.37}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{72}{listing.3.37}}
+\newlabel{code:dockerfile-confd}{{3.38}{73}{Balanceo de carga con Nginx usando Confd}{codelisting.3.38}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.38}{\ignorespaces Contenido de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]Dockerfile}}}\relax }}{73}{listing.3.38}}
+\newlabel{code:confd}{{3.39}{74}{Balanceo de carga con Nginx usando Confd}{codelisting.3.39}{}}
+\@writefile{lolisting}{\contentsline {listing}{\numberline {3.39}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]user-data.sampleapp.aws}}}\relax }}{74}{listing.3.39}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.59}{\ignorespaces Salud del clúster contemplada por las 3 máquinas.\relax }}{75}{figure.3.59}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.60}{\ignorespaces Información de las máquinas contemplada por las 3 máquinas.\relax }}{75}{figure.3.60}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.61}{\ignorespaces Información de las unidades fleet contemplada por las 3 máquinas.\relax }}{76}{figure.3.61}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.62}{\ignorespaces Obtención de claves y valores para \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]services/app/*}}}.\relax }}{76}{figure.3.62}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.63}{\ignorespaces Actualización de la configuración Nginx desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]confd}}}.\relax }}{77}{figure.3.63}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.64}{\ignorespaces Fichero \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]nginx.conf}}} actualizado.\relax }}{77}{figure.3.64}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.65}{\ignorespaces Dirección IP del contenedor \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task}}} en la máquina \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{77}{figure.3.65}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.66}{\ignorespaces Dirección IP del contenedor \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task}}} en la máquina \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-02}}}.\relax }}{78}{figure.3.66}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.67}{\ignorespaces Dirección IP del contenedor \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task}}} en la máquina \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-03}}}.\relax }}{78}{figure.3.67}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.68}{\ignorespaces Información de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task}}} sobre una petición en \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-03}}}.\relax }}{78}{figure.3.68}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.69}{\ignorespaces Información de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task}}} sobre una petición en \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{78}{figure.3.69}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.70}{\ignorespaces Información de \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]app-task}}} sobre una petición en \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-02}}}.\relax }}{79}{figure.3.70}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.71}{\ignorespaces Respuesta al servicio por comandos en \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}. \relax }}{79}{figure.3.71}}
+\newlabel{curl-confd}{{3.71}{79}{Respuesta al servicio por comandos en \kode {core-01}. \relax }{figure.3.71}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.72}{\ignorespaces Respuesta al servicio por el navegador web en \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}. \relax }}{79}{figure.3.72}}
+\newlabel{fig:web-confd}{{3.72}{79}{Respuesta al servicio por el navegador web en \kode {core-01}. \relax }{figure.3.72}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.73}{\ignorespaces Inicio de sesión en el servicio con el usuario \textit  {Example User}.\relax }}{80}{figure.3.73}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.74}{\ignorespaces Escritura de un comentario con el usuario \textit  {Example User}.\relax }}{80}{figure.3.74}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.75}{\ignorespaces Visualización de las instancias desde la consola de AWS.\relax }}{80}{figure.3.75}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.11}Resultado}{80}{subsection.3.6.11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.76}{\ignorespaces Salud del clúster contemplada por las 3 máquinas.\relax }}{81}{figure.3.76}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.77}{\ignorespaces Información de las máquinas del clúster.\relax }}{82}{figure.3.77}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.78}{\ignorespaces Información de las unidades de servicio del clúster.\relax }}{82}{figure.3.78}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.79}{\ignorespaces Acceso al servicio desde \leavevmode {\color  {darkgreen}\textbf  {\texttt  {\smaller  [0.75]core-01}}}.\relax }}{82}{figure.3.79}}
+\@setckpt{tmp/implementation.tmp}{
+\setcounter{page}{83}
+\setcounter{equation}{0}
+\setcounter{enumi}{4}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{1}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{3}
+\setcounter{section}{6}
+\setcounter{subsection}{11}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{79}
+\setcounter{table}{0}
+\setcounter{AM@survey}{0}
+\setcounter{Item}{9}
+\setcounter{Hy@AnnotLevel}{0}
+\setcounter{bookmark@seq@number}{62}
+\setcounter{parentequation}{0}
+\setcounter{FancyVerbLine}{2}
+\setcounter{LT@tables}{0}
+\setcounter{LT@chunks}{0}
+\setcounter{codelisting}{39}
+\setcounter{aside}{0}
+\setcounter{float@type}{8}
+\setcounter{ContinuedFloat}{0}
+\setcounter{listing}{39}
+\setcounter{cnltx@tmpa}{0}
+\setcounter{cnltx@tmpb}{0}
+\setcounter{cnltx@tmpc}{0}
+\setcounter{section@level}{0}
+}
