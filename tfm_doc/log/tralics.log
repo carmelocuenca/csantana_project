@@ -1,15 +1,292 @@
 This is tralics 2.15.1, a LaTeX to XML translator, running on carolina-SM
 Copyright INRIA/MIAOU/APICS/MARELLE 2002-2012, Jos\'e Grimm
 Licensed under the CeCILL Free Software Licensing Agreement
-Starting translation of file /tmp/polytex20161107-2839-jap7gy.tex.
+Starting translation of file /tmp/polytex20170703-28366-519cs7.tex.
 Dummy default configuration file used.
-Bib stats: seen 0 entries.
+Error signaled at line 23 of file /tmp/polytex20170703-28366-519cs7.tex:
+Bad \usepackage command
+The following command is not in outer vertical mode: \usepackage.
+Error signaled at line 24 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \titleformat.
+Error signaled at line 24 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing { inserted before unexpected } in argument of \chapter.
+Translating section command div0: <error/>.
+Error signaled at line 25 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \chaptertitlename.
+Error signaled at line 26 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \titlespacing.
+Error signaled at line 26 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing { inserted before unexpected } in argument of \chapter.
+Translating section command div0: <error/>.
+Error signaled at line 32 of file /tmp/polytex20170703-28366-519cs7.tex:
+Runaway argument?
+Paragraph ended while scanning an argument of \usepackage;
+scanning started on line 28.
+Error signaled at line 32 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \setlist.
+Error signaled at line 32 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \setlist.
+Error signaled at line 39 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \urlstyle.
+Error signaled at line 40 of file /tmp/polytex20170703-28366-519cs7.tex:
+Bad \usepackage command
+The following command is not in outer vertical mode: \usepackage.
+Error signaled at line 67 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \VerbatimFootnotes.
+Error signaled at line 73 of file /tmp/polytex20170703-28366-519cs7.tex:
+\begin{document} not at level 0.
+Tralics Warning: Unused global option
+   12pt.
+Error signaled at line 73 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \addtocontents.
+Error signaled at line 76 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined environment titlepage.
+Translating section command div0: Agradecimientos.
+Translating section command div0: Prefacio.
+Translating section command div0: Acerca de este Trabajo de Fin de Mbd3c3582e4c8ba20defe8d04f830c012fca3d226ster.
+Translating section command div0: Motivaci9c72631d173db67e80d187048fe6b9e8bd7e4644n.
+Translating section command div0: Objetivos.
+Translating section command div0: Metodolog2c88fcdc070de7c86723bd948332a28d573e9054a.
+Translating section command div0: Planificaci232729694a7395a913f02cd0ca178ca680a2f32en inicial y seguimiento.
+Translating section command div0: Aportaciones.
+Translating section command div0: Justificaciebfd220f3397cdf7849c77103d4ca9f431caa16bn de la competencia espec6a20df38f48899b8e48e9a181675d3947a294533fica cubierta.
+Translating section command div0: Estado del arte.
+Translating section command div0: Tecnologcdb06671e48871d230b256ebf95ef2161a763accas de contenedores.
+Error signaled at line 214 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 217 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 227 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 230 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 238 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 246 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 258 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 269 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Translating section command div0: Sistemas operativos orientados a contenedores.
+Error signaled at line 287 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 290 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 300 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 303 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 303 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 303 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Translating section command div0: Otros.
+Error signaled at line 370 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 373 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 380 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 383 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Translating section command div0: Herramientas para la orquestaci34cb8259875c3ff4193bae35ddebfe9026cac7c1n de contenedores.
+Error signaled at line 415 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 418 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 428 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 431 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 440 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 443 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 451 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 454 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 463 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 466 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 474 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 477 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Translating section command div0: Proveedores de Infraestructura como Servicio.
+Error signaled at line 500 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 503 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 517 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 520 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Translating section command div0: Otras herramientas tecnol89a27526af389ca763e06f3a5a6b4d7393acee1agicas.
+Error signaled at line 552 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 555 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 555 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 572 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 575 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 575 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 590 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 593 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Error signaled at line 608 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 611 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Translating section command div0: Desarrollo.
+Translating section command div0: An1a920eb286588c26a08ec5052ae27255388c3a2blisis de la aplicaci84f3eeb107cc582061cc41db1bdd34dc2ebb51b2n Ruby on Rails.
+Error signaled at line 660 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotemark.
+Error signaled at line 663 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \footnotetext.
+Translating section command div0: Iteraci30129aebbada373e8416353c29871b9c1d11d0c3n 1: Conversi397af205421d0ea23c21d61a0165d3e6cbe4fd03n a una arquitectura de microservicios con el uso de Docker.
+Error signaled at line 822 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:dockerfile' multiply defined (first use line 810 file /tmp/polytex20170703-28366-519cs7.tex).
+Translating section command div0: Iteracid98ae0c2f431085a37c2591efc7ef58e12c50c04n 2: Subida de la imagen resultante de la aplicaci742d31bb6ea2561d75f32b7af2ffe14f1a6c524en al repositorio de ime0f5d0994e626d1faffc9d9ef710e27877b59919genes Docker Hub.
+Translating section command div0: Iteraci480746577fdb724ddbd149ae6942ff238b63bce8n 3: Integracie6f343822fd31246e9457230f50448dcd933419fn y Despliegue continuos de la aplicaci786dafbdd17846e0d85a795937e93eeacd509c8an con Travis CI, Docker Hub y GitHub.
+Translating section command div0: Iteraci436f784add0492fabb68be0f1fc36ff2f27f0ef5n 4: Despliegue monomef14e4cf259b0517a884c9153498becbfc2cfe4equina con unidades de servicio usando Vagrant, VirtualBox y CoreOS.
+Error signaled at line 1114 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:cloud-config1' multiply defined (first use line 1100 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1130 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:cloud-config1' multiply defined (first use line 1100 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1189 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:credentials' multiply defined (first use line 721 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1276 of file /tmp/polytex20170703-28366-519cs7.tex:
+Error: Wrong dots in graphic file images/figures/volume-public.service.png.
+Warning: junk in figure
+detected on line 1278 of file /tmp/polytex20170703-28366-519cs7.tex.
+Error signaled at line 1282 of file /tmp/polytex20170703-28366-519cs7.tex:
+Error: Wrong dots in graphic file images/figures/postgresql.service.png.
+Warning: junk in figure
+detected on line 1284 of file /tmp/polytex20170703-28366-519cs7.tex.
+Error signaled at line 1288 of file /tmp/polytex20170703-28366-519cs7.tex:
+Error: Wrong dots in graphic file images/figures/app-job.service.png.
+Warning: junk in figure
+detected on line 1290 of file /tmp/polytex20170703-28366-519cs7.tex.
+Error signaled at line 1294 of file /tmp/polytex20170703-28366-519cs7.tex:
+Error: Wrong dots in graphic file images/figures/app-task.service.png.
+Warning: junk in figure
+detected on line 1296 of file /tmp/polytex20170703-28366-519cs7.tex.
+Error signaled at line 1300 of file /tmp/polytex20170703-28366-519cs7.tex:
+Error: Wrong dots in graphic file images/figures/nginx.service.png.
+Warning: junk in figure
+detected on line 1302 of file /tmp/polytex20170703-28366-519cs7.tex.
+Error signaled at line 1328 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:vagrantfile2' multiply defined (first use line 1144 file /tmp/polytex20170703-28366-519cs7.tex).
+Translating section command div0: Iteracib97040c2582118ded77fb832a9166146a4697693n 5: Despliegue en la nube p6318ac3d197cf785cd3ff56af7611d39ccc9593bblica de Amazon Web Services.
+Error signaled at line 1369 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'fig:aws-1-iteration' multiply defined (first use line 1368 file /tmp/polytex20170703-28366-519cs7.tex).
+Warning: junk in figure
+detected on line 1371 of file /tmp/polytex20170703-28366-519cs7.tex.
+Error signaled at line 1438 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:vagrantfile2' multiply defined (first use line 1144 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1459 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:vagrantfile2' multiply defined (first use line 1144 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1489 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:vagrantfile2' multiply defined (first use line 1144 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1653 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:vagrantfile2' multiply defined (first use line 1144 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1704 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:vagrantfile2' multiply defined (first use line 1144 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1854 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:vagrantfile2' multiply defined (first use line 1144 file /tmp/polytex20170703-28366-519cs7.tex).
+Error signaled at line 1910 of file /tmp/polytex20170703-28366-519cs7.tex:
+Label 'code:nginx.conf.tmpl' multiply defined (first use line 1898 file /tmp/polytex20170703-28366-519cs7.tex).
+Translating section command div0: Aspectos Econ460338851bf817e85de7a5ebc83ecf1a4f2851acmicos.
+Error signaled at line 2191 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \rowcolor.
+Error signaled at line 2192 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \multicolumn; command code = 27.
+Error signaled at line 2192 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2192 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2192 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2192 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2192 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2192 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2193 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2194 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2195 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2196 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2197 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \multirow.
+Error signaled at line 2197 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2198 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2199 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2200 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \multirow.
+Error signaled at line 2200 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2201 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2202 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \multirow.
+Error signaled at line 2202 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2231 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \FloatBarrier.
+Error signaled at line 2236 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \rowcolor.
+Error signaled at line 2237 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \multicolumn; command code = 27.
+Error signaled at line 2237 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2237 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Error signaled at line 2237 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \cellcolor.
+Translating section command div0: Resultados y Conclusiones.
+Translating section command div0: Resultados.
+Error signaled at line 2294 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 2294 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 2294 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Translating section command div0: Conclusiones.
+Error signaled at line 2343 of file /tmp/polytex20170703-28366-519cs7.tex:
+Undefined command \addcontentsline.
+Error signaled at line 2410 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 2415 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 2420 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Error signaled at line 2420 of file /tmp/polytex20170703-28366-519cs7.tex:
+Missing dollar not inserted, token ignored: {Character _ of catcode 8}.
+Bib stats: seen 34(34) entries.
 Math stats: formulas 0, kernels 0, trivial 0, \mbox 0, large 0, small 0.
-Buffer realloc 1, string 1368, size 12956, merge 0
-Macros created 198, deleted 10; hash size 2388; foonotes 0.
-Save stack +18 -18.
-Attribute list search 1512(1505) found 1071 in 1122 elements (1120 at boot).
-Number of ref 0, of used labels 0, of defined labels 0, of ext. ref. 0.
-Output written on /tmp/polytex20161107-2839-jap7gy.xml (180 bytes).
-No error found.
-(For more information, see transcript file /tmp/polytex20161107-2839-jap7gy.log)
+Buffer realloc 35, string 12364, size 628692, merge 40
+Macros created 201, deleted 10; hash size 2409; foonotes 0.
+Save stack +3954 -3933.
+Attribute list search 12226(1505) found 4613 in 4892 elements (1120 at boot).
+Number of ref 27, of used labels 26, of defined labels 61, of ext. ref. 56.
+There were 93 images.
+Following images not defined: images/figures/ubuntucore.
+Output written on /tmp/polytex20170703-28366-519cs7.xml (291074 bytes).
+There were 114 errors.
+(For more information, see transcript file /tmp/polytex20170703-28366-519cs7.log)
