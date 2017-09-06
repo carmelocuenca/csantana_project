@@ -69,13 +69,13 @@ Para crear un contenedor que contenga la aplicación habrá que crear su imagen 
 
 El principal propósito de este despliegue es que pueda realizarse automáticamente tras la ejecución de un \textit{script}. Este fichero comprobará que las variables de entorno que especifican el nombre y la contraseña del usuario de las distintas bases de datos PostgreSQL existentes (test, desarrollo y producción) están correctamente establecidas.
 
-Luego se creará el contenedor \kode{some-postgres} con el servidor \kode{PostgreSQL} y, seguidamente, se creará el contenedor de la aplicación web, llamado \kode{some-app}, a partir de la imagen de ésta, enlazándola con el contenedor \kode{some-postgres}, que será su base de datos.
+Luego se creará el contenedor \kode{some-postgres} con el servidor \kode{PostgreSQL} y, seguidamente, se crearán los contenedores \kode{app-job} y \kode{app-task}, a partir de la imagen de la aplicación web, enlazándolos con el contenedor \kode{some-postgres}, que será su base de datos.
 
 Con la intención de utilizar como servidor web de la aplicación un contenedor diferente al propio, se crea el contenedor \kode{some-nginx} que proporciona el servidor \kode{Nginx}. Se le indicará que el tráfico del puerto 8080 en el sistema anfitrión se redirija al 80 del contenedor. Así, el sitio web será accesible por la dirección local en el puerto 8080. Además, se enlazará a la aplicación web mediante el contenedor en el que se ejecuta.
 
 También se crea un volumen Docker de datos, llamado \kode{volume-public}, para compartirlo entre la aplicación web, la base de datos y el servidor proxy.
 
-Con todo ello, quedará construir, migrar y poblar la base de datos para, finalmente, ejecutar el servidor \kode{puma} dentro del contenedor \kode{some-app} y comprobar desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080. Esto producirá el resultado de la \hyperref[fig:resultado1]{Figura \ref{fig:resultado1}}.
+Con todo ello, quedará construir, migrar y poblar la base de datos, desde \kode{app-job}, para, finalmente, ejecutar el servidor \kode{puma} dentro del contenedor \kode{app-task} y comprobar desde el sistema anfitrión que la página principal de la aplicación \kode{sample\_app\_rails\_4} está disponible en el puerto 8080. Esto producirá el resultado de la \hyperref[fig:resultado1]{Figura \ref{fig:resultado1}}.
 
 \subsection{Preparación del repositorio local y remoto}
 
@@ -443,7 +443,7 @@ La imagen etiquetada como \kode{initial} se aprecia ahora en Docker Hub:
 En esta iteración se busca adaptar la aplicación Ruby on Rails para que funcione con Travis CI, definiendo la estructura presentada en la \hyperref[fig:iteration2]{Figura \ref{fig:iteration2}}. 
 
 \begin{figure}[H]
-\image{images/figures/iteration2.png}
+\image{images/figures/iteration3.png}
 \caption{Integración y Despliegue continuos con Travis CI. \label{fig:iteration2}}
 \end{figure}
 
